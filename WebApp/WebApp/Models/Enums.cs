@@ -8,7 +8,8 @@ namespace WebApp.Models
     public class Enums
     {
         public enum PassengerType { REGULAR = 0,PENSIONER, STUDENT }
-        public enum TypeOfTicket { TIMED, DIALY, MONTHLY, YEARLY}
-        public enum TypeOfRoute { TOWN, SUBURBAN}
+        public enum TypeOfTicket { TIMED = 0, DIALY, MONTHLY, YEARLY}
+        public enum TypeOfRoute { TOWN = 0, SUBURBAN}
+        public enum TypeOfDay { WORKDAY = 0, SATURDAY, SUNDAY }
     }
 }

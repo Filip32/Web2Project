@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,13 +8,20 @@ namespace WebApp.Models
 {
     public class Location
     {
+        private int id;
         private double x;
         private double y;
-        //private string address; 
 
         public Location()
         {
 
+        }
+
+        [Key]
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
         }
 
         public double X

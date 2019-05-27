@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,9 +8,10 @@ namespace WebApp.Models
 {
     public class Ticket
     {
-        private Enums.TypeOfTicket ticketType;
+        private PricelistItem pricelistItem;
         private DateTime from;
         private DateTime to;
+        private ApplicationUser applicationUser;
         private int id;
 
         public Ticket()
@@ -17,21 +19,37 @@ namespace WebApp.Models
 
         }
 
-        public Enums.TypeOfTicket TicketType
-        {
-            get
-            {
-                return ticketType;
-            }
-            set
-            {
-                ticketType = value;
-            }
-        }
+        [Key]
         public int Id
         {
             get { return id; }
+            set { id = value; }
         }
+
+        public PricelistItem PricelistItem
+        {
+            get
+            {
+                return pricelistItem;
+            }
+            set
+            {
+                pricelistItem = value;
+            }
+        }
+
+        public ApplicationUser ApplicationUser
+        {
+            get
+            {
+                return applicationUser;
+            }
+            set
+            {
+                applicationUser = value;
+            }
+        }
+
         public DateTime From
         {
             get
@@ -43,6 +61,7 @@ namespace WebApp.Models
                 from = value;
             }
         }
+
         public DateTime To
         {
             get

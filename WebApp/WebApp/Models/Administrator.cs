@@ -7,7 +7,6 @@ namespace WebApp.Models
 {
     public class Administrator:Person
     {
-        //nisam sigurna za ovo 
         public Administrator():base()
         {
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -17,7 +18,14 @@ namespace WebApp.Models
 
         public Person()
         {
-            address = new Address();
+
+        }
+
+        [Key]
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
         }
 
         public string Password
@@ -31,6 +39,7 @@ namespace WebApp.Models
                 password = value;
             }
         }
+
         public string Email
         {
             get
@@ -42,6 +51,7 @@ namespace WebApp.Models
                 email = value;
             }
         }
+
         public string Name
         {
             get
@@ -53,6 +63,7 @@ namespace WebApp.Models
                 name = value;
             }
         }
+
         public string LastName
         {
             get
@@ -61,9 +72,10 @@ namespace WebApp.Models
             }
             set
             {
-                LastName = value;
+                lastName = value;
             }
         }
+
         public DateTime BirthDate
         {
             get
@@ -75,17 +87,7 @@ namespace WebApp.Models
                 birthDate = value;
             }
         }
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
-            set
-            {
-                id = value;
-            }
-        }
+       
         public Address Address
         {
             get

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -17,12 +18,12 @@ namespace WebApp.Models
 
         }
 
-        public Address(string streetName, int streetNumber)
+        [Key]
+        public int Id
         {
-            this.streetNumber = streetNumber;
-            this.streetName = streetName;
+            get { return id; }
+            set { id = value; }
         }
-
 
         public int StreetNumber
         {
@@ -60,7 +61,5 @@ namespace WebApp.Models
                 city = value;
             }
         }
-
-        public int Id { get { return Id; } }
     }
 }

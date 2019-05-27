@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -16,13 +17,16 @@ namespace WebApp.Models
 
         public Station()
         {
-
+            Routes = new List<Route>();
         }
 
+        [Key]
         public int Id
         {
             get { return id; }
+            set { id = value; }
         }
+
         public double X
         {
             get
@@ -34,6 +38,7 @@ namespace WebApp.Models
                 x = value;
             }
         }
+
         public double Y
         {
             get
@@ -45,11 +50,19 @@ namespace WebApp.Models
                 y = value;
             }
         }
+
         public string Name
         {
-            get { return name; }
-            set { name = value; }
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
         }
+
         public Address Address
         {
             get
@@ -61,6 +74,7 @@ namespace WebApp.Models
                 address = value;
             }
         }
+
         public List<Route> Routes
         {
             get

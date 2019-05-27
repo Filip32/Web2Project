@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -16,12 +17,14 @@ namespace WebApp.Models
 
         public Route()
         {
-
+            Vehicles = new List<Vehicle>();
         }
 
+        [Key]
         public int Id
         {
             get { return id; }
+            set { id = value; }
         }
 
         public List<Station> Stations

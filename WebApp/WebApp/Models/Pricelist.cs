@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -14,6 +15,13 @@ namespace WebApp.Models
         public Pricelist()
         {
 
+        }
+
+        [Key]
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
         }
 
         public DateTime From
@@ -39,7 +47,5 @@ namespace WebApp.Models
                 to = value;
             }
         }
-
-        public int Id { get { return id; } }
     }
 }

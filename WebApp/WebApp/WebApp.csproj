@@ -265,7 +265,7 @@
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Administrator.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\Coeffiencts.cs" />
+    <Compile Include="Models\Coefficients.cs" />
     <Compile Include="Models\Controlor.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\Item.cs" />
@@ -277,6 +277,7 @@
     <Compile Include="Models\PricelistItem.cs" />
     <Compile Include="Models\Station.cs" />
     <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
