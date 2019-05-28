@@ -13,11 +13,11 @@ namespace WebApp.Models
         private double y;
         private string name;
         private Address address;
-        private List<Route> routes;
+        private List<int> routes;
 
         public Station()
         {
-            Routes = new List<Route>();
+            Routes = new List<int>();
         }
 
         [Key]
@@ -75,7 +75,7 @@ namespace WebApp.Models
             }
         }
 
-        public List<Route> Routes
+        public List<int> Routes
         {
             get
             {

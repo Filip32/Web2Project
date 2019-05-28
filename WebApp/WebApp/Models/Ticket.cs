@@ -11,7 +11,7 @@ namespace WebApp.Models
         private PricelistItem pricelistItem;
         private DateTime from;
         private DateTime to;
-        private ApplicationUser applicationUser;
+        private Passenger passenger;
         private int id;
 
         public Ticket()
@@ -38,15 +38,15 @@ namespace WebApp.Models
             }
         }
 
-        public ApplicationUser ApplicationUser
+        public Passenger Passenger
         {
             get
             {
-                return applicationUser;
+                return passenger;
             }
             set
             {
-                applicationUser = value;
+                passenger = value;
             }
         }
 
