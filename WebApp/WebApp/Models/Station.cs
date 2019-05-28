@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -13,14 +14,15 @@ namespace WebApp.Models
         private double y;
         private string name;
         private Address address;
-        private List<int> routes;
+        private List<Route> routes;
 
         public Station()
         {
-            Routes = new List<int>();
+            Routes = new List<Route>();
         }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id
         {
             get { return id; }
@@ -75,7 +77,7 @@ namespace WebApp.Models
             }
         }
 
-        public List<int> Routes
+        public List<Route> Routes
         {
             get
             {
