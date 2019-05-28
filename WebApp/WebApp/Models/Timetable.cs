@@ -10,12 +10,9 @@ namespace WebApp.Models
     {
         private int id;
         private Enums.TypeOfDay typeOfDay;
-        private Enums.TypeOfRoute typeOfRoute;
-        private List<int> routes;
 
         public Timetable()
         {
-            Routes = new List<int>();
         }
 
         [Key]
@@ -34,30 +31,6 @@ namespace WebApp.Models
             set
             {
                 typeOfDay = value;
-            }
-        }
-
-        public Enums.TypeOfRoute TypeOfRoute
-        {
-            get
-            {
-                return typeOfRoute;
-            }
-            set
-            {
-                typeOfRoute = value;
-            }
-        }
-
-        public List<int> Routes
-        {
-            get
-            {
-                return routes;
-            }
-            set
-            {
-                routes = value;
             }
         }
     }
