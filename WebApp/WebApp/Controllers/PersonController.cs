@@ -20,14 +20,14 @@ namespace WebApp.Controllers
         // GET: api/Person
         public IQueryable<Person> GetPeople()
         {
-            return db.People;
+            return db.Persons;
         }
 
         // GET: api/Person/5
         [ResponseType(typeof(Person))]
         public IHttpActionResult GetPerson(int id)
         {
-            Person person = db.People.Find(id);
+            Person person = db.Persons.Find(id);
             if (person == null)
             {
                 return NotFound();
@@ -80,7 +80,7 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.People.Add(person);
+            db.Persons.Add(person);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = person.Id }, person);
@@ -90,13 +90,13 @@ namespace WebApp.Controllers
         [ResponseType(typeof(Person))]
         public IHttpActionResult DeletePerson(int id)
         {
-            Person person = db.People.Find(id);
+            Person person = db.Persons.Find(id);
             if (person == null)
             {
                 return NotFound();
             }
 
-            db.People.Remove(person);
+            db.Persons.Remove(person);
             db.SaveChanges();
 
             return Ok(person);
@@ -113,7 +113,7 @@ namespace WebApp.Controllers
 
         private bool PersonExists(int id)
         {
-            return db.People.Count(e => e.Id == id) > 0;
+            return db.Persons.Count(e => e.Id == id) > 0;
         }
     }
 }
