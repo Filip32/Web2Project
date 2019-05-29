@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 .backgroundColor{
-    background-color: #e6ecff
+    background-color: #e6ecff !important
+}
+
+.my-font-title{
+    font-style: oblique;
+    font-size: 17px;
+    color:#9966ff;
+    font-weight: 700;
+    text-align: center;
+    justify-content: center;
 }
