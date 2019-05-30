@@ -1,3 +1,35 @@
-<p>
-  pricelist works!
-</p>
+<p class="my-pricelist-font">Pricelist<p>
+
+<table class="demo">
+  <thead class="my-thead-font">
+	<tr>
+		<th>Type of ticket</th>
+		<th>Price</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr *ngFor="let u of typeOfTicket; let i=index" (click) = "RowSelect(u)">
+		<td>{{u.Ticket}}</td>
+		<td>{{u.Price}}</td>
+	</tr>
+	</tbody>
+</table>
+
+<br/>
+
+<div>
+<p class="my-font float">Discount for<p> &nbsp;
+<select id="type-of-user">
+    <option value="Pensioner"><br/></option>
+  <option value="Pensioner">Pensioner</option>
+  <option value="Student">Student</option>
+</select>
+</div>
+
+<div>
+<p class="my-font float">Total:<p> &nbsp;
+</div>
+<br/><br/>
+<div>
+<input type="submit" value="Submit">
+</div>

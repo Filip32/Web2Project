@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PricelistComponent implements OnInit {
 
+  selectedRow: any;
+  typeOfTicket: [{Ticket: "Time Ticket", Price: "50"}, {Ticket: "Daily Ticket", Price: "50"}];
   constructor() { }
 
   ngOnInit() {
   }
 
+  RowSelect(u:any)
+  {
+    this.selectedRow = u;
+  }
 }
