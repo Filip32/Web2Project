@@ -3,22 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { TimetableComponent } from './timetable/timetable.component';
+import { PricelistComponent } from './pricelist/pricelist.component';
 
 const routes: Routes = [
-{
-  path: 'register',
-  component: RegisterComponent
-},
 
-{
-  path: 'login', 
-  component: LoginComponent
-},
-{
-  path: '',
-  component: HomeComponent
-}
-
+{path: '', component: HomeComponent},
+{path: 'login', component: LoginComponent},
+{path: 'register', component: RegisterComponent},
+{path: 'timetable', component: TimetableComponent},
+{path: 'pricelist', component: PricelistComponent}
 ];
 
 @NgModule({
