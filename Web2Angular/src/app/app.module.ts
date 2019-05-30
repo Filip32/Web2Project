@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TimetableComponent } from './timetable/timetable.component';
 import { PricelistComponent } from './pricelist/pricelist.component';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { PricelistComponent } from './pricelist/pricelist.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
