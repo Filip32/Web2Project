@@ -4,44 +4,44 @@
   </p>
 </div>
   
-  <div id="register-id">
+<div id="register-id">
         <label  class="my-font-title">Email</label>
         <br/>
-        <input type="email" name="email">
+        <input type="email" formControlName="Email" placeholder="Enter email..">
         <br/>
     
         <label class="my-font-title">Password</label>
         <br/>
-        <input type="password"  name="lastname">
+        <input type="password"  formControlName="Password" placeholder="Enter password..">
         <br/>
         <label class="my-font-title">Repeat password</label>
         <br/>
-        <input type="password"  name="lastname">
+        <input type="password"  formControlName="PasswordR" placeholder="Enter password..">
         <br/>
 
         <label class="my-font-title">Name</label>
         <br/>
-        <input type="text" id="lname" name="lastname" placeholder="Enter name..">
+        <input type="text" formControlName="Name" placeholder="Enter name..">
         <br/>
 
         <label class="my-font-title">Last name</label>
         <br/>
-        <input type="text" id="lname" name="lastname" placeholder="Enter last name..">
+        <input type="text" formControlName="Lastname" placeholder="Enter last name..">
         <br/>
       
-        <label class="my-font-title">Last name</label>
+        <label class="my-font-title">Address</label>
         <br/>
-        <input type="text" id="lname" name="lastname" placeholder="Enter address..">
+        <input type="text" formControlName="Address" placeholder="Enter address..">
         <br/>
 
         <label  class="my-font-title">Birthday</label>
         <br/>
-          <input type="date" name="bday">
+          <input type="date" formControlName="Birthday">
         <br/>
         <br/>
 
         <label class="my-font-title">Type of user</label>
-        <select id="type" name="type">
+        <select id="type" formControlName="UserType">
           <option value="Regular">Regular</option>
           <option value="Pensioner">Pensioner</option>
           <option value="Student">Student</option>

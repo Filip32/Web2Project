@@ -1,20 +1,28 @@
 <div>
-<p class="my-login-font">
-    Log in
-</p>
-</div>
+        <p class="my-login-font">
+            Log in
+        </p>
 
-<div id="login-id">
-      <label  class="my-font-title">Email</label>
-      <br/>
-      <input type="email" name="email">
-      <br/>
-  
-      <label class="my-font-title">Password</label>
-      <br/>
-      <input type="text" id="lname" name="lastname" placeholder="Enter password..">
-      <br/>
-    
-      <input type="submit" value="Submit">
-  </div>
-  
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <div id="login-id">
+            <label class="my-font-title">Email</label>
+            <br />
+            <input type="email" formControlName="email" placeholder="Enter email.." required>
+
+            <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)" class="alert alert-danger">
+
+                <div *ngIf="f.email.errors.required">
+                    <label class="my-font-title"> Email is required.</label>
+                </div>
+              </div>
+
+            <label class="my-font-title">Password</label>
+            <br />
+            <input type="password" formControlName="password" placeholder="Enter password.." required>
+            <br />
+            <input type="submit" value="Submit">
+        </div>
+
+    </form>
+</div>
