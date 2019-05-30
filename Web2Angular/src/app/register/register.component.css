@@ -8,7 +8,7 @@
 }
 
 input[type=text], select {
-    width: 80%;
+    width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -19,7 +19,7 @@ input[type=text], select {
 
   
   input[type=submit] {
-    width: 80%;
+    width: 100%;
     background-color: #668cff;
     color: white;
     padding: 14px 20px;
@@ -31,7 +31,7 @@ input[type=text], select {
   }
   
   input[type=email], select {
-    width: 80%;
+    width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -41,7 +41,7 @@ input[type=text], select {
   }
 
   input[type=password], select {
-    width: 80%;
+    width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -51,7 +51,7 @@ input[type=text], select {
   }
 
   input[type=date], select {
-    width: 80%;
+    width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -67,7 +67,7 @@ input[type=text], select {
 #register-id
 {
     position: absolute;
-    left:39%;   
+    left:40%;   
 }
 
   div {

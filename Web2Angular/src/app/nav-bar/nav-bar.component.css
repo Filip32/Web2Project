@@ -6,7 +6,8 @@
     left: 0;
     background-color: #668cff;
     overflow: hidden;
-    font-weight: bold
+    font-weight: bold;
+    z-index: 99;
   }
   
   /* Style the links inside the navigation bar */
