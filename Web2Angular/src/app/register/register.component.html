@@ -4,7 +4,7 @@
   </p>
 </div>
   
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="registerForm" novalidate (ngSubmit)="onSubmit()">
 <div id="register-id">
         <label class="my-font-title">Email</label>
         <br/>
@@ -13,11 +13,20 @@
     
         <label class="my-font-title">Password</label>
         <br/>
-        <input type="password"  formControlName="Password" placeholder="Enter password..">
+        <input type="password"  formControlName="password" placeholder="Enter password..">
         <br/>
         <label class="my-font-title">Repeat password</label>
         <br/>
-        <input type="password"  formControlName="PasswordR" placeholder="Enter password..">
+        <input type="password"  formControlName="confirmPassword" placeholder="Enter password..">
+        <div *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
+            <div *ngIf="f.repeatpass.errors.required">
+              Lozinka je obavezna.
+              <p> Lozinke se moraju poklapati </p>
+            </div>
+        <div *ngIf="f.confirmPassword.errors.mustMatch" class="my-font-title">
+            <p> Lozinke se moraju poklapati </p>
+          </div>
+        </div>
         <br/>
 
         <label class="my-font-title">Name</label>
