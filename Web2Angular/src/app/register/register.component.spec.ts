@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterComponent } from './register.component';
+import{ ConfirmPasswordValidator} from './confirm-password.validator';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
