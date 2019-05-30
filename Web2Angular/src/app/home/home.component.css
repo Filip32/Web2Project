@@ -1,0 +1,40 @@
+.map {
+    width: 50%;
+    height: 88.5%;
+    position: fixed;
+    top: 9%;
+    right: 1%;
+    border:1px solid #2764c6;
+  }
+
+  .link-a
+  {
+    position: fixed;
+    font-size: 20px;
+    text-decoration: underline;
+    font-style: oblique;
+    color: #2764c6
+  }
+
+  .link-a :hover
+  {
+    cursor: pointer;
+    color: #6093e4
+  }
+
+  .timetable 
+  {
+    top: 92%;
+  }
+
+  .pricelist 
+  {
+    top: 86%;
+  }
+
+  .my-route-font{
+    font-style: oblique;
+    font-size: 25px;
+    color:#9966ff;
+    font-weight: 700;
+}
