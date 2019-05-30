@@ -7,6 +7,15 @@
     justify-content: center;
 }
 
+.my-p-font{
+  font-style: oblique;
+  font-size: 17px;
+  color:#9966ff;
+  font-weight: 700;
+  text-align: center;
+  justify-content: center;
+}
+
 input[type=password], select {
   width: 150%;
   padding: 12px 20px;
