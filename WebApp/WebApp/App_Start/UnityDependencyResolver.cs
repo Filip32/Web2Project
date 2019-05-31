@@ -74,7 +74,6 @@ namespace WebApp.App_Start
             container.RegisterType<ICoefficientRepository, CoefficientRepository>();
             container.RegisterType<ILocationRepository, LocationRepository>();
             container.RegisterType<IPassengerRepository, PassengerRepository>();
-            container.RegisterType<IPersonRepository, PersonRepository>();
             container.RegisterType<IPricelistItemRepository, PricelistItemRepository>();
             container.RegisterType<IPricelistRepository, PricelistRepository>();
             container.RegisterType<IRouteRepository, RouteRepository>();

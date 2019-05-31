@@ -16,14 +16,18 @@ export class LoginComponent implements OnInit {
    }
 
     loginForm = this.fb.group({
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.email, Validators.required]],
       password: ['', Validators.required],
     });
        ngOnInit() {
   }
 
   onSubmit() {
-    this.mainService.login(this.loginForm.value);
+    let poruka = this.mainService.login(this.loginForm.value).subscribe(
+      (res) => {
+        console.log(res);
+      }
+    );
   }
 
   get f() { return this.loginForm.controls; }

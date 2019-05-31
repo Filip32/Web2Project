@@ -18,7 +18,6 @@ namespace WebApp.Persistence
         public DbSet<Item> Items { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
-        public DbSet<Person> Persons { get; set; }
         public DbSet<Pricelist> Pricelists { get; set; }
         public DbSet<PricelistItem> PricelistItems { get; set; }
         public DbSet<Route> Routes { get; set; }

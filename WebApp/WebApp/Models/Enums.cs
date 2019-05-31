@@ -11,5 +11,6 @@ namespace WebApp.Models
         public enum TypeOfTicket { TIMED = 0, DIALY, MONTHLY, YEARLY}
         public enum TypeOfRoute { TOWN = 0, SUBURBAN}
         public enum TypeOfDay { WORKDAY = 0, SATURDAY, SUNDAY }
+        public enum StateType { UNVERIFIED = 0, ACCEPTED, DENIED }
     }
 }

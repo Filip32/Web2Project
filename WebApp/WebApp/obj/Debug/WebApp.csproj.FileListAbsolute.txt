@@ -885,7 +885,6 @@ C:\Users\filip\Desktop\Web\Web2Project\WebApp\WebApp\bin\Microsoft.Owin.Security
 C:\Users\filip\Desktop\Web\Web2Project\WebApp\WebApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\filip\Desktop\Web\Web2Project\WebApp\WebApp\bin\System.Web.Http.Owin.xml
 C:\Users\filip\Desktop\Web\Web2Project\WebApp\WebApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\filip\Desktop\Web\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 C:\Users\filip\Desktop\Web\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.InitialMigration.resources
 C:\Users\filip\Desktop\Web\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.FirstMigration.resources
 C:\Users\filip\Desktop\Web\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csproj.GenerateResource.cache
@@ -1045,3 +1044,4 @@ C:\Users\asus\Desktop\W2New\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csproj.Co
 C:\Users\asus\Desktop\W2New\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 C:\Users\asus\Desktop\W2New\Web2Project\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\asus\Desktop\W2New\Web2Project\WebApp\WebApp\obj\Debug\WebApp.pdb
+C:\Users\filip\Desktop\Web\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration10.resources

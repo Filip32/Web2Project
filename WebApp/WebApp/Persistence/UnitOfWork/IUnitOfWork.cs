@@ -14,7 +14,6 @@ namespace WebApp.Persistence.UnitOfWork
         ILocationRepository LocationRepository { get; set; }
         IPassengerRepository PassengerRepository { get; set; }
         ICoefficientRepository CoefficientRepository { get; set; }
-        IPersonRepository PersonRepository { get; set; }
         IPricelistItemRepository PricelistItemRepository { get; set; }
         IPricelistRepository PricelistRepository { get; set; }
         IRouteRepository RouteRepository { get; set; }

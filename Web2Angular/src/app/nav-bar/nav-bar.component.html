@@ -2,7 +2,8 @@
 <div class="topnav">
   <a class="active" routerLink="/" >NS Bus Application</a>
   <a routerLink="/" >Home</a>
-  <a routerLink="/register">Register</a>
-  <a routerLink="/login">Log in</a>
+  <a routerLink="/register" *ngIf="!isLogin()">Register</a>
+  <a routerLink="/login" *ngIf="!isLogin()">Log in</a>
+  <a routerLink="/" *ngIf="isLogin()">Log out</a>
 </div>
 

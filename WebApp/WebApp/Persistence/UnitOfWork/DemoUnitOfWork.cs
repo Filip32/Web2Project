@@ -26,8 +26,6 @@ namespace WebApp.Persistence.UnitOfWork
         [Dependency]
         public ICoefficientRepository CoefficientRepository { get; set; }
         [Dependency]
-        public IPersonRepository PersonRepository { get; set; }
-        [Dependency]
         public IPricelistItemRepository PricelistItemRepository { get; set; }
         [Dependency]
         public IPricelistRepository PricelistRepository { get; set; }

@@ -16,5 +16,18 @@ export class NavBarComponent implements OnInit {
 login():void{
 this.loginvar= true;
 
-}  
+}
+
+isLogin(): boolean
+{
+  if(localStorage.login)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
 }

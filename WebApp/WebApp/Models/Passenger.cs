@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace WebApp.Models
 {
-    public class Passenger:Person
+    public class Passenger
     {
-        private bool isValidated;
+        int id;
+        private Enums.StateType isValidated;
+        private string name;
+        private string lastName;
+        private Address address;
+        private DateTime birthday;
         private string picture;
         private Enums.PassengerType passengerType;
 
@@ -17,7 +23,39 @@ namespace WebApp.Models
 
         }
 
-        public bool IsValidated
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
+
+        public string LastName
+        {
+            get
+            {
+                return lastName;
+            }
+            set
+            {
+                lastName = value;
+            }
+        }
+
+        public Enums.StateType IsValidated
         {
             get
             {
@@ -26,6 +64,30 @@ namespace WebApp.Models
             set
             {
                 isValidated = value;
+            }
+        }
+
+        public DateTime Birthday
+        {
+            get
+            {
+                return birthday;
+            }
+            set
+            {
+                birthday = value;
+            }
+        }
+
+        public Address Address
+        {
+            get
+            {
+                return address;
+            }
+            set
+            {
+                address = value;
             }
         }
 
