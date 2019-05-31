@@ -28,7 +28,7 @@
                          Password is required.
                     </div>
                 </div>
-            <input type="submit" value="Submit">
+            <input type="submit" [disabled]="loginForm.invalid" value="Submit">
         </div>
 
     </form>

@@ -1,63 +1,117 @@
 <div>
   <p class="my-register-font">
-      Register
+    Register
   </p>
 </div>
-  
-<form [formGroup]="registerForm" novalidate (ngSubmit)="onSubmit()">
-<div id="register-id">
-        <label class="my-font-title">Email</label>
-        <br/>
-        <input type="email" formControlName="Email" placeholder="Enter email..">
-        <br/>
-    
-        <label class="my-font-title">Password</label>
-        <br/>
-        <input type="password"  formControlName="password" placeholder="Enter password..">
-        <br/>
-        <label class="my-font-title">Repeat password</label>
-        <br/>
-        <input type="password"  formControlName="confirmPassword" placeholder="Enter password..">
-        <div *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
-            <div *ngIf="f.repeatpass.errors.required">
-              Lozinka je obavezna.
-              <p> Lozinke se moraju poklapati </p>
-            </div>
-        <div *ngIf="f.confirmPassword.errors.mustMatch" class="my-font-title">
-            <p> Lozinke se moraju poklapati </p>
-          </div>
-        </div>
-        <br/>
 
-        <label class="my-font-title">Name</label>
-        <br/>
-        <input type="text" formControlName="Name" placeholder="Enter name..">
-        <br/>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div id="register-id">
+    <label class="my-font-title">Email</label>
+    <br />
 
-        <label class="my-font-title">Last name</label>
-        <br/>
-        <input type="text" formControlName="Lastname" placeholder="Enter last name..">
-        <br/>
-      
-        <label class="my-font-title">Address</label>
-        <br/>
-        <input type="text" formControlName="Address" placeholder="Enter address..">
-        <br/>
+    <input type="email" formControlName="Email" placeholder="Enter email.." required
+      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+    <div *ngIf="f.Email.invalid && (f.Email.dirty || f.Email.touched)">
+      <div *ngIf="f.Email.errors.required" class="my-font-title">
+        Email is required.
+      </div>
+      <div *ngIf="f.Email.errors && f.Email.errors.pattern" class="my-font-title">
+        Email is not of correct format.
+      </div>
 
-        <label  class="my-font-title">Birthday</label>
-        <br/>
-          <input type="date" formControlName="Birthday">
-        <br/>
-        <br/>
+    </div>
+    <br />
 
-        <label class="my-font-title">Type of user</label>
-        <select id="type" formControlName="UserType">
-          <option value="Regular">Regular</option>
-          <option value="Pensioner">Pensioner</option>
-          <option value="Student">Student</option>
-        </select>
+    <label class="my-font-title">Password</label>
+    <br />
+    <input type="password" formControlName="password" placeholder="Enter password.." required>
+    <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
+      <div *ngIf="f.password.errors.required" class="my-font-title">
+        Password is reqired.
+      </div>
+    </div>
+    <br />
+    <label class="my-font-title">Repeat password</label>
+    <br />
+    <input type="password" formControlName="confirmPassword" placeholder="Enter password.." required>
+    <div *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
+      <div *ngIf="f.confirmPassword.errors.required" class="my-font-title">
+        Password is reqired.
+      </div>
+      <div *ngIf="f.confirmPassword.errors.mustMatch" class="my-font-title">
+        <p> Passwords must match. </p>
+      </div>
+    </div>
+    <br />
 
-        <input type="submit" value="Submit">
+    <label class="my-font-title">Name</label>
+    <br />
+    <input type="text" formControlName="Name" placeholder="Enter name.." required>
+    <div *ngIf="f.Name.invalid && (f.Name.dirty || f.Name.touched)">
+      <div *ngIf="f.Name.errors.required" class="my-font-title">
+        Name is required.
+      </div>
+    </div>
+    <br />
 
-</div>
+    <label class="my-font-title">Last name</label>
+    <br />
+    <input type="text" formControlName="Lastname" placeholder="Enter last name..">
+    <div *ngIf="f.Lastname.invalid && (f.Lastname.dirty || f.Lastname.touched)">
+      <div *ngIf="f.Lastname.errors.required" class="my-font-title">
+        Last name is required.
+      </div>
+    </div>
+    <br />
+
+    <label class="my-font-title">Address</label>
+    <br />
+    <label class="my-font-title">Street name</label>
+    <br />
+    <input type="text" formControlName="Address_StreetName" placeholder="Enter last name..">
+    <div *ngIf="f.Address_StreetName.invalid && (f.Address_StreetName.dirty || f.Address_StreetName.touched)">
+      <div *ngIf="f.Address_StreetName.errors.required" class="my-font-title">
+        Street name is required.
+      </div>
+    </div>
+    <br />
+    <label class="my-font-title">Enter street number</label>
+    <br />
+    <input type="text" formControlName="Address_StreetNumber" placeholder="Enter street name..">
+    <div *ngIf="f.Address_StreetNumber.invalid && (f.Address_StreetNumber.dirty || f.Address_StreetNumber.touched)">
+      <div *ngIf="f.Address_StreetNumber.errors.required" class="my-font-title">
+        Street number is required.
+      </div>
+    </div>
+    <br />
+    <label class="my-font-title">Enter zip code</label>
+    <input type="text" formControlName="Address_Zipcode" placeholder="Enter street name..">
+    <div *ngIf="f.Address_Zipcode.invalid && (f.Address_Zipcode.dirty || f.Address_Zipcode.touched)">
+      <div *ngIf="f.Address_Zipcode.errors.required" class="my-font-title">
+        Zip code is required.
+      </div>
+    </div>
+    <br />
+
+    <label class="my-font-title">Birthday</label>
+    <br />
+    <input type="date" formControlName="Birthday">
+    <div *ngIf="f.Birthday.invalid && (f.Birthday.dirty || f.Birthday.touched)">
+      <div *ngIf="f.Birthday.errors.required" class="my-font-title">
+        You must select your date of birth.
+      </div>
+    </div>
+    <br />
+    <br />
+
+    <label class="my-font-title">Type of user</label>
+    <select id="type" formControlName="UserType">
+      <option value="Regular">Regular</option>
+      <option value="Pensioner">Pensioner</option>
+      <option value="Student">Student</option>
+    </select>
+
+    <input type="submit" [disabled]="registerForm.invalid" value="Submit">
+
+  </div>
 </form>
