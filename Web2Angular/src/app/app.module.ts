@@ -11,6 +11,7 @@ import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TimetableComponent } from './timetable/timetable.component';
 import { PricelistComponent } from './pricelist/pricelist.component';
 import { HttpClientModule} from '@angular/common/http';
+import { PricelistUnregisteredComponent } from './pricelist-unregistered/pricelist-unregistered.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HttpClientModule} from '@angular/common/http';
     RegisterComponent,
     LoginComponent,
     TimetableComponent,
-    PricelistComponent
+    PricelistComponent,
+    PricelistUnregisteredComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { TimetableComponent } from './timetable/timetable.component';
 import { PricelistComponent } from './pricelist/pricelist.component';
+import { PricelistUnregisteredComponent } from './pricelist-unregistered/pricelist-unregistered.component';
 
 const routes: Routes = [
 
@@ -12,7 +13,8 @@ const routes: Routes = [
 {path: 'login', component: LoginComponent},
 {path: 'register', component: RegisterComponent},
 {path: 'timetable', component: TimetableComponent},
-{path: 'pricelist', component: PricelistComponent}
+{path: 'pricelist', component: PricelistComponent},
+{path: 'pricelist-unregistered', component: PricelistUnregisteredComponent}
 ];
 
 @NgModule({

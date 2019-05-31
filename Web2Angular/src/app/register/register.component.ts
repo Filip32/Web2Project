@@ -11,23 +11,26 @@ import { ConfirmPasswordValidator } from './confirm-password.validator';
 export class RegisterComponent implements OnInit {
   registerForm:FormGroup;
   submitted:boolean = false;
-  get f() { return this.registerForm.controls; }
+ 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
-      Email: ['', Validators.required],
+      Email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword:['', Validators.required],
-      Name: [''],
-      Lastname: [''],
-      Address: [''],
-      Birthday:[''],
+      Name: ['',Validators.required],
+      Lastname: ['',Validators.required],
+      Address_StreetName: ['',Validators.required],
+      Address_StreetNumber: ['',Validators.required],
+      Address_Zipcode: ['',Validators.required],
+      Birthday:['',Validators.required],
       UserType:['']
     },{
       validator: MustMatch('password', 'confirmPassword')
     })};
 
+    get f() { return this.registerForm.controls; }
   onSubmit() {
     console.warn(this.registerForm.value);
     this.submitted = true;
