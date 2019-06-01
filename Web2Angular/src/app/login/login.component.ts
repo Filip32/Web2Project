@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { MainService } from '../main.service';
+import { AuthService } from '../auth.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http'
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
  
-  constructor(private fb: FormBuilder, private mainService: MainService, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private http: HttpClient, private router: Router) {
 
    }
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    let poruka = this.mainService.login(this.loginForm.value).subscribe(
+    let poruka = this.authService.login(this.loginForm.value).subscribe(
       (res) => {
         if(localStorage.role == "AppUser")
         {
