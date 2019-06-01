@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MainService } from '../main.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http'
 })
 export class LoginComponent implements OnInit {
  
-  constructor(private fb: FormBuilder, private mainService: MainService, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private mainService: MainService, private http: HttpClient, private router: Router) {
 
    }
 
@@ -25,7 +26,18 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     let poruka = this.mainService.login(this.loginForm.value).subscribe(
       (res) => {
-        console.log(res);
+        if(localStorage.role == "AppUser")
+        {
+          this.router.navigate(['/']);
+        } 
+        else if(localStorage.role == "Admin")
+        {
+          this.router.navigate(['/routes-stations-a']);
+        }
+        else if(localStorage.role == "Controlor")
+        {
+          this.router.navigate(['/verification-c']);
+        }
       }
     );
   }

@@ -11,7 +11,12 @@ import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TimetableComponent } from './timetable/timetable.component';
 import { PricelistComponent } from './pricelist/pricelist.component';
 import { HttpClientModule} from '@angular/common/http';
-import { PricelistUnregisteredComponent } from './pricelist-unregistered/pricelist-unregistered.component';
+import { ProfilComponent } from './profil/profil.component';
+import { TicketsChackComponent } from './tickets-chack/tickets-chack.component';
+import { VerificationComponent } from './verification/verification.component';
+import { TimetableAdminComponent } from './timetable-admin/timetable-admin.component';
+import { RoutesStationsAdminComponent } from './routes-stations-admin/routes-stations-admin.component';
+import { PricelistAdminComponent } from './pricelist-admin/pricelist-admin.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,12 @@ import { PricelistUnregisteredComponent } from './pricelist-unregistered/priceli
     LoginComponent,
     TimetableComponent,
     PricelistComponent,
-    PricelistUnregisteredComponent
+    ProfilComponent,
+    TicketsChackComponent,
+    VerificationComponent,
+    TimetableAdminComponent,
+    RoutesStationsAdminComponent,
+    PricelistAdminComponent,
   ],
   imports: [
     BrowserModule,

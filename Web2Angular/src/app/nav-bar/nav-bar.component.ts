@@ -18,6 +18,13 @@ this.loginvar= true;
 
 }
 
+logout(): any
+  {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('role');
+    localStorage.removeItem('login');
+  }
+
 isLogin(): boolean
 {
   if(localStorage.login)
@@ -28,6 +35,68 @@ isLogin(): boolean
   {
     return false;
   }
+}
+
+isAdmin()
+{
+  if(localStorage.role){
+      if(localStorage.role == "Admin")
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+  }
+  return false;
+}
+
+isControlor()
+{
+  if(localStorage.role){
+    if(localStorage.role == "Controlor")
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  return false;
+}
+
+isUser()
+{
+  if(localStorage.role)
+  {
+    if(localStorage.role == "AppUser")
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+isUserProfile()
+{
+  if(localStorage.role)
+  {
+    if(localStorage.role == "AppUser")
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  return false;
 }
 
 }
