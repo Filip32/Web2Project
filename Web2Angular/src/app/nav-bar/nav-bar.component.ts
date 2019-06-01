@@ -55,7 +55,7 @@ isAdmin()
 isControlor()
 {
   if(localStorage.role){
-    if(localStorage.role == "Controlor")
+    if(localStorage.role == "Controller")
     {
       return true;
     }

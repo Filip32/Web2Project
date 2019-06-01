@@ -11,6 +11,7 @@ import { VerificationComponent } from './verification/verification.component';
 import { TimetableAdminComponent } from './timetable-admin/timetable-admin.component';
 import { RoutesStationsAdminComponent } from './routes-stations-admin/routes-stations-admin.component';
 import { PricelistAdminComponent } from './pricelist-admin/pricelist-admin.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
 
@@ -19,12 +20,18 @@ const routes: Routes = [
 {path: 'register', component: RegisterComponent},
 {path: 'timetable', component: TimetableComponent},
 {path: 'pricelist', component: PricelistComponent},
-{path: 'profil', component: ProfilComponent},
-{path: 'tickets-c', component: TicketsChackComponent},
-{path: 'verification-c', component: VerificationComponent},
-{path: 'timetable-a', component: TimetableAdminComponent},
-{path: 'routes-stations-a', component: RoutesStationsAdminComponent},
-{path: 'priceist-a', component: PricelistAdminComponent},
+{path: 'profil', component: ProfilComponent, 
+                 canActivate: [AuthGuard]},
+{path: 'tickets-c', component: TicketsChackComponent, 
+                    canActivate: [AuthGuard]},
+{path: 'verification-c', component: VerificationComponent, 
+                         canActivate: [AuthGuard]},
+{path: 'timetable-a', component: TimetableAdminComponent, 
+                      canActivate: [AuthGuard]},
+{path: 'routes-stations-a', component: RoutesStationsAdminComponent, 
+                            canActivate: [AuthGuard]},
+{path: 'priceist-a', component: PricelistAdminComponent, 
+                     canActivate: [AuthGuard]},
 ];
 
 @NgModule({

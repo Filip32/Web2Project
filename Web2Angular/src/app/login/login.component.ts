@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
         {
           this.router.navigate(['/routes-stations-a']);
         }
-        else if(localStorage.role == "Controlor")
+        else if(localStorage.role == "Controller")
         {
           this.router.navigate(['/verification-c']);
         }
