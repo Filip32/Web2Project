@@ -1,3 +1,21 @@
-<p>
-  pricelist-admin works!
-</p>
+<p class="my-pricelist-font">Pricelist<p>
+
+    <table class="demo">
+      <thead class="my-thead-font">
+      <tr>
+        <th>Type of ticket</th>
+        <th>Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let u of typeOfTicket; let i=index" (click) = "RowSelect(u)">
+        <td>{{u.Ticket}}</td>
+        <td>{{u.Price}}</td>
+      </tr>
+      </tbody>
+    </table>  
+    
+    <br/><br/>
+    <div>
+    <input type="submit" value="Submit">
+    </div>

@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PricelistAdminComponent implements OnInit {
 
+  selectedRow: any;
   constructor() { }
 
   ngOnInit() {
+  }
+  
+  RowSelect(u:any)
+  {
+    this.selectedRow = u;
   }
 
 }
