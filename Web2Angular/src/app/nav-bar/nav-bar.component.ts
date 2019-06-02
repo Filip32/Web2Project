@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router,NavigationEnd } from '@angular/router';
+import { ServerConnectionService } from '../server-connection.service';
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
@@ -7,14 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
-  loginvar:boolean = false;
+  constructor(private router: Router, private serverConnectionService: ServerConnectionService) { 
 
-  ngOnInit() {
   }
 
-login():void{
-this.loginvar= true;
+  ngOnInit() {
+  }	
+
+getPricelist()
+{
+  this.serverConnectionService.getPricelist().subscribe(
+    (res) => {
+     console.log(res);
+    }
+  );
 
 }
 
