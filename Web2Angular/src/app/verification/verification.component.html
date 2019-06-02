@@ -1,3 +1,18 @@
-<p>
-  verification works!
-</p>
+<div>
+  <p class="my-register-font">
+    User verification
+  </p>
+</div>
+
+<table class="demo">
+  <thead class="my-thead-font">
+    <tr>
+      <th>{{Route}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of stations">
+      <td>{{u.Ticket}}</td>
+    </tr>
+  </tbody>
+</table>

@@ -14,7 +14,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         console.log(localStorage.role);
       if(localStorage.role == "Admin" && (state.url == "/routes-stations-a" ||
                                           state.url == "/timetable-a" ||
-                                          state.url == "/priceist-a")){
+                                          state.url == "/priceist-a"
+                                          )){
                 return true;
       }
       else if(localStorage.role == "AppUser" && (state.url == "/" || 
