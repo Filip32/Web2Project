@@ -1,3 +1,99 @@
-<p>
-  routes-stations-admin works!
-</p>
+<div>
+  <p class="my-register-font">
+    Changing stations
+  </p>
+</div>
+
+<form [formGroup]="routesStationsForm" (ngSubmit)="onSubmit()">
+  <div class="in-centar">
+    <div>
+      <p class="my-font-title">Select route</p>
+      <select id="type-of-user">
+        <option value="7">7</option>
+        <option value="11a">11a</option>
+      </select>
+    </div>
+    <br />
+    <p class="my-font-title">Select the station</p>
+    <table class="demo">
+      <thead class="my-thead-font">
+        <tr>
+          <th>{{Route}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of stations">
+          <td>{{u.Ticket}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <input type="submit" value="Change">
+
+    <br />
+    <label class="my-font-title">Enter x coordinate</label>
+    <br />
+    <input type="text" formControlName="StationXcoordinate" placeholder="Enter x coordinate..">
+    <div *ngIf="f.StationXcoordinate.invalid && (f.StationXcoordinate.dirty || f.StationXcoordinate.touched)">
+      <div *ngIf="f.StationXcoordinate.errors.required" class="my-font-title">
+        X coordinate is required.
+      </div>
+    </div>
+    <br />
+
+    <label class="my-font-title">Enter y coordinate</label>
+    <br />
+    <input type="text" formControlName="StationYcoordinate" placeholder="Enter y coordinate..">
+    <div *ngIf="f.StationYcoordinate.invalid && (f.StationYcoordinate.dirty || f.StationYcoordinate.touched)">
+      <div *ngIf="f.StationYcoordinate.errors.required" class="my-font-title">
+        Y coordinate is required.
+      </div>
+    </div>
+    <br />
+
+    <label class="my-font-title">Enter station name </label>
+    <br />
+    <input type="text" formControlName="StationName" placeholder="Enter station name..">
+    <div *ngIf="f.StationName.invalid && (f.StationName.dirty || f.StationName.touched)">
+      <div *ngIf="f.StationName.errors.required" class="my-font-title">
+        Station name is required.
+      </div>
+    </div>
+    <br />
+
+    <label class="my-font-title">Address</label>
+    <br />
+    <label class="my-font-title">Street name</label>
+    <br />
+    <input type="text" formControlName="AddressStreetName" placeholder="Enter street name..">
+    <div *ngIf="f.AddressStreetName.invalid && (f.AddressStreetName.dirty || f.AddressStreetName.touched)">
+      <div *ngIf="f.AddressStreetName.errors.required" class="my-font-title">
+        Street name is required.
+      </div>
+    </div>
+    <br />
+    <label class="my-font-title">Enter street number</label>
+    <br />
+    <input type="text" formControlName="AddressStreetNumber" placeholder="Enter street number..">
+    <div *ngIf="f.AddressStreetNumber.invalid && (f.AddressStreetNumber.dirty || f.AddressStreetNumber.touched)">
+      <div *ngIf="f.AddressStreetNumber.errors.required" class="my-font-title">
+        Street number is required.
+      </div>
+    </div>
+    <br />
+    <label class="my-font-title">Enter zip code</label>
+    <br />
+    <input type="text" formControlName="AddressZipcode" placeholder="Enter zip code..">
+    <div *ngIf="f.AddressZipcode.invalid && (f.AddressZipcode.dirty || f.AddressZipcode.touched)">
+      <div *ngIf="f.AddressZipcode.errors.required" class="my-font-title">
+        Zip code is required.
+      </div>
+    </div>
+    <br />
+
+    <input type="submit" value="Apply station change">
+    <!--Stavi dodatna polja za izmenu stanice da se prikazu-->
+  </div>
+</form>

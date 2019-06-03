@@ -18,3 +18,12 @@
     color:#9966ff;
     font-weight: 700;
 }
+
+.my-register-font{
+    font-style: oblique;
+    font-size: 25px;
+    color:#9966ff;
+    font-weight: 700;
+    text-align: center;
+    justify-content: center;
+}

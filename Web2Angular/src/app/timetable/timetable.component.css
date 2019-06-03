@@ -17,7 +17,7 @@
 }
 
 .demo {
-    position:fixed;
+    position: absolute;
     left: 30%;
     width: 40%;
     border:1px solid #b86cc7;

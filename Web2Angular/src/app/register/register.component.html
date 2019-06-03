@@ -68,7 +68,7 @@
     <br />
     <label class="my-font-title">Street name</label>
     <br />
-    <input type="text" formControlName="Address_StreetName" placeholder="Enter last name..">
+    <input type="text" formControlName="Address_StreetName" placeholder="Enter street name..">
     <div *ngIf="f.Address_StreetName.invalid && (f.Address_StreetName.dirty || f.Address_StreetName.touched)">
       <div *ngIf="f.Address_StreetName.errors.required" class="my-font-title">
         Street name is required.
@@ -77,7 +77,7 @@
     <br />
     <label class="my-font-title">Enter street number</label>
     <br />
-    <input type="text" formControlName="Address_StreetNumber" placeholder="Enter street name..">
+    <input type="text" formControlName="Address_StreetNumber" placeholder="Enter street number..">
     <div *ngIf="f.Address_StreetNumber.invalid && (f.Address_StreetNumber.dirty || f.Address_StreetNumber.touched)">
       <div *ngIf="f.Address_StreetNumber.errors.required" class="my-font-title">
         Street number is required.
@@ -85,7 +85,7 @@
     </div>
     <br />
     <label class="my-font-title">Enter zip code</label>
-    <input type="text" formControlName="Address_Zipcode" placeholder="Enter street name..">
+    <input type="text" formControlName="Address_Zipcode" placeholder="Enter zip code..">
     <div *ngIf="f.Address_Zipcode.invalid && (f.Address_Zipcode.dirty || f.Address_Zipcode.touched)">
       <div *ngIf="f.Address_Zipcode.errors.required" class="my-font-title">
         Zip code is required.
