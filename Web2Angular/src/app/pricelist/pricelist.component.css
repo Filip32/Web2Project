@@ -15,6 +15,15 @@ text-align:left;
 padding:5px;
 }
 
+.total-price-font
+{
+    font-style: oblique;
+    font-size: 20px;
+    color:#9966ff;
+    display: inline-block;
+    font-weight: 300;
+}
+
 .my-pricelist-font{
     font-style: oblique;
     font-size: 25px;

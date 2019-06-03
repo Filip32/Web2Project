@@ -1356,3 +1356,4 @@ C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csproj.Co
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.pdb
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration20.resources
+C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache

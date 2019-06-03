@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -25,13 +27,42 @@ namespace WebApp.Controllers
         //[Authorize(Roles = "Admin")]
         public IHttpActionResult GetPricelist()
         {
-            if (User.Identity.IsAuthenticated)
+            //if (User.Identity.IsAuthenticated)
+            //{
+                   // User.IsInRole()
+            //}
+
+            Pricelist pricelist = unitOfWork.PricelistRepository.GetAll().Where(x => DateTime.Compare(x.From , DateTime.Now) < 0 && DateTime.Compare(x.To, DateTime.Now) > 0).FirstOrDefault();
+            List<Item> item = unitOfWork.ItemRepository.GetAll().ToList();
+            List<PricelistItem> pricelistItems = unitOfWork.PricelistItemRepository.GetAll().Where(x=> x.Pricelist_id == pricelist.Id).ToList();
+
+            string json = "[";
+            int c = 0;
+            foreach (PricelistItem p in pricelistItems)
             {
-               // User.IsInRole()
+                json += "{\"type\": \"" + item.Where(i => i.Id == p.Item_id).FirstOrDefault().TypeOfTicket.ToString() + "\",";
+                json += "\"price\": \"" + pricelistItems.Where(i => i.Item_id == p.Item_id).FirstOrDefault().Price + "\"},";
+                c++;
             }
-            List<PricelistItem> a = unitOfWork.PricelistItemRepository.GetAll().ToList();
-            List<Item> i = unitOfWork.ItemRepository.GetAll().ToList();
-            return Ok(a);
+            json = json.Remove(json.Length-1,1);
+            json += "]";
+
+            
+            return Ok(json);
+        }
+
+        [Route("getCoefficient")]
+        public IHttpActionResult GetCoefficient()
+        {
+            Coefficients coefficients = unitOfWork.CoefficientRepository.GetAll().FirstOrDefault();
+            return Ok(coefficients);
+        }
+
+        [Route("buyTicket")]
+        public IHttpActionResult BuyTicket(string typeOfUser, string typeOfTicket, int totalPrice)
+        {
+
+            return Ok();
         }
     }
 }

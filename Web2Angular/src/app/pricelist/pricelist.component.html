@@ -8,9 +8,9 @@
 	</tr>
 	</thead>
 	<tbody>
-	<tr *ngFor="let u of typeOfTicket; let i=index" (click) = "RowSelect(u)">
-		<td>{{u.Ticket}}</td>
-		<td>{{u.Price}}</td>
+	<tr *ngFor="let u of tableData; let i=index" (click) = "RowSelect(u)">
+		<td>{{u.type}}</td>
+		<td>{{u.price}}</td>
 	</tr>
 	</tbody>
 </table>
@@ -19,17 +19,24 @@
 
 <div>
 <p class="my-font float">Discount for<p> &nbsp;
-<select id="type-of-user">
-    <option value=""><br/></option>
+<select id="type-of-user" (change)="selectChangeHandler($event)">
+    <option value="Basic"><br/></option>
   <option value="Pensioner">Pensioner</option>
   <option value="Student">Student</option>
 </select>
 </div>
 
 <div>
-<p class="my-font float">Total:<p> &nbsp;
+<div class="my-font float">Total:</div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="total-price-font">{{totalPrice}}</div>
 </div>
 <br/><br/>
 <div>
-<input type="submit" value="Submit">
+<input type="submit" value="Buy" (click)="onSubmit()">
+</div>
+<div *ngIf="canBuy" class="my-thead-font">
+		To purchase a ticket, first login or register.
+</div>
+<div *ngIf="isSelectedTicket" class="my-thead-font">
+		First select a ticket.
 </div>

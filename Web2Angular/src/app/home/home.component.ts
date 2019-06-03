@@ -41,17 +41,5 @@ export class HomeComponent implements OnInit {
      view: this.view
    });
    
-   this.getPricelist();
  }
-
- getPricelist()
-{
-  this.serverConnectionService.getPricelist().subscribe(
-    (res) => {
-     console.log(res);
-    }
-  );
-
-}
-
 }
