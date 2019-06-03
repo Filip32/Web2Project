@@ -305,6 +305,7 @@
     <Compile Include="Persistence\Repository\CoefficientRepository.cs" />
     <Compile Include="Persistence\Repository\IAddressRepository.cs" />
     <Compile Include="Persistence\Repository\ICoefficientRepository.cs" />
+    <Compile Include="Persistence\Repository\IItemRepository.cs" />
     <Compile Include="Persistence\Repository\ILocationRepository.cs" />
     <Compile Include="Persistence\Repository\IPassengerRepository.cs" />
     <Compile Include="Persistence\Repository\IPricelistRepository.cs" />
@@ -312,6 +313,7 @@
     <Compile Include="Persistence\Repository\IRepository.cs" />
     <Compile Include="Persistence\Repository\IRouteRepository.cs" />
     <Compile Include="Persistence\Repository\IStationRepository.cs" />
+    <Compile Include="Persistence\Repository\ItemRepository.cs" />
     <Compile Include="Persistence\Repository\ITicketRepository.cs" />
     <Compile Include="Persistence\Repository\ITimetableRepository.cs" />
     <Compile Include="Persistence\Repository\LocationRepository.cs" />

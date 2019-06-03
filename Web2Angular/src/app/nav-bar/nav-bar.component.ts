@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router,NavigationEnd } from '@angular/router';
-import { ServerConnectionService } from '../server-connection.service';
+
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
@@ -8,23 +8,12 @@ import { ServerConnectionService } from '../server-connection.service';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(private router: Router, private serverConnectionService: ServerConnectionService) { 
+  constructor(private router: Router) { 
 
   }
 
   ngOnInit() {
-    this.getPricelist();
   }	
-
-getPricelist()
-{
-  this.serverConnectionService.getPricelist().subscribe(
-    (res) => {
-     console.log(res);
-    }
-  );
-
-}
 
 logout(): any
   {

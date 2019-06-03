@@ -5,6 +5,7 @@ import XYZ from 'ol/source/XYZ';
 import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';
 import { fromLonLat } from 'ol/proj'
+import { ServerConnectionService } from '../server-connection.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ import { fromLonLat } from 'ol/proj'
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private serverConnectionService: ServerConnectionService) { }
 
  map: Map;
  source: XYZ;
@@ -39,7 +40,18 @@ export class HomeComponent implements OnInit {
      layers: [this.layer],
      view: this.view
    });
+   
+   this.getPricelist();
+ }
 
-  
+ getPricelist()
+{
+  this.serverConnectionService.getPricelist().subscribe(
+    (res) => {
+     console.log(res);
+    }
+  );
+
 }
+
 }

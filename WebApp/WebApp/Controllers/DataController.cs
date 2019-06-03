@@ -30,6 +30,7 @@ namespace WebApp.Controllers
                // User.IsInRole()
             }
             List<PricelistItem> a = unitOfWork.PricelistItemRepository.GetAll().ToList();
+            List<Item> i = unitOfWork.ItemRepository.GetAll().ToList();
             return Ok(a);
         }
     }

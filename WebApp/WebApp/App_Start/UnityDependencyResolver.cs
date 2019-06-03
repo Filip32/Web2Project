@@ -80,6 +80,7 @@ namespace WebApp.App_Start
             container.RegisterType<IStationRepository, StationRepository>();
             container.RegisterType<ITicketRepository, TicketRepository>();
             container.RegisterType<ITimetableRepository, TimetableRepository>();
+            container.RegisterType<IItemRepository, ItemRepository>();
         }
 
         public void Dispose()

@@ -16,18 +16,6 @@ export class ServerConnectionService {
 
   getPricelist(): Observable<any>
   {
-    return this.http.get<any>('http://localhost:52295/api/Data/getPricelist').pipe(
-      map(res => {
-        console.log(res);
-      }),
-
-      catchError(this.handleError<any>('getPricelist'))
-    );
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      return of(result as T);
-    };
+    return this.http.get<any>('http://localhost:52295/api/Data/getPricelist');
   }
 }
