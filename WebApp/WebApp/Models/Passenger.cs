@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,6 +22,29 @@ namespace WebApp.Models
 
         public Passenger():base()
         {
+
+        }
+
+        public Passenger(object json)
+        {
+            JObject jObject = JObject.Parse(json.ToString());
+            JToken jUser = jObject;
+            name = (string)jUser["name"];
+            lastName = (string)jUser["lastName"];
+            birthday = (DateTime)jUser["birthday"];
+            string pt = (string)jUser["UserType"];
+            if (pt != "")
+            {
+                if (pt == "Pensioner")
+                    passengerType = Enums.PassengerType.PENSIONER;
+                else if(pt == "Regular")
+                    passengerType = Enums.PassengerType.REGULAR;
+                else
+                    passengerType = Enums.PassengerType.STUDENT;
+            }else
+            {
+                passengerType = Enums.PassengerType.REGULAR;
+            }
 
         }
 
