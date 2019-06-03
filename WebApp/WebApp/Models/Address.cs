@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +14,15 @@ namespace WebApp.Models
         private int streetNumber;
         private string city;
         private int id;
+
+        public Address(object json)
+        {
+            JObject jObject = JObject.Parse(json.ToString());
+            JToken jUser = jObject;
+            streetName = (string)jUser["streetName"];
+            streetNumber = (int)jUser["streetNumber"];
+            city = (string)jUser["city"];
+        }
 
         public Address()
         {
