@@ -1203,3 +1203,5 @@ C:\Users\asus\Desktop\FF300520\2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.cspr
 C:\Users\asus\Desktop\FF300520\2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\asus\Desktop\FF300520\2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.pdb
 >>>>>>> cdd21bded852862e00e9e5f62f6e8d3b518a966d
+C:\Users\asus\Desktop\FF300520\2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration11.resources
+C:\Users\asus\Desktop\FF300520\2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration12.resources
