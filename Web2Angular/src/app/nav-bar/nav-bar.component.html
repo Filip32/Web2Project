@@ -1,9 +1,9 @@
 <div class="topnav">
   <a class="active">NS Bus Application</a>
-  <a routerLink="/" *ngIf="isUser()">Home</a>
+  <a routerLink="/">Home</a>
   <a routerLink="/profil" *ngIf="isUserProfile()">Profil</a>
-  <a routerLink="/tickets-c" *ngIf="isControlor()">Tickets</a>
   <a routerLink="/verification-c" *ngIf="isControlor()">User Verification</a>
+  <a routerLink="/tickets-c" *ngIf="isControlor()">Tickets</a>
   <a routerLink="/routes-stations-a" *ngIf="isAdmin()">Routes and Stations</a>
   <a routerLink="/timetable-a" *ngIf="isAdmin()">Timetable</a>
   <a routerLink="/priceist-a" *ngIf="isAdmin()">Pricelist</a>

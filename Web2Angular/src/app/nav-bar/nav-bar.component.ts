@@ -13,6 +13,7 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPricelist();
   }	
 
 getPricelist()

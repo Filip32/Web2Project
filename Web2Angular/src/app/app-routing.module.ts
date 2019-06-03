@@ -12,26 +12,37 @@ import { TimetableAdminComponent } from './timetable-admin/timetable-admin.compo
 import { RoutesStationsAdminComponent } from './routes-stations-admin/routes-stations-admin.component';
 import { PricelistAdminComponent } from './pricelist-admin/pricelist-admin.component';
 import { AuthGuard } from './auth.guard';
+import { AdminGuard } from './admin.guard';
+import { ControllerGuard } from './controller.guard';
+import { AppUserGuard } from './app-user.guard';
+import { NegAuthGuard } from './neg-auth.guard';
 
 const routes: Routes = [
 
 {path: '', component: HomeComponent},
-{path: 'login', component: LoginComponent},
-{path: 'register', component: RegisterComponent},
+
 {path: 'timetable', component: TimetableComponent},
 {path: 'pricelist', component: PricelistComponent},
+
+{path: 'login', component: LoginComponent,
+                canActivate: [NegAuthGuard]},
+{path: 'register', component: RegisterComponent,
+                   canActivate: [NegAuthGuard]},
+
 {path: 'profil', component: ProfilComponent, 
-                 canActivate: [AuthGuard]},
+                 canActivate: [AuthGuard, AppUserGuard]},
+
 {path: 'tickets-c', component: TicketsChackComponent, 
-                    canActivate: [AuthGuard]},
+                    canActivate: [AuthGuard, ControllerGuard]},
 {path: 'verification-c', component: VerificationComponent, 
-                         canActivate: [AuthGuard]},
+                         canActivate: [AuthGuard, ControllerGuard]},
+
 {path: 'timetable-a', component: TimetableAdminComponent, 
-                      canActivate: [AuthGuard]},
+                      canActivate: [AuthGuard, AdminGuard]},
 {path: 'routes-stations-a', component: RoutesStationsAdminComponent, 
-                            canActivate: [AuthGuard]},
+                            canActivate: [AuthGuard, AdminGuard]},
 {path: 'priceist-a', component: PricelistAdminComponent, 
-                     canActivate: [AuthGuard]},
+                     canActivate: [AuthGuard, AdminGuard]},
 ];
 
 @NgModule({

@@ -5,17 +5,17 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class NegAuthGuard implements CanActivate, CanActivateChild {
   constructor(private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {    
     if (localStorage.login) {
-        return true;
+        console.error("Access denied");
+        this.router.navigate(['/']);
+        return false;
     }
     else {
-      console.error("Access denied");
-      this.router.navigate(['/']);
-      return false;
+      return true;
     }
   }
 

@@ -10,6 +10,7 @@ namespace WebApp.Models
     public class Passenger
     {
         int id;
+        int appUserId;
         private Enums.StateType isValidated;
         private string name;
         private string lastName;
@@ -29,6 +30,12 @@ namespace WebApp.Models
         {
             get { return id; }
             set { id = value; }
+        }
+
+        public int AppUserId
+        {
+            get { return appUserId; }
+            set { appUserId = value; }
         }
 
         public string Name
