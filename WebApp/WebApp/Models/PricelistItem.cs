@@ -9,9 +9,9 @@ namespace WebApp.Models
 {
     public class PricelistItem
     {
-        private Pricelist pricelist;
-        private Item item;
-        private Coefficients coefficients;
+        private int pricelist_id;
+        private int item_id;
+        private int coefficients_id;
         private decimal price;
         private int id;
 
@@ -28,39 +28,39 @@ namespace WebApp.Models
             set { id = value; }
         }
 
-        public Pricelist Pricelist
+        public int Pricelist_id
         {
             get
             {
-                return pricelist;
+                return pricelist_id;
             }
             set
             {
-                pricelist = value;
+                pricelist_id = value;
             }
         }
 
-        public Item Item
+        public int Item_id
         {
             get
             {
-                return item;
+                return item_id;
             }
             set
             {
-                item = value;
+                item_id = value;
             }
         }
 
-        public Coefficients Coefficients
+        public int Coefficients_id
         {
             get
             {
-                return coefficients;
+                return coefficients_id;
             }
             set
             {
-                coefficients = value;
+                coefficients_id = value;
             }
         }
 

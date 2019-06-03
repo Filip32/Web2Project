@@ -9,10 +9,10 @@ namespace WebApp.Models
 {
     public class Ticket
     {
-        private PricelistItem pricelistItem;
+        private int pricelistItem_id;
         private DateTime from;
         private DateTime to;
-        private Passenger passenger;
+        private int passenger_id;
         private int id;
 
         public Ticket()
@@ -28,27 +28,27 @@ namespace WebApp.Models
             set { id = value; }
         }
 
-        public PricelistItem PricelistItem
+        public int PricelistItem_id
         {
             get
             {
-                return pricelistItem;
+                return pricelistItem_id;
             }
             set
             {
-                pricelistItem = value;
+                pricelistItem_id = value;
             }
         }
 
-        public Passenger Passenger
+        public int Passenger_id
         {
             get
             {
-                return passenger;
+                return passenger_id;
             }
             set
             {
-                passenger = value;
+                passenger_id = value;
             }
         }
 

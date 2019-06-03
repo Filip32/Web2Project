@@ -280,6 +280,10 @@
     <Compile Include="Migrations\201906030818480_Migration1.2.Designer.cs">
       <DependentUpon>201906030818480_Migration1.2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906031523057_Migration2.0.cs" />
+    <Compile Include="Migrations\201906031523057_Migration2.0.Designer.cs">
+      <DependentUpon>201906031523057_Migration2.0.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -436,6 +440,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906030818480_Migration1.2.resx">
       <DependentUpon>201906030818480_Migration1.2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906031523057_Migration2.0.resx">
+      <DependentUpon>201906031523057_Migration2.0.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

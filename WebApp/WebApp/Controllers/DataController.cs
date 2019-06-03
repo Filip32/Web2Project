@@ -29,7 +29,7 @@ namespace WebApp.Controllers
             {
                // User.IsInRole()
             }
-            List<Address> a = unitOfWork.AddressRepository.GetAll().ToList();
+            List<PricelistItem> a = unitOfWork.PricelistItemRepository.GetAll().ToList();
             return Ok(a);
         }
     }

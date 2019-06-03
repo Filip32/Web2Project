@@ -14,7 +14,7 @@ namespace WebApp.Models
         private Enums.StateType isValidated;
         private string name;
         private string lastName;
-        private Address address;
+        private int address_id;
         private DateTime birthday;
         private string picture;
         private Enums.PassengerType passengerType;
@@ -86,15 +86,15 @@ namespace WebApp.Models
             }
         }
 
-        public Address Address
+        public int Address_id
         {
             get
             {
-                return address;
+                return address_id;
             }
             set
             {
-                address = value;
+                address_id = value;
             }
         }
 

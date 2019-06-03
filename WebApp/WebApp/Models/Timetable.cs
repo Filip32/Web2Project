@@ -12,11 +12,11 @@ namespace WebApp.Models
     {
         private int id;
         private Enums.TypeOfDay typeOfDay;
-        private List<Route> routes;
+        private List<int> routes;
 
         public Timetable()
         {
-            Route = new List<Route>();
+            Route = new List<int>();
         }
 
         [Key]
@@ -27,7 +27,7 @@ namespace WebApp.Models
             set { id = value; }
         }
 
-        public List<Route> Route
+        public List<int> Route
         {
             get
             {
