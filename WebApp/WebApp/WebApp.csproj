@@ -285,7 +285,6 @@
     <Compile Include="Migrations\201906031523057_Migration2.0.Designer.cs">
       <DependentUpon>201906031523057_Migration2.0.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Migrations\201906040827498_Migration2.1.cs" />
     <Compile Include="Migrations\201906040827498_Migration2.1.Designer.cs">
       <DependentUpon>201906040827498_Migration2.1.cs</DependentUpon>
@@ -293,11 +292,6 @@
     <Compile Include="Migrations\201906040841033_Migration2.2.cs" />
     <Compile Include="Migrations\201906040841033_Migration2.2.Designer.cs">
       <DependentUpon>201906040841033_Migration2.2.cs</DependentUpon>
-=======
-    <Compile Include="Migrations\201906040807103_Migration2.1.cs" />
-    <Compile Include="Migrations\201906040807103_Migration2.1.Designer.cs">
-      <DependentUpon>201906040807103_Migration2.1.cs</DependentUpon>
->>>>>>> 2af60682e657ddfec05d2e7fa16094c9a3b612e0
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -463,16 +457,11 @@
     <EmbeddedResource Include="Migrations\201906031523057_Migration2.0.resx">
       <DependentUpon>201906031523057_Migration2.0.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
     <EmbeddedResource Include="Migrations\201906040827498_Migration2.1.resx">
       <DependentUpon>201906040827498_Migration2.1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906040841033_Migration2.2.resx">
       <DependentUpon>201906040841033_Migration2.2.cs</DependentUpon>
-=======
-    <EmbeddedResource Include="Migrations\201906040807103_Migration2.1.resx">
-      <DependentUpon>201906040807103_Migration2.1.cs</DependentUpon>
->>>>>>> 2af60682e657ddfec05d2e7fa16094c9a3b612e0
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

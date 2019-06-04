@@ -1356,10 +1356,7 @@ C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csproj.Co
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.pdb
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration20.resources
-<<<<<<< HEAD
-=======
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
->>>>>>> 2af60682e657ddfec05d2e7fa16094c9a3b612e0
 C:\Users\asus\Desktop\FF300520\3\Web2Project\WebApp\WebApp\bin\WebApp.dll.config
 C:\Users\asus\Desktop\FF300520\3\Web2Project\WebApp\WebApp\bin\WebApp.dll
 C:\Users\asus\Desktop\FF300520\3\Web2Project\WebApp\WebApp\bin\WebApp.pdb
@@ -1515,11 +1512,9 @@ C:\Users\asus\Desktop\FF300520\3\Web2Project\WebApp\WebApp\obj\Debug\WebApp.cspr
 C:\Users\asus\Desktop\FF300520\3\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 C:\Users\asus\Desktop\FF300520\3\Web2Project\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\asus\Desktop\FF300520\3\Web2Project\WebApp\WebApp\obj\Debug\WebApp.pdb
-<<<<<<< HEAD
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration21.resources
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration22.resources
-=======
 C:\Users\asus\Desktop\FF300520\GoodClone\Web2Project\WebApp\WebApp\bin\WebApp.dll.config
 C:\Users\asus\Desktop\FF300520\GoodClone\Web2Project\WebApp\WebApp\bin\WebApp.dll
 C:\Users\asus\Desktop\FF300520\GoodClone\Web2Project\WebApp\WebApp\bin\WebApp.pdb
@@ -1676,4 +1671,3 @@ C:\Users\asus\Desktop\FF300520\GoodClone\Web2Project\WebApp\WebApp\obj\Debug\Web
 C:\Users\asus\Desktop\FF300520\GoodClone\Web2Project\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\asus\Desktop\FF300520\GoodClone\Web2Project\WebApp\WebApp\obj\Debug\WebApp.pdb
 C:\Users\asus\Desktop\FF300520\GoodClone\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration21.resources
->>>>>>> 2af60682e657ddfec05d2e7fa16094c9a3b612e0
