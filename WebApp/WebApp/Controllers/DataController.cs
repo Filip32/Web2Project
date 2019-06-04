@@ -29,12 +29,12 @@ namespace WebApp.Controllers
         {
             //if (User.Identity.IsAuthenticated)
             //{
-                   // User.IsInRole()
+            // User.IsInRole()
             //}
 
-            Pricelist pricelist = unitOfWork.PricelistRepository.GetAll().Where(x => DateTime.Compare(x.From , DateTime.Now) < 0 && DateTime.Compare(x.To, DateTime.Now) > 0).FirstOrDefault();
+            Pricelist pricelist = unitOfWork.PricelistRepository.GetAll().Where(x => DateTime.Compare(x.From, DateTime.Now) < 0 && DateTime.Compare(x.To, DateTime.Now) > 0).FirstOrDefault();
             List<Item> item = unitOfWork.ItemRepository.GetAll().ToList();
-            List<PricelistItem> pricelistItems = unitOfWork.PricelistItemRepository.GetAll().Where(x=> x.Pricelist_id == pricelist.Id).ToList();
+            List<PricelistItem> pricelistItems = unitOfWork.PricelistItemRepository.GetAll().Where(x => x.Pricelist_id == pricelist.Id).ToList();
 
             string json = "[";
             int c = 0;
@@ -44,10 +44,10 @@ namespace WebApp.Controllers
                 json += "\"price\": \"" + pricelistItems.Where(i => i.Item_id == p.Item_id).FirstOrDefault().Price + "\"},";
                 c++;
             }
-            json = json.Remove(json.Length-1,1);
+            json = json.Remove(json.Length - 1, 1);
             json += "]";
 
-            
+
             return Ok(json);
         }
 
@@ -61,6 +61,27 @@ namespace WebApp.Controllers
         [Route("buyTicket")]
         public IHttpActionResult BuyTicket(string typeOfUser, string typeOfTicket, int totalPrice)
         {
+
+            return Ok();
+        }
+
+        [Route("updateProfile")]
+        public IHttpActionResult UpdateProfile(RegisterUser userToRegister)
+        {
+
+
+            return Ok();
+        }
+
+        [Route("getProfileData")]
+        public IHttpActionResult GetProfileData()
+        {
+            //Kako da proverim kredencijale korisnika?
+            //Da li kopam nekako token ili?
+
+            string s = User.Identity.Name;
+
+
 
             return Ok();
         }

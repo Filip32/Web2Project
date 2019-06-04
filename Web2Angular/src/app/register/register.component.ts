@@ -14,7 +14,8 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm:FormGroup;
   submitted:boolean = false;
- 
+  serverSuccessMessage = "";
+
   constructor(private fb: FormBuilder,private ServerConnectionService: ServerConnectionService, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
@@ -38,7 +39,7 @@ export class RegisterComponent implements OnInit {
     //console.warn(this.registerForm.value);
     let poruka = this.ServerConnectionService.Register(this.registerForm.value).subscribe(
       (res) => {
-        
+        this.serverSuccessMessage = res;
       }
     );
     this.submitted = true;

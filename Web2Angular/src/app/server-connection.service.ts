@@ -3,6 +3,7 @@ import { Observable, pipe, of  } from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http'
 import { catchError, map } from 'rxjs/operators';
 import { Ticket } from './Models/ticket';
+import { ArrayType } from '@angular/compiler';
 
 
 const httpOptions = {
@@ -21,6 +22,12 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Data/getPricelist');
   }
 
+  getProfileData(): Observable<any>
+  {
+    return this.http.get<any>('http://localhost:52295/api/Data/getProfileData');
+  }
+
+
   getCoefficient(): Observable<any>
   {
     return this.http.get<any>('http://localhost:52295/api/Data/getCoefficient');
@@ -33,6 +40,7 @@ export class ServerConnectionService {
     ticket.typeOfTicket = typeOfTicket;
     ticket.totalPrice = totalPrice;
     return this.http.post<any>('http://localhost:52295/api/Data/buyTicket',ticket,httpOptions);
+  }
 	
   Register(arg: any): Observable<any>
   {
@@ -46,6 +54,7 @@ export class ServerConnectionService {
       username:arg.Email,
       password: arg.password,
       name: arg.Name,
+      lastName: arg.Lastname,
       birthday : arg.Birthday,
       streetName:arg.Address_StreetName,
       streetNumber: arg.Address_StreetNumber,
@@ -53,13 +62,30 @@ export class ServerConnectionService {
       UserType: arg.UserType
     };
 
-    return this.http.post<any>('http://localhost:52295/api/Register/registerUser',par,headers).pipe(
-      map(res => {
-        
-      }),
+    return this.http.post<any>('http://localhost:52295/api/Register/registerUser',par,headers);
+  }
 
-      catchError(this.handleError<any>('register'))
-    );
+  UpdateProfile(arg: any): Observable<any>
+  {
+    let headers={
+      headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+      })
+  }
+
+     let par= {
+      username:arg.Email,
+      password: arg.password,
+      name: arg.Name,
+      lastName: arg.Lastname,
+      birthday : arg.Birthday,
+      streetName:arg.Address_StreetName,
+      streetNumber: arg.Address_StreetNumber,
+      city: arg.Address_City,
+      UserType: arg.UserType
+    };
+
+    return this.http.post<any>('http://localhost:52295/api/Data/updateProfile',par,headers);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

@@ -285,6 +285,10 @@
     <Compile Include="Migrations\201906031523057_Migration2.0.Designer.cs">
       <DependentUpon>201906031523057_Migration2.0.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906040807103_Migration2.1.cs" />
+    <Compile Include="Migrations\201906040807103_Migration2.1.Designer.cs">
+      <DependentUpon>201906040807103_Migration2.1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -294,6 +298,7 @@
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\RegisterUser.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Models\Passenger.cs" />
     <Compile Include="Models\Pricelist.cs" />
@@ -446,6 +451,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906031523057_Migration2.0.resx">
       <DependentUpon>201906031523057_Migration2.0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906040807103_Migration2.1.resx">
+      <DependentUpon>201906040807103_Migration2.1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
