@@ -85,7 +85,7 @@
     </div>
     <br />
     <label class="my-font-title">Enter city name</label>
-    <input type="text" formControlName="Address_City" placeholder="Enter zip code..">
+    <input type="text" formControlName="Address_City" placeholder="Enter city name..">
     <div *ngIf="f.Address_City.invalid && (f.Address_City.dirty || f.Address_City.touched)">
       <div *ngIf="f.Address_City.errors.required" class="my-font-title">
         City name is required.
@@ -112,6 +112,6 @@
     </select>
 
     <input type="submit" [disabled]="registerForm.invalid" value="Submit">
-
+    <label class="my-register-font">{{serverSuccessMessage}}</label>
   </div>
 </form>
