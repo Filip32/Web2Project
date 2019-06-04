@@ -1,6 +1,6 @@
 export class Ticket
 {
-    typeOfUser: string;
-    typeOfTicket: string;
-    totalPrice: number;
+    TypeOfUser: string;
+    TypeOfTicket: string;
+    TotalPrice: number;
 }

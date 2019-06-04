@@ -9,7 +9,8 @@ namespace WebApp.Models
 {
     public class Ticket
     {
-        private int pricelistItem_id;
+        private Enums.TypeOfTicket typeOfTicket;
+        private float price;
         private DateTime from;
         private DateTime to;
         private int passenger_id;
@@ -28,15 +29,15 @@ namespace WebApp.Models
             set { id = value; }
         }
 
-        public int PricelistItem_id
+        public Enums.TypeOfTicket TypeOfTicket
         {
             get
             {
-                return pricelistItem_id;
+                return typeOfTicket;
             }
             set
             {
-                pricelistItem_id = value;
+                typeOfTicket = value;
             }
         }
 
@@ -49,6 +50,18 @@ namespace WebApp.Models
             set
             {
                 passenger_id = value;
+            }
+        }
+
+        public float Price
+        {
+            get
+            {
+                return price;
+            }
+            set
+            {
+                price = value;
             }
         }
 

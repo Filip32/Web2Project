@@ -26,14 +26,15 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Data/getCoefficient');
   }
 
-  buyTicket(typeOfUser: any, typeOfTicket: any, totalPrice: any) : Observable<any>
+  buyTicket(typeOfUser: string, typeOfTicket: string, totalPrice: number) : Observable<any>
   {
     let ticket: Ticket = new Ticket();
-    ticket.typeOfUser = typeOfUser;
-    ticket.typeOfTicket = typeOfTicket;
-    ticket.totalPrice = totalPrice;
-    return this.http.post<any>('http://localhost:52295/api/Data/buyTicket',ticket,httpOptions);
-	
+    ticket.TypeOfUser = typeOfUser;
+    ticket.TypeOfTicket = typeOfTicket;
+    ticket.TotalPrice = totalPrice;
+    return this.http.post<any>('http://localhost:52295/api/Data/buyTicket',ticket);
+  }
+  
   Register(arg: any): Observable<any>
   {
     let headers={

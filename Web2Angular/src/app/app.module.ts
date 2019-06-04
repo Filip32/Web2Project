@@ -1,5 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import { JwtInterceptor } from './jwt-interceptor';
+//import { ValuesHttpService } from './services/http/values-http.service';
+//import { AuthHttpService } from './services/http/auth-http.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +21,8 @@ import { VerificationComponent } from './verification/verification.component';
 import { TimetableAdminComponent } from './timetable-admin/timetable-admin.component';
 import { RoutesStationsAdminComponent } from './routes-stations-admin/routes-stations-admin.component';
 import { PricelistAdminComponent } from './pricelist-admin/pricelist-admin.component';
+import { AgmCoreModule } from '@agm/core';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -33,15 +39,20 @@ import { PricelistAdminComponent } from './pricelist-admin/pricelist-admin.compo
     TimetableAdminComponent,
     RoutesStationsAdminComponent,
     PricelistAdminComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    //ValuesHttpService, 
+    //AuthHttpService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

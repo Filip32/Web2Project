@@ -82,7 +82,7 @@ export class PricelistComponent implements OnInit {
 
         this.serverConnectionService.buyTicket(this.typeOfUser, this.selectedRow.type, this.totalPrice).subscribe(
           (res) => {
-            
+            console.log(res);
           }
         );
       }

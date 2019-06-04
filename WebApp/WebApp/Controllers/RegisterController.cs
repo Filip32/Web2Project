@@ -34,7 +34,7 @@ namespace WebApp.Controllers
             Passenger newPassenger = new Passenger(json);
             Address newAddress = new Address(json);
 
-            List<ApplicationUser> apu = unitOfWork..GetAll().ToList();
+            //List<ApplicationUser> apu = unitOfWork.GetAll().ToList();
 
 
             return Ok(true);

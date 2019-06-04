@@ -9,6 +9,8 @@ using System.Web.Http;
 using WebApp.Models;
 using WebApp.Persistence;
 using WebApp.Persistence.UnitOfWork;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace WebApp.Controllers
 {
@@ -24,14 +26,8 @@ namespace WebApp.Controllers
         }
 
         [Route("getPricelist")]
-        //[Authorize(Roles = "Admin")]
         public IHttpActionResult GetPricelist()
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-                   // User.IsInRole()
-            //}
-
             Pricelist pricelist = unitOfWork.PricelistRepository.GetAll().Where(x => DateTime.Compare(x.From , DateTime.Now) < 0 && DateTime.Compare(x.To, DateTime.Now) > 0).FirstOrDefault();
             List<Item> item = unitOfWork.ItemRepository.GetAll().ToList();
             List<PricelistItem> pricelistItems = unitOfWork.PricelistItemRepository.GetAll().Where(x=> x.Pricelist_id == pricelist.Id).ToList();
@@ -58,10 +54,58 @@ namespace WebApp.Controllers
             return Ok(coefficients);
         }
 
-        [Route("buyTicket")]
-        public IHttpActionResult BuyTicket(string typeOfUser, string typeOfTicket, int totalPrice)
+        [HttpPost,Route("buyTicket")]
+        [Authorize(Roles = "AppUser")]
+        public IHttpActionResult BuyTicket(BuyedTicket ticket)
         {
+            var userStore = new UserStore<ApplicationUser>(dbContext);
+            var userManager = new UserManager<ApplicationUser>(userStore);
 
+            if (User.Identity.IsAuthenticated)
+            {
+                Ticket t = new Ticket();
+
+                if (ticket.TypeOfTicket == "TIMED")
+                {
+                    t.From = DateTime.Now;
+                    t.To = DateTime.Now;
+                    t.To = t.To.AddHours(1);
+                    t.TypeOfTicket = Enums.TypeOfTicket.TIMED;
+                    t.Price = ticket.TotalPrice;
+                }
+                else if (ticket.TypeOfTicket == "DIALY")
+                {
+                    t.From = DateTime.Now;
+                    t.To = DateTime.Now;
+                    t.To = t.To.AddDays(1);
+                    t.TypeOfTicket = Enums.TypeOfTicket.DIALY;
+                    t.Price = ticket.TotalPrice;
+                }
+                else if (ticket.TypeOfTicket == "MONTHLY")
+                {
+                    t.From = DateTime.Now;
+                    t.To = DateTime.Now;
+                    t.To = t.To.AddMonths(1);
+                    t.TypeOfTicket = Enums.TypeOfTicket.MONTHLY;
+                    t.Price = ticket.TotalPrice;
+                }
+                else if (ticket.TypeOfTicket == "YEARLY")
+                {
+                    t.From = DateTime.Now;
+                    t.To = DateTime.Now;
+                    t.To = t.To.AddYears(1);
+                    t.TypeOfTicket = Enums.TypeOfTicket.YEARLY;
+                    t.Price = ticket.TotalPrice;
+                }
+
+                string s = User.Identity.GetUserId();
+                int passenger = unitOfWork.PassengerRepository.GetAll().Where(x => x.AppUserId == s).FirstOrDefault().Id;
+                t.Passenger_id = passenger;
+
+                unitOfWork.TicketRepository.Add(t);
+                unitOfWork.Complete();
+                return Ok();
+            }
             return Ok();
         }
     }
