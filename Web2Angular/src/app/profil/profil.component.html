@@ -5,11 +5,11 @@
 </div>
 
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  
   <div id="profile-id">
     <label  class="my-font-title">Email</label>
     <br />
-
-    <input type="email" formControlName="Email" placeholder="Enter email.." required
+    <input type="email" readonly formControlName="Email" placeholder="Enter email.." required
       pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
     <div *ngIf="f.Email.invalid && (f.Email.dirty || f.Email.touched)">
       <div *ngIf="f.Email.errors.required" class="my-font-title">
@@ -18,11 +18,20 @@
       <div *ngIf="f.Email.errors && f.Email.errors.pattern" class="my-font-title">
         Email is not of correct format.
       </div>
-
+    </div>
+    
+    <br />
+    <label class="my-font-title">Current password</label>
+    <br />
+    <input type="password" formControlName="CurrentPassword" placeholder="Enter password.." required>
+    <div *ngIf="f.CurrentPassword.invalid && (f.CurrentPassword.dirty || f.CurrentPassword.touched)">
+      <div *ngIf="f.CurrentPassword.errors.required" class="my-font-title">
+        Password is reqired.
+      </div>
     </div>
     <br />
 
-    <label class="my-font-title">Password</label>
+    <label class="my-font-title">New password</label>
     <br />
     <input type="password" formControlName="password" placeholder="Enter password.." required>
     <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
@@ -31,7 +40,7 @@
       </div>
     </div>
     <br />
-    <label class="my-font-title">Repeat password</label>
+    <label class="my-font-title">Repeat new password</label>
     <br />
     <input type="password" formControlName="confirmPassword" placeholder="Enter password.." required>
     <div *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
@@ -106,12 +115,12 @@
 
     <label class="my-font-title">Type of user</label>
     <select id="type" formControlName="UserType">
-      <option value="Regular">Regular</option>
-      <option value="Pensioner">Pensioner</option>
-      <option value="Student">Student</option>
+      <option value="0">Regular</option>
+      <option value="1">Pensioner</option>
+      <option value="2">Student</option>
     </select>
 
-    <input type="submit" [disabled]="profileForm.invalid" value="Submit">
-
+    <input type="submit" [disabled]="profileForm.invalid" value="Update">
+    <label class="my-register-font">{{serverSuccessMessage}}</label>
   </div>
 </form>

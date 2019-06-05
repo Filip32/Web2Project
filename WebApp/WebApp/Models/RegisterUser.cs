@@ -10,9 +10,11 @@ namespace WebApp.Models
     {
         private string username;
         private string password;
+        private string originalPassword;
         private string name;
         private string lastname;
         private DateTime birthday;
+        private string sendBackBirthday;
         private string streetName;
         private int streetNumber;
         private string city;
@@ -24,6 +26,8 @@ namespace WebApp.Models
         }
 
         public string Username { get { return username; } set { username = value; } }
+        public string OriginalPassword { get { return originalPassword; } set { originalPassword = value; } }
+        public string SendBackBirthday { get { return sendBackBirthday; } set { sendBackBirthday = value; } }
         public string Password { get { return password; } set { password = value; } }
         public string Name { get { return name; } set { name = value; } }
         public string Lastname { get { return lastname; } set { lastname = value; } }

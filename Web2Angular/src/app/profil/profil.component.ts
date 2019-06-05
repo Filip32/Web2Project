@@ -22,6 +22,7 @@ export class ProfilComponent implements OnInit {
       Email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
+      CurrentPassword: ['', Validators.required],
       Name: ['', Validators.required],
       Lastname: ['', Validators.required],
       Address_StreetName: ['', Validators.required],
@@ -41,8 +42,6 @@ export class ProfilComponent implements OnInit {
 
 
   onSubmit() {
-    //console.warn(this.profileForm.value);
-    //this.submitted = true;
     let poruka = this.ServerConnectionService.UpdateProfile(this.profileForm.value).subscribe(
       (res) => {
         this.serverSuccessMessage = res;
@@ -54,9 +53,16 @@ export class ProfilComponent implements OnInit {
   getProfileData() {
     this.ServerConnectionService.getProfileData().subscribe(
       (res) => {
-        let i: string = res;
-        let j: any = JSON.parse(i);
-        this.profileForm = j;
+        console.log(res);
+       this.profileForm.controls['Email'].setValue(res["Username"]);
+       this.profileForm.controls['Name'].setValue(res["Name"]);
+       this.profileForm.controls['Lastname'].setValue(res["Lastname"]);
+       this.profileForm.controls['Birthday'].setValue(res["SendBackBirthday"]);
+       this.profileForm.controls['Address_City'].setValue(res["City"]);
+       this.profileForm.controls['Address_StreetName'].setValue(res["StreetName"]);
+       this.profileForm.controls['Address_StreetNumber'].setValue(res["StreetNumber"]);
+       this.profileForm.controls['UserType'].setValue(res["UserType"]);
+
       }
     );
   }

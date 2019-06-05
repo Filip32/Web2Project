@@ -11,6 +11,7 @@ using WebApp.Persistence;
 using WebApp.Persistence.UnitOfWork;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Globalization;
 
 namespace WebApp.Controllers
 {
@@ -111,24 +112,78 @@ namespace WebApp.Controllers
         }
 
         [Route("updateProfile")]
-        public IHttpActionResult UpdateProfile(RegisterUser userToRegister)
+        public IHttpActionResult UpdateProfile(RegisterUser userToUpdate)
         {
+            var userStore = new UserStore<ApplicationUser>(dbContext);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            string returnMessage = "";
 
+            string s = User.Identity.GetUserId();
+            var user = dbContext.Users.Any(u => u.Id == s);
+            ApplicationUser apu = new ApplicationUser();
+            apu = userManager.FindByIdAsync(s).Result;
 
-            return Ok();
+            Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == s).FirstOrDefault();
+            Address a = unitOfWork.AddressRepository.Find(u => u.Id == p.Address_id).FirstOrDefault();
+
+            if (!userManager.CheckPasswordAsync(apu, userToUpdate.OriginalPassword).Result)
+            {
+                returnMessage = "You have entered an invalid password";
+                return Ok(returnMessage);
+            }       
+
+            /*if (userToUpdate.Username != apu.Email)
+            {
+                if (dbContext.Users.Any(u => u.UserName == userToUpdate.Username))
+                {
+                    returnMessage = "This username is already taken.";
+                    return Ok(returnMessage);
+                }
+            }*/
+
+            //apu.Email = userToUpdate.Username;
+            apu.PasswordHash = ApplicationUser.HashPassword(userToUpdate.Password);
+            userManager.Update(apu);
+
+            a.City = userToUpdate.City;
+            a.StreetName = userToUpdate.StreetName;
+            a.StreetNumber = userToUpdate.StreetNumber;
+            unitOfWork.AddressRepository.Update(a);
+            unitOfWork.Complete();
+
+            p.Birthday = userToUpdate.Birthday;
+            p.LastName = userToUpdate.Lastname;
+            p.Name = userToUpdate.Name;
+            p.PassengerType = userToUpdate.UserType;
+            unitOfWork.PassengerRepository.Update(p);
+            unitOfWork.Complete();
+            returnMessage = "Profile successfully updated.";
+
+            return Ok(returnMessage);
         }
 
         [Route("getProfileData")]
         public IHttpActionResult GetProfileData()
         {
-            //Kako da proverim kredencijale korisnika?
-            //Da li kopam nekako token ili?
+            //Koj err da baci i kako ako do ovde slucajno stigne neki junk?
+            var userStore = new UserStore<ApplicationUser>(dbContext);
+            var userManager = new UserManager<ApplicationUser>(userStore);
 
-            string s = User.Identity.Name;
+            RegisterUser registerUser = new RegisterUser();
+            string s = User.Identity.GetUserId();
+            var user = dbContext.Users.Any(u => u.UserName == s);
+            Passenger p = unitOfWork.PassengerRepository.Find(u=>u.AppUserId == s).FirstOrDefault();
+            Address a = unitOfWork.AddressRepository.Find(u => u.Id == p.Address_id).FirstOrDefault();
+            registerUser.SendBackBirthday = Convert.ToDateTime(p.Birthday).ToString("yyyy-MM-dd");
+            registerUser.City = a.City;
+            registerUser.Lastname = p.LastName;
+            registerUser.Name = p.Name;
+            registerUser.StreetName = a.StreetName;
+            registerUser.StreetNumber = a.StreetNumber;
+            registerUser.Username = User.Identity.Name;
+            registerUser.UserType = p.PassengerType;
 
-
-
-            return Ok();
+            return Ok(registerUser);
         }
     }
 }
