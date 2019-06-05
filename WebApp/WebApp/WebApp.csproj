@@ -293,6 +293,22 @@
     <Compile Include="Migrations\201906040841033_Migration2.2.Designer.cs">
       <DependentUpon>201906040841033_Migration2.2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906050826584_Migration3.0.cs" />
+    <Compile Include="Migrations\201906050826584_Migration3.0.Designer.cs">
+      <DependentUpon>201906050826584_Migration3.0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906050840233_Migration3.1.cs" />
+    <Compile Include="Migrations\201906050840233_Migration3.1.Designer.cs">
+      <DependentUpon>201906050840233_Migration3.1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906050843401_Migration3.2.cs" />
+    <Compile Include="Migrations\201906050843401_Migration3.2.Designer.cs">
+      <DependentUpon>201906050843401_Migration3.2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906050858366_Migration3.3.cs" />
+    <Compile Include="Migrations\201906050858366_Migration3.3.Designer.cs">
+      <DependentUpon>201906050858366_Migration3.3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -308,6 +324,8 @@
     <Compile Include="Models\Passenger.cs" />
     <Compile Include="Models\Pricelist.cs" />
     <Compile Include="Models\PricelistItem.cs" />
+    <Compile Include="Models\Routes.cs" />
+    <Compile Include="Models\RouteStation.cs" />
     <Compile Include="Models\Station.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\Timetable.cs" />
@@ -323,6 +341,7 @@
     <Compile Include="Persistence\Repository\IPricelistItemRepository.cs" />
     <Compile Include="Persistence\Repository\IRepository.cs" />
     <Compile Include="Persistence\Repository\IRouteRepository.cs" />
+    <Compile Include="Persistence\Repository\IRouteStationRepositpry.cs" />
     <Compile Include="Persistence\Repository\IStationRepository.cs" />
     <Compile Include="Persistence\Repository\ItemRepository.cs" />
     <Compile Include="Persistence\Repository\ITicketRepository.cs" />
@@ -333,6 +352,7 @@
     <Compile Include="Persistence\Repository\PricelistRepository.cs" />
     <Compile Include="Persistence\Repository\Repository.cs" />
     <Compile Include="Persistence\Repository\RouteRepository.cs" />
+    <Compile Include="Persistence\Repository\RouteStationRepositpry.cs" />
     <Compile Include="Persistence\Repository\StationRepository.cs" />
     <Compile Include="Persistence\Repository\TicketRepository.cs" />
     <Compile Include="Persistence\Repository\TimetableRepository.cs" />
@@ -462,6 +482,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906040841033_Migration2.2.resx">
       <DependentUpon>201906040841033_Migration2.2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906050826584_Migration3.0.resx">
+      <DependentUpon>201906050826584_Migration3.0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906050840233_Migration3.1.resx">
+      <DependentUpon>201906050840233_Migration3.1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906050843401_Migration3.2.resx">
+      <DependentUpon>201906050843401_Migration3.2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906050858366_Migration3.3.resx">
+      <DependentUpon>201906050858366_Migration3.3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -3,8 +3,6 @@
         <p>All Routs</p>
     </div>
 
-    <div></div>
-
     <div class="link-a pricelist">
         <a routerLink="/pricelist">View Pricelist</a>
     </div>
@@ -15,4 +13,12 @@
     <div  class="map">
         <app-map></app-map>
     </div>
+</div>
+
+<div id="buttons" class="routes-div">
+    <ul>
+        <li *ngFor="let route of routes" (click)="selectedRoute(route)">
+            <a class="button-linija tooltip grad ablin1" [style.background-color]="route===isSelected ? '#9966ff' : ''"  title="{{route.RouteType}}">{{route.RouteNumber}}</a>
+        </li>
+    </ul>
 </div>
