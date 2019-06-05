@@ -309,6 +309,10 @@
     <Compile Include="Migrations\201906050858366_Migration3.3.Designer.cs">
       <DependentUpon>201906050858366_Migration3.3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906052006311_Migration4.0.cs" />
+    <Compile Include="Migrations\201906052006311_Migration4.0.Designer.cs">
+      <DependentUpon>201906052006311_Migration4.0.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -327,7 +331,9 @@
     <Compile Include="Models\Routes.cs" />
     <Compile Include="Models\RouteStation.cs" />
     <Compile Include="Models\Station.cs" />
+    <Compile Include="Models\StationHelp.cs" />
     <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\TicketHelp.cs" />
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Persistence\Repository\AddressRepository.cs" />
@@ -494,6 +500,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906050858366_Migration3.3.resx">
       <DependentUpon>201906050858366_Migration3.3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906052006311_Migration4.0.resx">
+      <DependentUpon>201906052006311_Migration4.0.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

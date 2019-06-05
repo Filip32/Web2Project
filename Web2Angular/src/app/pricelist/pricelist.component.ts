@@ -9,23 +9,25 @@ import { ServerConnectionService } from '../server-connection.service';
 export class PricelistComponent implements OnInit {
 
   selectedRow: any;
+  purchasedTickets: any;
+  textMessage: string = "";
   tableData: any[] = [];
   coefficients: any;
   selectedPrice: any;
   totalPrice: any;
-  typeOfUser: any;
-  canBuy: boolean = false;
-  isSelectedTicket: boolean = false;
+  typeOfUser: any = "Regular";
+  typeOfLoginUser: any;
 
   constructor(private serverConnectionService: ServerConnectionService) { }
 
   ngOnInit() {
     this.getPricelist();
     this.getCoefficeints();
+    this.getTypeOfLoginUser();
+    this.getTickets();
   }
 
   selectChangeHandler (event: any) {
-    //update the ui
     this.typeOfUser = event.target.value;
     this.totalPrice = this.selectedPrice;
     this.calculatePrice();
@@ -50,6 +52,27 @@ export class PricelistComponent implements OnInit {
     );
   }
 
+getTickets()
+{
+  this.serverConnectionService.GetTickets().subscribe(
+    (res) => {
+      this.purchasedTickets = res;
+      console.log(res);
+    }
+  );
+}
+
+  getTypeOfLoginUser()
+  {
+    this.serverConnectionService.getTypeOfLoginUser().subscribe(
+      (res) => {
+        let i: string = res;
+        let j: any = JSON.parse(i);
+        this.typeOfLoginUser = j;
+      }
+    );
+  }
+
   getCoefficeints()
   {
     this.serverConnectionService.getCoefficient().subscribe(
@@ -57,6 +80,13 @@ export class PricelistComponent implements OnInit {
         this.coefficients = res;
       }
     );
+  }
+  deleteTicket(u)
+  {
+    this.serverConnectionService.DeleteTicket(u).subscribe(
+      (res) => {
+        this.getTickets();
+      });
   }
 
   calculatePrice()
@@ -77,23 +107,34 @@ export class PricelistComponent implements OnInit {
     if(localStorage.login)
     {
       if(this.totalPrice > 0){
-        this.canBuy = false;
-        this.isSelectedTicket = false;
+        if(this.typeOfUser.toLowerCase() == this.typeOfLoginUser.TypeOfUser.toLowerCase()){
+            if(this.typeOfLoginUser.IsValid == "ACCEPTED"){
+                this.textMessage = "";
 
-        this.serverConnectionService.buyTicket(this.typeOfUser, this.selectedRow.type, this.totalPrice).subscribe(
-          (res) => {
-            console.log(res);
-          }
-        );
+                this.serverConnectionService.buyTicket(this.typeOfUser, this.selectedRow.type, this.totalPrice).subscribe(
+                  (res) => {
+                    console.log(res);
+                  }
+                );
+
+                this.getTickets();
+            }
+            else
+            {
+              this.textMessage = "You are not verified";
+            }
+        }else{
+          this.textMessage = "You can't take this discount";
+        }
       }
       else
       {
-        this.isSelectedTicket = true;
+        this.textMessage = "First select a ticket.";
       }
     }
     else
     {
-      this.canBuy = true;
+      this.textMessage = "To purchase a ticket, first login or register.";
     }
   }
 }

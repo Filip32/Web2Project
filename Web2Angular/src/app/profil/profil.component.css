@@ -7,6 +7,13 @@
     justify-content: center;
 }
 
+.status-of-user{
+  font-style: oblique;
+  font-size: 22px;
+  color:#9966ff;
+  font-weight: 700;
+}
+
 input[type=text], select {
     width: 100%;
     padding: 12px 20px;

@@ -14,6 +14,7 @@ namespace WebApp.Models
         private DateTime from;
         private DateTime to;
         private int passenger_id;
+        private bool isDeleted;
         private int id;
 
         public Ticket()
@@ -50,6 +51,18 @@ namespace WebApp.Models
             set
             {
                 passenger_id = value;
+            }
+        }
+
+        public bool IsDeleted
+        {
+            get
+            {
+                return isDeleted;
+            }
+            set
+            {
+                isDeleted = value;
             }
         }
 
