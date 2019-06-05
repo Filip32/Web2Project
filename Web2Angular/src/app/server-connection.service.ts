@@ -25,6 +25,10 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Data/getProfileData');
   }
 
+  getRoutes(): Observable<any>
+  {
+    return this.http.get<any>('http://localhost:52295/api/Data/getRoutes');
+  }
 
   getCoefficient(): Observable<any> {
     return this.http.get<any>('http://localhost:52295/api/Data/getCoefficient');

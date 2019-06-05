@@ -1356,7 +1356,6 @@ C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csproj.Co
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.pdb
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration20.resources
-C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 C:\Users\asus\Desktop\FF300520\3\Web2Project\WebApp\WebApp\bin\WebApp.dll.config
 C:\Users\asus\Desktop\FF300520\3\Web2Project\WebApp\WebApp\bin\WebApp.dll
 C:\Users\asus\Desktop\FF300520\3\Web2Project\WebApp\WebApp\bin\WebApp.pdb
@@ -1827,3 +1826,11 @@ C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.cs
 C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.pdb
+C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration30.resources
+C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration31.resources
+C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration32.resources
+C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration33.resources
+C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration30.resources
+C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration31.resources
+C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration32.resources
+C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration33.resources

@@ -81,6 +81,7 @@ namespace WebApp.App_Start
             container.RegisterType<ITicketRepository, TicketRepository>();
             container.RegisterType<ITimetableRepository, TimetableRepository>();
             container.RegisterType<IItemRepository, ItemRepository>();
+            container.RegisterType<IRouteStationRepositpry, RouteStationRepositpry>();
         }
 
         public void Dispose()

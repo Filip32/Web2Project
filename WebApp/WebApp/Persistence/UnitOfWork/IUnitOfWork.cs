@@ -21,7 +21,7 @@ namespace WebApp.Persistence.UnitOfWork
         IStationRepository StationRepository { get; set; }
         ITicketRepository TicketRepository { get; set; }
         ITimetableRepository TimetableRepository { get; set; }
-
+        IRouteStationRepositpry RouteStationRepositpry { get; set; }
         int Complete();
     }
 }

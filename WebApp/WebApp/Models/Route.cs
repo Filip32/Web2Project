@@ -9,7 +9,6 @@ namespace WebApp.Models
 {
     public class Route
     {
-        private List<int> stations;
         private Enums.TypeOfRoute routeType;
         private string departures;
         private int id;
@@ -17,7 +16,6 @@ namespace WebApp.Models
 
         public Route()
         {
-            Stations = new List<int>();
         }
 
         [Key]
@@ -28,17 +26,6 @@ namespace WebApp.Models
             set { id = value; }
         }
 
-        public List<int> Stations
-        {
-            get
-            {
-                return stations;
-            }
-            set
-            {
-                stations = value;
-            }
-        }
         public string Departures
         {
             get

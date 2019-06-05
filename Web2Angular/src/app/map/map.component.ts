@@ -7,7 +7,7 @@ import { Polyline } from './model/polyline';
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
-  styles: ['agm-map {height: 555px; width: 682px; top: 20%;}'] //postavljamo sirinu i visinu mape
+  styles: ['agm-map {height: 555px; width: 682px;}'] //postavljamo sirinu i visinu mape
 })
 export class MapComponent implements OnInit {
 
@@ -27,7 +27,8 @@ export class MapComponent implements OnInit {
 
   placeMarker($event){
     this.polyline.addLocation(new GeoLocation($event.coords.lat, $event.coords.lng))
-    console.log($event.coords.lat, $event.coords.lng)
+    console.log($event.coords.lat, $event.coords.lng);
+    //console.log(this.polyline)
   }
 
 }

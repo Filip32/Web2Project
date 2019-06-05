@@ -14,11 +14,10 @@ namespace WebApp.Models
         private double y;
         private string name;
         private int address_id;
-        private List<int> routes;
+        private bool isStation;
 
         public Station()
         {
-            Routes = new List<int>();
         }
 
         [Key]
@@ -38,6 +37,18 @@ namespace WebApp.Models
             set
             {
                 x = value;
+            }
+        }
+
+        public bool IsStation
+        {
+            get
+            {
+                return isStation;
+            }
+            set
+            {
+                isStation = value;
             }
         }
 
@@ -65,6 +76,7 @@ namespace WebApp.Models
             }
         }
 
+        
         public int Address_id
         {
             get
@@ -76,18 +88,5 @@ namespace WebApp.Models
                 address_id = value;
             }
         }
-
-        public List<int> Routes
-        {
-            get
-            {
-                return routes;
-            }
-            set
-            {
-                routes = value;
-            }
-        }
-
     }
 }

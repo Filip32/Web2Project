@@ -1,8 +1,8 @@
 <p>
   <!-- Kreiramo mapu -->
-  <agm-map [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude" [zoom]="18" (mapClick)="placeMarker($event)">  
+  <agm-map [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude" [zoom]="15" (mapClick)="placeMarker($event)">  
 
-    <agm-marker [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude" [title]="markerInfo.title"
+   <agm-marker [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude" [title]="markerInfo.title"
     [label]="markerInfo.label" [iconUrl]="markerInfo.iconUrl">
 
       <!-- Svakom markeru dodajemo info-window (Nije obavezno!)-->

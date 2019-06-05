@@ -185,5 +185,28 @@ namespace WebApp.Controllers
 
             return Ok(registerUser);
         }
+
+        [Route("getRoutes")]
+        public IHttpActionResult GetRoutes()
+        {
+            List<Routes> routes = new List<Routes>();
+
+            List<Route> routesDb = unitOfWork.RouteRepository.GetAll().ToList();
+
+            foreach (Route r in routesDb)
+            {
+                List<RouteStation> routeStations = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Route_id == r.Id).ToList();
+                List<Station> stations = new List<Station>();
+
+                foreach (RouteStation rs in routeStations)
+                {
+                    stations.Add(unitOfWork.StationRepository.Get(rs.Station_id));
+                }
+                //dobaviti adrese od station mesto samo int za id
+                routes.Add(new Routes { RouteNumber = r.RouteNumber, RouteType = r.RouteType.ToString(), Stations = stations });
+            }
+
+            return Ok(routes);
+        }
     }
 }
