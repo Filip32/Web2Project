@@ -9,11 +9,11 @@ namespace WebApp.Models
     {
         public string RouteNumber { get; set; }
         public string RouteType { get; set; }
-        public List<Station> Stations { get; set; }
+        public List<StationHelp> Stations { get; set; }
 
         public Routes()
         {
-            Stations = new List<Station>();
+            Stations = new List<StationHelp>();
         }
     }
 }

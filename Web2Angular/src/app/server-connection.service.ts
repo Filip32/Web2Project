@@ -34,12 +34,19 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Data/getCoefficient');
   }
 
+  getTypeOfLoginUser(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Data/getTypeOfLoginUser');
+  }
+
   buyTicket(typeOfUser: string, typeOfTicket: string, totalPrice: number): Observable<any> {
     let ticket: Ticket = new Ticket();
     ticket.TypeOfUser = typeOfUser;
     ticket.TypeOfTicket = typeOfTicket;
     ticket.TotalPrice = totalPrice;
     return this.http.post<any>('http://localhost:52295/api/Data/buyTicket', ticket);
+  }
+  GetTickets(): Observable<any>{
+    return this.http.get<any>('http://localhost:52295/api/Data/getTickes');
   }
 
   Register(arg: any): Observable<any> {
@@ -62,6 +69,10 @@ export class ServerConnectionService {
     };
 
     return this.http.post<any>('http://localhost:52295/api/Register/registerUser', par, headers);
+  }
+
+  DeleteTicket(u: any): Observable<any>{
+    return this.http.post<any>('http://localhost:52295/api/Data/deleteTicket',u);
   }
 
   UpdateProfile(arg: any): Observable<any> {

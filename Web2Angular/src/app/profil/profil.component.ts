@@ -14,6 +14,7 @@ export class ProfilComponent implements OnInit {
   profileForm: FormGroup;
   submitted: boolean = false;
   serverSuccessMessage = "";
+  UserValid: any;
 
   constructor(private fb: FormBuilder, private ServerConnectionService: ServerConnectionService) { }
 
@@ -65,6 +66,15 @@ export class ProfilComponent implements OnInit {
 
       }
     );
+
+    this.ServerConnectionService.getTypeOfLoginUser().subscribe(
+      (res) => {
+        let i: string = res;
+        let j: any = JSON.parse(i);
+        this.UserValid = j.IsValid;
+      }
+    );
+
   }
 }
 

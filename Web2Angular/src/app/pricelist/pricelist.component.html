@@ -1,3 +1,4 @@
+<div class="div-s-by-s">
 <p class="my-pricelist-font">Pricelist<p>
 
 <table class="demo">
@@ -15,12 +16,10 @@
 	</tbody>
 </table>
 
-<br/>
-
 <div>
 <p class="my-font float">Discount for<p> &nbsp;
 <select id="type-of-user" (change)="selectChangeHandler($event)">
-    <option value="Basic"><br/></option>
+    <option value="Regular">Regular</option>
   <option value="Pensioner">Pensioner</option>
   <option value="Student">Student</option>
 </select>
@@ -34,9 +33,31 @@
 <div>
 <input type="submit" value="Buy" (click)="onSubmit()">
 </div>
-<div *ngIf="canBuy" class="my-thead-font">
-		To purchase a ticket, first login or register.
+<div class="my-thead-font">
+		{{textMessage}}
 </div>
-<div *ngIf="isSelectedTicket" class="my-thead-font">
-		First select a ticket.
+
+</div>
+<br/>
+<div class="div-s-by-s2">
+	<p class="my-pricelist-font">Purchased Tickets<p></p>
+	<table class="demo">
+			<thead class="my-thead-font">
+			<tr>
+				<th>Type of ticket</th>
+				<th>Price</th>
+				<th>Date of validity</th>
+				<th >&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr *ngFor="let u of purchasedTickets">
+				<td>{{u.Type}}</td>
+				<td>{{u.Price}}</td>
+				<td>{{u.Date}}</td>
+				<td><a id="a" class="button" (click)="deleteTicket(u)">Delete</a></td>
+			</tr>
+			</tbody>
+		</table>
+		
 </div>

@@ -12,6 +12,7 @@ using WebApp.Persistence.UnitOfWork;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Globalization;
+using WebApp.Helper;
 
 namespace WebApp.Controllers
 {
@@ -23,6 +24,7 @@ namespace WebApp.Controllers
 
         public DataController(IUnitOfWork uw)
         {
+           // HelperReader.Reader(uw);
             unitOfWork = uw;
         }
 
@@ -54,6 +56,21 @@ namespace WebApp.Controllers
         {
             Coefficients coefficients = unitOfWork.CoefficientRepository.GetAll().FirstOrDefault();
             return Ok(coefficients);
+        }
+
+        [Route("getTypeOfLoginUser")]
+        [Authorize(Roles = "AppUser")]
+        public IHttpActionResult GetTypeOfLoginUser()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                string s = User.Identity.GetUserId();
+                Passenger passenger = unitOfWork.PassengerRepository.GetAll().Where(x => x.AppUserId == s).FirstOrDefault();
+                string message = "{\"TypeOfUser\" : \"" + passenger.PassengerType.ToString()+ "\",";
+                message += "\"IsValid\" : \"" + passenger.IsValidated + "\"}";
+                return Ok(message);
+            }
+            return Ok();
         }
 
         [HttpPost,Route("buyTicket")]
@@ -186,17 +203,55 @@ namespace WebApp.Controllers
             foreach (Route r in routesDb)
             {
                 List<RouteStation> routeStations = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Route_id == r.Id).ToList();
-                List<Station> stations = new List<Station>();
+                List<StationHelp> stations = new List<StationHelp>();
 
                 foreach (RouteStation rs in routeStations)
                 {
-                    stations.Add(unitOfWork.StationRepository.Get(rs.Station_id));
+                    Station station = unitOfWork.StationRepository.Get(rs.Station_id);
+                    stations.Add(new StationHelp { X = station.X, Y = station.Y, Name = station.Name, IsStation = station.IsStation, Address = unitOfWork.AddressRepository.Get(station.Address_id) });
                 }
-                //dobaviti adrese od station mesto samo int za id
+
                 routes.Add(new Routes { RouteNumber = r.RouteNumber, RouteType = r.RouteType.ToString(), Stations = stations });
             }
 
             return Ok(routes);
         }
+
+        [Route("getTickes")]
+        [Authorize(Roles = "AppUser")]
+        public IHttpActionResult GetTickets()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                List<TicketHelp> ticketHelps = new List<TicketHelp>();
+                int passenger_id = unitOfWork.PassengerRepository.GetAll().Where(x => x.AppUserId == User.Identity.GetUserId()).FirstOrDefault().Id;
+                List<Ticket> tickets = unitOfWork.TicketRepository.GetAll().Where(x => x.Passenger_id == passenger_id && !x.IsDeleted).ToList();
+
+                foreach(Ticket t in tickets)
+                {
+                    string time = t.From.Date.ToString().Split(' ')[0] + " - " +t.To.Date.ToString().Split(' ')[0];
+                    ticketHelps.Add(new TicketHelp { Id = t.Id, Price = t.Price.ToString(), Type = t.TypeOfTicket.ToString(), Date = time });
+                }
+
+                return Ok(ticketHelps);
+            }
+
+            return Ok();
+        }
+
+        [HttpPost,Route("deleteTicket")]
+        [Authorize(Roles = "AppUser")]
+        public IHttpActionResult DeleteTicket(TicketHelp ticketHelp)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                Ticket ticket = unitOfWork.TicketRepository.Get(ticketHelp.Id);
+                ticket.IsDeleted = true;
+                unitOfWork.TicketRepository.Update(ticket);
+                unitOfWork.Complete();
+            }
+            return Ok();
+        }
+
     }
 }

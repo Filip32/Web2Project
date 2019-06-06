@@ -1,5 +1,5 @@
 .demo {
-width: 27.5%;
+width: 30%;
 border:1px solid #b86cc7;
 border-collapse:collapse;
 padding:5px;
@@ -22,6 +22,31 @@ padding:5px;
     color:#9966ff;
     display: inline-block;
     font-weight: 300;
+}
+
+.button {
+    font: bold 14px oblique;
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #9966ff;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    cursor: pointer;
+  }
+
+.div-s-by-s
+{
+    float: left; 
+    width: 40%;
+}
+
+.div-s-by-s
+{
+    float: left;
+    width: 50%;
 }
 
 .my-pricelist-font{
@@ -71,7 +96,7 @@ tr:nth-child(odd)
 
 tbody :hover
 {
-    background: #673dff !important;    
+    background: #673dff;    
 }
 
 .float
