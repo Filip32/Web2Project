@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { ServerConnectionService } from '../server-connection.service';
+import { EventEmitter } from 'protractor';
 
 @Component({
   selector: 'app-home',
@@ -21,8 +22,11 @@ export class HomeComponent implements OnInit {
  selectedRoute(route: any)
  {
     this.isSelected = route;
-    this.sRoute = route;
-    console.log(route);
+    this.serverConnectionService.getRoute(route.Id).subscribe(
+      (res) => {
+        console.log(res);
+        this.sRoute = res;
+      });
  }
 
  getRoutes()

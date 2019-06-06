@@ -2,6 +2,7 @@ import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { MarkerInfo } from './model/marker-info.model';
 import { GeoLocation } from './model/geolocation';
 import { Polyline } from './model/polyline';
+import { Marker } from '@agm/core/services/google-maps-types';
 
 @Component({
   selector: 'app-map',
@@ -10,25 +11,47 @@ import { Polyline } from './model/polyline';
   styles: ['agm-map {height: 555px; width: 682px;}'] //postavljamo sirinu i visinu mape
 })
 export class MapComponent implements OnInit {
-
-  markerInfo: MarkerInfo;
   public polyline: Polyline;
+  public stationsIcon: MarkerInfo[];
   public zoom: number;
+  private _route: any;
 
   ngOnInit() {
-    this.markerInfo = new MarkerInfo(new GeoLocation(45.242268, 19.842954), "",
-      "Jugodrvo" , "" , "http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka");
-
-      this.polyline = new Polyline([], 'blue', { url:"assets/busicon.png", scaledSize: {width: 50, height: 50}});
+    this.polyline= new Polyline([], '#9966ff', { url:"", scaledSize: {width: 50, height: 50}});
   }
 
   constructor(private ngZone: NgZone){
   }
 
-  placeMarker($event){
-    this.polyline.addLocation(new GeoLocation($event.coords.lat, $event.coords.lng))
-    console.log($event.coords.lat, $event.coords.lng);
-    //console.log(this.polyline)
+  @Input()
+  set route(route: any) {
+    this._route = route;
+    if(this._route){
+        this.drowRoutes();
+    }
   }
 
+  drowRoutes()
+  {
+    this.polyline= new Polyline([], '#9966ff', { url:"", scaledSize: {width: 50, height: 50}});
+    this.stationsIcon = [];
+    this._route.Stations.forEach(element => {
+      if(!element.IsStation)
+      {
+        this.polyline.addLocation(new GeoLocation(element.X, element.Y));
+      }
+      else
+      {
+        this.stationsIcon.push(new MarkerInfo(new GeoLocation(element.X, element.Y), "assets/busicon.png",
+        element.Name , element.Address.City +  ", "+ element.Address.StreetName + ", " + element.Address.StreetNumber,""));
+      }
+    });
+  }
+
+  placeMarker($event){
+    if(localStorage.role == "Admin"){
+      this.polyline.addLocation(new GeoLocation($event.coords.lat, $event.coords.lng));
+      console.log(this.polyline);
+    }
+  }
 }

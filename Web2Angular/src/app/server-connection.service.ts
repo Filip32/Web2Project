@@ -30,6 +30,11 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Data/getRoutes');
   }
 
+  getRoute(id: number): Observable<any>
+  {
+    return this.http.get<any>('http://localhost:52295/api/Data/getRoute' + `/?id=${id}`);
+  }
+
   getCoefficient(): Observable<any> {
     return this.http.get<any>('http://localhost:52295/api/Data/getCoefficient');
   }

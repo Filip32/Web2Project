@@ -43,6 +43,7 @@ export class RegisterComponent implements OnInit {
       }
     );
     this.submitted = true;
+    this.router.navigate(['/login']);
   }
 }
 

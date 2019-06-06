@@ -50,8 +50,7 @@ import { MapComponent } from './map/map.component';
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    //ValuesHttpService, 
-    //AuthHttpService
+    
   ],
   bootstrap: [AppComponent]
 })
