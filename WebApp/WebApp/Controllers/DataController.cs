@@ -132,16 +132,6 @@ namespace WebApp.Controllers
                 return Ok(returnMessage);
             }       
 
-            /*if (userToUpdate.Username != apu.Email)
-            {
-                if (dbContext.Users.Any(u => u.UserName == userToUpdate.Username))
-                {
-                    returnMessage = "This username is already taken.";
-                    return Ok(returnMessage);
-                }
-            }*/
-
-            //apu.Email = userToUpdate.Username;
             apu.PasswordHash = ApplicationUser.HashPassword(userToUpdate.Password);
             userManager.Update(apu);
 
