@@ -12,6 +12,7 @@ using WebApp.Persistence.UnitOfWork;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Globalization;
+using WebApp.Helper;
 
 namespace WebApp.Controllers
 {
@@ -23,6 +24,7 @@ namespace WebApp.Controllers
 
         public DataController(IUnitOfWork uw)
         {
+           // HelperReader.Reader(uw);
             unitOfWork = uw;
         }
 
