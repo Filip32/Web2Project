@@ -23,7 +23,7 @@ export class PricelistComponent implements OnInit {
   ngOnInit() {
     this.getPricelist();
     this.getCoefficeints();
-    if(localStorage.login){
+    if(localStorage.role == "AppUser"){
         this.getTypeOfLoginUser();
         this.getTickets();
     }
@@ -117,30 +117,36 @@ getTickets()
   onSubmit() {
     if(localStorage.login)
     {
-      if(this.totalPrice > 0){
-        if(this.typeOfUser.toLowerCase() == this.typeOfLoginUser.TypeOfUser.toLowerCase()){
-            if(this.typeOfLoginUser.IsValid == "ACCEPTED"){
-                this.textMessage = "";
+      if(localStorage.role == "AppUser"){
+        if(this.totalPrice > 0){
+          if(this.typeOfUser.toLowerCase() == this.typeOfLoginUser.TypeOfUser.toLowerCase()){
+              if(this.typeOfLoginUser.IsValid == "ACCEPTED"){
+                  this.textMessage = "";
 
-                this.serverConnectionService.buyTicket(this.typeOfUser, this.selectedRow.type, this.totalPrice).subscribe(
-                  (res) => {
-                    console.log(res);
-                  }
-                );
+                  this.serverConnectionService.buyTicket(this.typeOfUser, this.selectedRow.type, this.totalPrice).subscribe(
+                    (res) => {
+                      console.log(res);
+                    }
+                  );
 
-                this.getTickets();
-            }
-            else
-            {
-              this.textMessage = "You are not verified";
-            }
-        }else{
-          this.textMessage = "You can't take this discount";
+                  this.getTickets();
+              }
+              else
+              {
+                this.textMessage = "You are not verified.";
+              }
+          }else{
+            this.textMessage = "You can't take this discount.";
+          }
+        }
+        else
+        {
+          this.textMessage = "First select a ticket.";
         }
       }
       else
       {
-        this.textMessage = "First select a ticket.";
+        this.textMessage = "Only passenger can buy a ticket.";
       }
     }
     else
