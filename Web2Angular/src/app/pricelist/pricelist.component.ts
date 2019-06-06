@@ -23,8 +23,19 @@ export class PricelistComponent implements OnInit {
   ngOnInit() {
     this.getPricelist();
     this.getCoefficeints();
-    this.getTypeOfLoginUser();
-    this.getTickets();
+    if(localStorage.login){
+        this.getTypeOfLoginUser();
+        this.getTickets();
+    }
+  }
+
+  isLogin(): boolean
+  {
+    if(localStorage.login)
+    {
+      return true;
+    }
+    return false;
   }
 
   selectChangeHandler (event: any) {
