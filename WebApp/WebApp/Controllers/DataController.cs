@@ -24,7 +24,26 @@ namespace WebApp.Controllers
 
         public DataController(IUnitOfWork uw)
         {
-           // HelperReader.Reader(uw);
+            //HelperReader.Reader(uw, "1A");
+            //HelperReader.Reader(uw, "1B");
+            //HelperReader.Reader(uw, "4A");
+            //HelperReader.Reader(uw, "4B");
+            //HelperReader.Reader(uw, "11A");
+            //HelperReader.Reader(uw, "11B");
+            //HelperReader.Reader(uw, "12A");
+            //HelperReader.Reader(uw, "12B");
+            //HelperReader.Reader(uw, "13A");
+            //HelperReader.Reader(uw, "13B");
+            //HelperReader.Reader(uw, "16A");
+            //HelperReader.Reader(uw, "16B");
+            //HelperReader.Reader(uw, "22A");
+            //HelperReader.Reader(uw, "22B");
+            //HelperReader.Reader(uw, "32A");
+            //HelperReader.Reader(uw, "32B");
+            //HelperReader.Reader(uw, "41A");
+            //HelperReader.Reader(uw, "41B");
+            //HelperReader.Reader(uw, "51A");
+            //HelperReader.Reader(uw, "51B");
             unitOfWork = uw;
         }
 
@@ -252,18 +271,28 @@ namespace WebApp.Controllers
 
             foreach (Route r in routesDb)
             {
-                List<RouteStation> routeStations = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Route_id == r.Id).ToList();
-                List<StationHelp> stations = new List<StationHelp>();
-
-                foreach (RouteStation rs in routeStations)
-                {
-                    Station station = unitOfWork.StationRepository.Get(rs.Station_id);
-                    stations.Add(new StationHelp { X = station.X, Y = station.Y, Name = station.Name, IsStation = station.IsStation, Address = unitOfWork.AddressRepository.Get(station.Address_id) });
-                }
-
-                routes.Add(new Routes { RouteNumber = r.RouteNumber, RouteType = r.RouteType.ToString(), Stations = stations });
+                routes.Add(new Routes { Id = r.Id,RouteNumber = r.RouteNumber, RouteType = r.RouteType.ToString() });
             }
 
+            return Ok(routes);
+        }
+
+        [HttpGet,Route("getRoute")]
+        public IHttpActionResult GetRoute(int id)
+        {
+            Route route = unitOfWork.RouteRepository.Get(id);
+
+            List<RouteStation> routeStations = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Route_id == route.Id).ToList();
+            List<StationHelp> stations = new List<StationHelp>();
+
+            foreach (RouteStation rs in routeStations)
+            {
+                Station station = unitOfWork.StationRepository.Get(rs.Station_id);
+                if (station != null)
+                    stations.Add(new StationHelp { X = station.X, Y = station.Y, Name = station.Name, IsStation = station.IsStation, Address = unitOfWork.AddressRepository.Get(station.Address_id) });
+            }
+            Routes routes = new Routes() { Id = route.Id, RouteNumber = route.RouteNumber, RouteType = route.RouteType.ToString() };
+            routes.Stations = stations;
             return Ok(routes);
         }
 

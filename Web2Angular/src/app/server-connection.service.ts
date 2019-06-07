@@ -30,12 +30,21 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Data/getRoutes');
   }
 
+  getRoute(id: number): Observable<any>
+  {
+    return this.http.get<any>('http://localhost:52295/api/Data/getRoute' + `/?id=${id}`);
+  }
+
   getCoefficient(): Observable<any> {
     return this.http.get<any>('http://localhost:52295/api/Data/getCoefficient');
   }
 
   getTypeOfLoginUser(): Observable<any> {
     return this.http.get<any>('http://localhost:52295/api/Data/getTypeOfLoginUser');
+  }
+
+  notify(): Observable<any> {  
+    return this.http.post("http://localhost:52295/api/Notify", "", {headers:{"Accept": "text/plain"}});
   }
 
   buyTicket(typeOfUser: string, typeOfTicket: string, totalPrice: number): Observable<any> {

@@ -13,13 +13,13 @@ namespace WebApp.Helper
         static ApplicationDbContext dbContext = new ApplicationDbContext();
         static IUnitOfWork unitOfWork;
 
-        public static void Reader(IUnitOfWork uw)
+        public static void Reader(IUnitOfWork uw, string routeName)
         {
             unitOfWork = uw;
             bool state = true;
             string line;
-            int idRoute = unitOfWork.RouteRepository.GetAll().Where(x => x.RouteNumber == "32B").FirstOrDefault().Id;
-            System.IO.StreamReader file = new System.IO.StreamReader(@"C:\Users\filip\Desktop\Web2\Web2Project\32B.txt");
+            int idRoute = unitOfWork.RouteRepository.GetAll().Where(x => x.RouteNumber == routeName).FirstOrDefault().Id;
+            System.IO.StreamReader file = new System.IO.StreamReader(@"C:\Users\filip\Desktop\Web2\Web2Project\"+ routeName + ".txt");
             while ((line = file.ReadLine()) != null)
             {
                 if (line == "-")
