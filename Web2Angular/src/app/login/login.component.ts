@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
- 
+  serverSuccessMessage = "";
+
   constructor(private fb: FormBuilder, private authService: AuthService, private http: HttpClient, private router: Router) {
 
    }
@@ -37,6 +38,9 @@ export class LoginComponent implements OnInit {
         else if(localStorage.role == "Controller")
         {
           this.router.navigate(['/verification-c']);
+        }else
+        {
+          this.serverSuccessMessage="You have entered wrong username/password";
         }
       }
     );

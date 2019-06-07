@@ -89,6 +89,15 @@ namespace WebApp.Controllers
                     t.From = DateTime.Now;
                     t.To = DateTime.Now;
                     t.To = t.To.AddHours(1);
+
+                    if (t.To.Day != t.From.Day)
+                    {
+                        string ss = t.From.Date.ToString();
+                        string[] niz = ss.Split(' ');
+                        niz[1] = "11:59:59 PM";
+                        string time = niz[0] + " " + niz[1];
+                        t.To = Convert.ToDateTime(time);
+                    }
                     t.TypeOfTicket = Enums.TypeOfTicket.TIMED;
                     t.Price = ticket.TotalPrice;
                 }
@@ -97,6 +106,14 @@ namespace WebApp.Controllers
                     t.From = DateTime.Now;
                     t.To = DateTime.Now;
                     t.To = t.To.AddDays(1);
+                    if (t.To.Day != t.From.Day)
+                    {
+                        string ss = t.From.Date.ToString();
+                        string[] niz = ss.Split(' ');
+                        niz[1] = "11:59:59 PM";
+                        string time = niz[0] + " " + niz[1];
+                        t.To = Convert.ToDateTime(time);
+                    }
                     t.TypeOfTicket = Enums.TypeOfTicket.DIALY;
                     t.Price = ticket.TotalPrice;
                 }
@@ -105,6 +122,19 @@ namespace WebApp.Controllers
                     t.From = DateTime.Now;
                     t.To = DateTime.Now;
                     t.To = t.To.AddMonths(1);
+                   
+                    if (t.To.Month != t.From.Month)
+                    {
+                        string ss = t.From.ToString();
+                        string[] niz = ss.Split(' ');
+                        string lastDay = GetLastDay(t.From.Month).ToString();
+                        niz[1] = "11:59:59 PM";
+                        string[] nizniz = niz[0].Split('-');
+                        nizniz[0] = lastDay;
+                        //Assemble the whole date
+                        string wholeDate = nizniz[0] + "-" + nizniz[1] + "-" + nizniz[2] + " " + niz[1];
+                        t.To = Convert.ToDateTime(wholeDate);
+                    }
                     t.TypeOfTicket = Enums.TypeOfTicket.MONTHLY;
                     t.Price = ticket.TotalPrice;
                 }
@@ -113,6 +143,17 @@ namespace WebApp.Controllers
                     t.From = DateTime.Now;
                     t.To = DateTime.Now;
                     t.To = t.To.AddYears(1);
+                    if (t.From.Year != t.To.Year)
+                    {
+                        string ss = t.From.ToString();
+                        string[] niz = ss.Split(' ');
+                        string[] nizniz = niz[0].Split('-');
+                        nizniz[0] = "31";
+                        nizniz[1] = "Dec";
+                        niz[1] = "11:59:59 PM";
+                        string wholeDate = nizniz[0] + "-" + nizniz[1] + "-" + nizniz[2] + " " + niz[1];
+                        t.To = Convert.ToDateTime(wholeDate);
+                    }
                     t.TypeOfTicket = Enums.TypeOfTicket.YEARLY;
                     t.Price = ticket.TotalPrice;
                 }
@@ -129,68 +170,77 @@ namespace WebApp.Controllers
         }
 
         [Route("updateProfile")]
+        [Authorize(Roles = "AppUser")]
         public IHttpActionResult UpdateProfile(RegisterUser userToUpdate)
         {
-            var userStore = new UserStore<ApplicationUser>(dbContext);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-            string returnMessage = "";
-
-            string s = User.Identity.GetUserId();
-            var user = dbContext.Users.Any(u => u.Id == s);
-            ApplicationUser apu = new ApplicationUser();
-            apu = userManager.FindByIdAsync(s).Result;
-
-            Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == s).FirstOrDefault();
-            Address a = unitOfWork.AddressRepository.Find(u => u.Id == p.Address_id).FirstOrDefault();
-
-            if (!userManager.CheckPasswordAsync(apu, userToUpdate.OriginalPassword).Result)
+            if (User.Identity.IsAuthenticated)
             {
-                returnMessage = "You have entered an invalid password";
+                var userStore = new UserStore<ApplicationUser>(dbContext);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                string returnMessage = "";
+
+                string s = User.Identity.GetUserId();
+                var user = dbContext.Users.Any(u => u.Id == s);
+                ApplicationUser apu = new ApplicationUser();
+                apu = userManager.FindByIdAsync(s).Result;
+
+                Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == s).FirstOrDefault();
+                Address a = unitOfWork.AddressRepository.Find(u => u.Id == p.Address_id).FirstOrDefault();
+
+                if (!userManager.CheckPasswordAsync(apu, userToUpdate.OriginalPassword).Result)
+                {
+                    returnMessage = "You have entered an invalid password";
+                    return Ok(returnMessage);
+                }
+
+                apu.PasswordHash = ApplicationUser.HashPassword(userToUpdate.Password);
+                userManager.Update(apu);
+
+                a.City = userToUpdate.City;
+                a.StreetName = userToUpdate.StreetName;
+                a.StreetNumber = userToUpdate.StreetNumber;
+                unitOfWork.AddressRepository.Update(a);
+                unitOfWork.Complete();
+
+                p.Birthday = userToUpdate.Birthday;
+                p.LastName = userToUpdate.Lastname;
+                p.Name = userToUpdate.Name;
+                p.PassengerType = userToUpdate.UserType;
+                unitOfWork.PassengerRepository.Update(p);
+                unitOfWork.Complete();
+                returnMessage = "Profile successfully updated.";
+
                 return Ok(returnMessage);
-            }       
-
-            apu.PasswordHash = ApplicationUser.HashPassword(userToUpdate.Password);
-            userManager.Update(apu);
-
-            a.City = userToUpdate.City;
-            a.StreetName = userToUpdate.StreetName;
-            a.StreetNumber = userToUpdate.StreetNumber;
-            unitOfWork.AddressRepository.Update(a);
-            unitOfWork.Complete();
-
-            p.Birthday = userToUpdate.Birthday;
-            p.LastName = userToUpdate.Lastname;
-            p.Name = userToUpdate.Name;
-            p.PassengerType = userToUpdate.UserType;
-            unitOfWork.PassengerRepository.Update(p);
-            unitOfWork.Complete();
-            returnMessage = "Profile successfully updated.";
-
-            return Ok(returnMessage);
+            }
+            return Ok();
         }
 
         [Route("getProfileData")]
+        [Authorize(Roles = "AppUser")]
         public IHttpActionResult GetProfileData()
         {
-            //Koj err da baci i kako ako do ovde slucajno stigne neki junk?
-            var userStore = new UserStore<ApplicationUser>(dbContext);
-            var userManager = new UserManager<ApplicationUser>(userStore);
+            if (User.Identity.IsAuthenticated)
+            {
+                var userStore = new UserStore<ApplicationUser>(dbContext);
+                var userManager = new UserManager<ApplicationUser>(userStore);
 
-            RegisterUser registerUser = new RegisterUser();
-            string s = User.Identity.GetUserId();
-            var user = dbContext.Users.Any(u => u.UserName == s);
-            Passenger p = unitOfWork.PassengerRepository.Find(u=>u.AppUserId == s).FirstOrDefault();
-            Address a = unitOfWork.AddressRepository.Find(u => u.Id == p.Address_id).FirstOrDefault();
-            registerUser.SendBackBirthday = Convert.ToDateTime(p.Birthday).ToString("yyyy-MM-dd");
-            registerUser.City = a.City;
-            registerUser.Lastname = p.LastName;
-            registerUser.Name = p.Name;
-            registerUser.StreetName = a.StreetName;
-            registerUser.StreetNumber = a.StreetNumber;
-            registerUser.Username = User.Identity.Name;
-            registerUser.UserType = p.PassengerType;
+                RegisterUser registerUser = new RegisterUser();
+                string s = User.Identity.GetUserId();
+                var user = dbContext.Users.Any(u => u.UserName == s);
+                Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == s).FirstOrDefault();
+                Address a = unitOfWork.AddressRepository.Find(u => u.Id == p.Address_id).FirstOrDefault();
+                registerUser.SendBackBirthday = Convert.ToDateTime(p.Birthday).ToString("yyyy-MM-dd");
+                registerUser.City = a.City;
+                registerUser.Lastname = p.LastName;
+                registerUser.Name = p.Name;
+                registerUser.StreetName = a.StreetName;
+                registerUser.StreetNumber = a.StreetNumber;
+                registerUser.Username = User.Identity.Name;
+                registerUser.UserType = p.PassengerType;
 
-            return Ok(registerUser);
+                return Ok(registerUser);
+            }
+            return Ok();
         }
 
         [Route("getRoutes")]
@@ -229,11 +279,54 @@ namespace WebApp.Controllers
 
                 foreach(Ticket t in tickets)
                 {
-                    string time = t.From.Date.ToString().Split(' ')[0] + " - " +t.To.Date.ToString().Split(' ')[0];
-                    ticketHelps.Add(new TicketHelp { Id = t.Id, Price = t.Price.ToString(), Type = t.TypeOfTicket.ToString(), Date = time });
+                    if (t.TypeOfTicket == Enums.TypeOfTicket.TIMED)
+                    {
+                        string s1 = t.From.ToString();
+                        string[] niz = s1.Split(' ');
+                        string s2 = t.To.ToString();
+                        string[] niz1 = s2.Split(' ');
+                        string time = niz[1] + " - " + niz1[1];
+                        ticketHelps.Add(new TicketHelp { Id = t.Id, Price = t.Price.ToString(), Type = t.TypeOfTicket.ToString(), Date = time });
+                    }
+                    else
+                    {
+                        string time = t.From.Date.ToString().Split(' ')[0] + " - " + t.To.Date.ToString().Split(' ')[0];
+                        ticketHelps.Add(new TicketHelp { Id = t.Id, Price = t.Price.ToString(), Type = t.TypeOfTicket.ToString(), Date = time });
+                    }
                 }
 
                 return Ok(ticketHelps);
+            }
+
+            return Ok();
+        }
+
+        [Route("getTicket")]
+        [Authorize(Roles = "Controller")]
+        public IHttpActionResult GetTicket(int id)
+        {
+            List<string> messageToReturn = new List<string>();
+            if (User.Identity.IsAuthenticated)
+            {
+                Ticket ticketToReturn = unitOfWork.TicketRepository.Find(t => t.Id == id).FirstOrDefault();
+                if (ticketToReturn == null)
+                {
+                    messageToReturn.Add("The ticket with that id doesn't exist.");
+                    return Ok(messageToReturn);
+                }
+
+                int result = DateTime.Compare(ticketToReturn.To, DateTime.Now);
+                if (result < 0)
+                {
+                    messageToReturn.Add("This ticket is valid.");
+                    messageToReturn.Add("From: " + ticketToReturn.ToString() + " To: " + ticketToReturn.ToString());
+                    return Ok(messageToReturn);
+                }
+                else
+                {
+                    messageToReturn.Add("This ticket has expired.");
+                    return Ok(messageToReturn);
+                }
             }
 
             return Ok();
@@ -251,6 +344,69 @@ namespace WebApp.Controllers
                 unitOfWork.Complete();
             }
             return Ok();
+        }
+
+        [Authorize(Roles = "Controller")]
+        [Route("getUsers")]
+        public IHttpActionResult GetUsers()
+        {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                PassengerForVerification pas = new PassengerForVerification();
+                var userStore = new UserStore<ApplicationUser>(dbContext);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                List<PassengerForVerification> passengerForVerifications = new List<PassengerForVerification>();
+                List<Passenger> passengers = unitOfWork.PassengerRepository.GetAll().ToList();
+
+                foreach (Passenger p in passengers)
+                {
+                    string s = User.Identity.GetUserId();
+                    var user = dbContext.Users.Any(u => u.Id == s);
+                    ApplicationUser apu = new ApplicationUser();
+                    apu = userManager.FindByIdAsync(s).Result;
+                    Address a = unitOfWork.AddressRepository.Find(aa=>aa.Id == p.Address_id).FirstOrDefault();
+
+                    pas.Birthday = p.Birthday;
+                    pas.Email = apu.UserName;
+                    pas.Address = a.City + ", " + a.StreetName + " " + a.StreetNumber;
+                    pas.IsValidated = p.IsValidated.ToString();
+                    pas.LastName = p.LastName;
+                    pas.Name = p.Name;
+                    pas.PassengerType = p.ToString();
+                    //pas.Picture
+                    passengerForVerifications.Add(pas);
+                }
+                return Ok(pas);
+            }
+
+            return Ok();
+        }
+
+        private int GetLastDay(int month) {
+            int res;
+
+            if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+            {
+                res = 31;
+            }
+            else if (month == 4 || month == 6 || month == 9 || month == 11)
+            {
+                res = 30;
+            }
+            else {
+                int year = DateTime.Now.Year;
+                if (year % 4 == 0)
+                {
+                    res = 29;
+                }
+                else
+                {
+                    res = 28;
+                }
+            }
+
+            return res;
         }
 
     }

@@ -10,8 +10,8 @@
   <div id="profile-id">
     <label  class="my-font-title">Email</label>
     <br />
-    <input type="email" readonly formControlName="Email" placeholder="Enter email.." required
-      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+    <input type="email" readonly formControlName="Email" placeholder="Enter email.."
+      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required>
     <div *ngIf="f.Email.invalid && (f.Email.dirty || f.Email.touched)">
       <div *ngIf="f.Email.errors.required" class="my-font-title">
         Email is required.
@@ -34,7 +34,7 @@
 
     <label class="my-font-title">New password</label>
     <br />
-    <input type="password" formControlName="password" placeholder="Enter password.." required>
+    <input type="password" formControlName="password" placeholder="Enter password..">
     <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
       <div *ngIf="f.password.errors.required" class="my-font-title">
         Password is reqired.
@@ -43,7 +43,7 @@
     <br />
     <label class="my-font-title">Repeat new password</label>
     <br />
-    <input type="password" formControlName="confirmPassword" placeholder="Enter password.." required>
+    <input type="password" formControlName="confirmPassword" placeholder="Enter password.." >
     <div *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
       <div *ngIf="f.confirmPassword.errors.required" class="my-font-title">
         Password is reqired.
@@ -121,7 +121,7 @@
       <option value="2">Student</option>
     </select>
 
-    <input type="submit" [disabled]="profileForm.invalid" value="Update">
+    <input type="submit" value="Update">
     <label class="my-register-font">{{serverSuccessMessage}}</label>
   </div>
 </form>

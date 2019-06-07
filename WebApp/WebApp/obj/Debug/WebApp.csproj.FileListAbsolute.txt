@@ -1836,3 +1836,4 @@ C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Mi
 C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration33.resources
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration40.resources
+C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration40.resources
