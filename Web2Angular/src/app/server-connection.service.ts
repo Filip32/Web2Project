@@ -43,6 +43,10 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Data/getTypeOfLoginUser');
   }
 
+  notify(): Observable<any> {  
+    return this.http.post("http://localhost:52295/api/Notify", "", {headers:{"Accept": "text/plain"}});
+  }
+
   buyTicket(typeOfUser: string, typeOfTicket: string, totalPrice: number): Observable<any> {
     let ticket: Ticket = new Ticket();
     ticket.TypeOfUser = typeOfUser;
