@@ -12,6 +12,7 @@ namespace WebApp.Models
         private int id;
         private int route_id;
         private int station_id;
+        private int station_num;
 
         public RouteStation()
         {
@@ -23,5 +24,6 @@ namespace WebApp.Models
         public int Id { get { return id; } set { id = value; } }
         public int Route_id { get { return route_id; } set { route_id = value; } }
         public int Station_id { get { return station_id; } set { station_id = value; } }
+        public int Station_num { get { return station_num; } set { station_num= value; } }
     }
 }

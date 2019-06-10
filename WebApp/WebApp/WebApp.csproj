@@ -252,7 +252,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\NotifyController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -315,6 +314,10 @@
     <Compile Include="Migrations\201906052006311_Migration4.0.cs" />
     <Compile Include="Migrations\201906052006311_Migration4.0.Designer.cs">
       <DependentUpon>201906052006311_Migration4.0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906100832387_Migration5.0.cs" />
+    <Compile Include="Migrations\201906100832387_Migration5.0.Designer.cs">
+      <DependentUpon>201906100832387_Migration5.0.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -506,6 +509,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906052006311_Migration4.0.resx">
       <DependentUpon>201906052006311_Migration4.0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906100832387_Migration5.0.resx">
+      <DependentUpon>201906100832387_Migration5.0.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

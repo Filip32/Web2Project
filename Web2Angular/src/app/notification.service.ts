@@ -10,7 +10,7 @@ export class NotificationService {
  
   private proxy: any;  
   private proxyName: string = 'notifications';  
-  private connection: any;  
+  public connection: any;  
   public connectionExists: Boolean; 
 
   public notificationReceived: EventEmitter < string >;  
@@ -28,7 +28,6 @@ export class NotificationService {
  
   // browser console will display whether the connection was successful    
   public startConnection(): Observable<Boolean> { 
-      
     return Observable.create((observer) => {
        
         this.connection.start()
@@ -53,19 +52,24 @@ export class NotificationService {
       
     return Observable.create((observer) => {
 
-        this.proxy.on('setRealTime', (data: string) => {  
-            console.log('received time: ' + data);  
-            observer.next(data);
-            observer.complete(); 
+        this.proxy.on('setRealTime', (data: string) => {
+            observer.next(data); 
         });  
     });      
   }
-
+  
   public StopTimer() {
       this.proxy.invoke("StopTimeServerUpdates");
   }
 
+  public SendBusRoute(data: any)
+  {
+    this.proxy.invoke("BroadcastData",data);
+  }
+
   public StartTimer() {
+
       this.proxy.invoke("TimeServerUpdates");
+      var chat = $.connection.signalRPushEvents;
   }
 }
