@@ -21,8 +21,8 @@ export class ProfilComponent implements OnInit {
   ngOnInit() {
     this.profileForm = this.fb.group({
       Email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
+      password: [''],
+      confirmPassword: ['' ],
       CurrentPassword: ['', Validators.required],
       Name: ['', Validators.required],
       Lastname: ['', Validators.required],
@@ -42,14 +42,30 @@ export class ProfilComponent implements OnInit {
   get f() { return this.profileForm.controls; }
 
 
-  onSubmit() {
-    let poruka = this.ServerConnectionService.UpdateProfile(this.profileForm.value).subscribe(
+ // onSubmit() {
+   /* let poruka = this.ServerConnectionService.UpdateProfile(this.profileForm.value).subscribe(
       (res) => {
         this.serverSuccessMessage = res;
       }
     );
-    this.submitted = true;
-  }
+    this.submitted = true;*/
+    onSubmit() {
+    if (this.profileForm.valid) {
+      let poruka = this.ServerConnectionService.UpdateProfile(this.profileForm.value).subscribe(
+        (res) => {
+          this.serverSuccessMessage = res;
+        }
+      );
+      this.submitted = true;
+    }
+    else {
+      Object.keys(this.profileForm.controls).forEach(field => {
+        const control = this.profileForm.get(field);
+        control.markAsTouched({ onlySelf: true });
+      });
+    }
+  } 
+ // }
 
   getProfileData() {
     this.ServerConnectionService.getProfileData().subscribe(

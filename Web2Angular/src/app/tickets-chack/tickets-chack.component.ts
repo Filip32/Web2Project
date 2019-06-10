@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tickets-chack.component.css']
 })
 export class TicketsChackComponent implements OnInit {
-
+  serverSuccessMessage = "";
   constructor() { }
 
   ngOnInit() {
