@@ -16,10 +16,22 @@
 <br/>
 <br/>
 <p class="my-font-title">Enter ticket id</p>
+<form [formGroup]="ticketsCheckForm">
 <div class="container">
 
-  <input type="text" placeholder="Search...">
+  <input type="text" placeholder="Search..." formControlName="ticket_id" (keyup.enter)="onSubmit()">
   <div class="search"></div>
   <br/>
-  <label class="my-register-font">{{serverSuccessMessage}}</label>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <div *ngIf="serverSuccessMessage[0] == 'This ticket is valid.\n'">
+    <p class="my-valid-font"> {{serverSuccessMessage}} </p> 
+  </div>
+  <div *ngIf="serverSuccessMessage[0] != 'This ticket is valid.\n'">
+    <p class="my-invalid-font"> {{serverSuccessMessage}} </p> 
+  </div>
 </div>
+</form>

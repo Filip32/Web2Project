@@ -10,7 +10,7 @@ namespace WebApp.Models
         private string isValidated;
         private string name;
         private string lastName;
-        private DateTime birthday;
+        private string birthday;
         private string picture;
         private string passengerType;
         private string email;
@@ -61,7 +61,7 @@ namespace WebApp.Models
             }
         }
 
-        public DateTime Birthday
+        public string Birthday
         {
             get
             {

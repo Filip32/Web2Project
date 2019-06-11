@@ -138,3 +138,23 @@ body {
     justify-content: center;
 
 }
+
+.my-valid-font{
+  font-style: oblique;
+  font-size: 25px;
+  color:green;
+  font-weight: 700;
+  text-align: center;
+  justify-content: center;
+
+}
+
+.my-invalid-font{
+  font-style: oblique;
+  font-size: 25px;
+  color:red;
+  font-weight: 700;
+  text-align: center;
+  justify-content: center;
+
+}

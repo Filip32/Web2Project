@@ -85,14 +85,14 @@ namespace WebApp.Controllers
             {
                 string s = User.Identity.GetUserId();
                 Passenger passenger = unitOfWork.PassengerRepository.GetAll().Where(x => x.AppUserId == s).FirstOrDefault();
-                string message = "{\"TypeOfUser\" : \"" + passenger.PassengerType.ToString()+ "\",";
+                string message = "{\"TypeOfUser\" : \"" + passenger.PassengerType.ToString() + "\",";
                 message += "\"IsValid\" : \"" + passenger.IsValidated + "\"}";
                 return Ok(message);
             }
             return Ok();
         }
 
-        [HttpPost,Route("buyTicket")]
+        [HttpPost, Route("buyTicket")]
         [Authorize(Roles = "AppUser")]
         public IHttpActionResult BuyTicket(BuyedTicket ticket)
         {
@@ -141,7 +141,7 @@ namespace WebApp.Controllers
                     t.From = DateTime.Now;
                     t.To = DateTime.Now;
                     t.To = t.To.AddMonths(1);
-                   
+
                     if (t.To.Month != t.From.Month)
                     {
                         string ss = t.From.ToString();
@@ -271,13 +271,13 @@ namespace WebApp.Controllers
 
             foreach (Route r in routesDb)
             {
-                routes.Add(new Routes { Id = r.Id,RouteNumber = r.RouteNumber, RouteType = r.RouteType.ToString() });
+                routes.Add(new Routes { Id = r.Id, RouteNumber = r.RouteNumber, RouteType = r.RouteType.ToString() });
             }
 
             return Ok(routes);
         }
 
-        [HttpGet,Route("getRoute")]
+        [HttpGet, Route("getRoute")]
         public IHttpActionResult GetRoute(int id)
         {
             Route route = unitOfWork.RouteRepository.Get(id);
@@ -306,7 +306,7 @@ namespace WebApp.Controllers
                 int passenger_id = unitOfWork.PassengerRepository.GetAll().Where(x => x.AppUserId == User.Identity.GetUserId()).FirstOrDefault().Id;
                 List<Ticket> tickets = unitOfWork.TicketRepository.GetAll().Where(x => x.Passenger_id == passenger_id && !x.IsDeleted).ToList();
 
-                foreach(Ticket t in tickets)
+                foreach (Ticket t in tickets)
                 {
                     if (t.TypeOfTicket == Enums.TypeOfTicket.TIMED)
                     {
@@ -330,7 +330,7 @@ namespace WebApp.Controllers
             return Ok();
         }
 
-        [Route("getTicket")]
+        [HttpGet, Route("getTicket")]
         [Authorize(Roles = "Controller")]
         public IHttpActionResult GetTicket(int id)
         {
@@ -345,10 +345,10 @@ namespace WebApp.Controllers
                 }
 
                 int result = DateTime.Compare(ticketToReturn.To, DateTime.Now);
-                if (result < 0)
+                if (result > 0)
                 {
-                    messageToReturn.Add("This ticket is valid.");
-                    messageToReturn.Add("From: " + ticketToReturn.ToString() + " To: " + ticketToReturn.ToString());
+                    messageToReturn.Add("This ticket is valid.\n");
+                    messageToReturn.Add("From: " + ticketToReturn.From.ToString() + "\nTo: " + ticketToReturn.To.ToString());
                     return Ok(messageToReturn);
                 }
                 else
@@ -361,7 +361,7 @@ namespace WebApp.Controllers
             return Ok();
         }
 
-        [HttpPost,Route("deleteTicket")]
+        [HttpPost, Route("deleteTicket")]
         [Authorize(Roles = "AppUser")]
         public IHttpActionResult DeleteTicket(TicketHelp ticketHelp)
         {
@@ -375,14 +375,49 @@ namespace WebApp.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Controller")]
-        [Route("getUsers")]
-        public IHttpActionResult GetUsers()
-        {
 
+        /// <summary>
+        ///  Da li da dodamo za logicko brisanje polje ili ne? 
+        /// </summary>
+        /// <param name="passengerForVerification"></param>
+        /// <returns></returns>
+        [HttpPost, Route("approveUser")]
+        [Authorize(Roles = "Controller")]
+        public IHttpActionResult ApproveUser(PassengerForVerification passengerForVerification)
+        {
             if (User.Identity.IsAuthenticated)
             {
-                PassengerForVerification pas = new PassengerForVerification();
+                var user = dbContext.Users.Any(u => u.UserName == passengerForVerification.Email);
+                Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == passengerForVerification.Email).FirstOrDefault();
+                p.IsValidated = Enums.StateType.ACCEPTED;
+                unitOfWork.PassengerRepository.Update(p);
+                unitOfWork.Complete();
+            }
+            return Ok();
+        }
+
+        [HttpPost, Route("denyUser")]
+        [Authorize(Roles = "Controller")]
+        public IHttpActionResult DenyUser(PassengerForVerification passengerForVerification)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = dbContext.Users.Any(u => u.UserName == passengerForVerification.Email);
+                Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == passengerForVerification.Email).FirstOrDefault();
+                p.IsValidated = Enums.StateType.DENIED;
+                unitOfWork.PassengerRepository.Update(p);
+                unitOfWork.Complete();
+            }
+            return Ok();
+        }
+
+        [Authorize(Roles = "Controller")]
+        [HttpGet,Route("getUsers")]
+        public IHttpActionResult GetUsers()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                // da li da ubacim uslov za samo ne verifikovane da izbacuje 
                 var userStore = new UserStore<ApplicationUser>(dbContext);
                 var userManager = new UserManager<ApplicationUser>(userStore);
                 List<PassengerForVerification> passengerForVerifications = new List<PassengerForVerification>();
@@ -390,27 +425,29 @@ namespace WebApp.Controllers
 
                 foreach (Passenger p in passengers)
                 {
-                    string s = User.Identity.GetUserId();
-                    var user = dbContext.Users.Any(u => u.Id == s);
-                    ApplicationUser apu = new ApplicationUser();
-                    apu = userManager.FindByIdAsync(s).Result;
-                    Address a = unitOfWork.AddressRepository.Find(aa=>aa.Id == p.Address_id).FirstOrDefault();
+                    //string s = User.Identity.GetUserId();
+                    //var user = dbContext.Users.Any(u => u.Id == p.AppUserId);
+                    //ApplicationUser apu = new ApplicationUser();
+                    PassengerForVerification pas = new PassengerForVerification();
+                    ApplicationUser apu = userManager.FindByIdAsync(p.AppUserId).Result;
+                    Address a = unitOfWork.AddressRepository.Find(aa => aa.Id == p.Address_id).FirstOrDefault();
 
-                    pas.Birthday = p.Birthday;
+                    pas.Birthday = Convert.ToDateTime(p.Birthday).ToString("yyyy-MM-dd");
                     pas.Email = apu.UserName;
                     pas.Address = a.City + ", " + a.StreetName + " " + a.StreetNumber;
                     pas.IsValidated = p.IsValidated.ToString();
                     pas.LastName = p.LastName;
                     pas.Name = p.Name;
-                    pas.PassengerType = p.ToString();
+                    pas.PassengerType = p.PassengerType.ToString();
                     //pas.Picture
                     passengerForVerifications.Add(pas);
                 }
-                return Ok(pas);
+                return Ok(passengerForVerifications);
             }
 
             return Ok();
         }
+
 
         private int GetLastDay(int month) {
             int res;

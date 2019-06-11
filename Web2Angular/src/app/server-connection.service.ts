@@ -30,6 +30,12 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Data/getRoutes');
   }
 
+  getUsers(): Observable<any>
+  {
+    return this.http.get<any>('http://localhost:52295/api/Data/getUsers');
+  }
+
+
   getRoute(id: number): Observable<any>
   {
     return this.http.get<any>('http://localhost:52295/api/Data/getRoute' + `/?id=${id}`);
@@ -58,6 +64,11 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Data/getTickes');
   }
 
+  getTicket(arg: any):Observable<any>{
+    let id = arg.ticket_id;
+    return this.http.get<any>('http://localhost:52295/api/Data/getTicket' + `/?id=${id}`);
+  }
+
   Register(arg: any): Observable<any> {
     let headers = {
       headers: new HttpHeaders({
@@ -82,6 +93,14 @@ export class ServerConnectionService {
 
   DeleteTicket(u: any): Observable<any>{
     return this.http.post<any>('http://localhost:52295/api/Data/deleteTicket',u);
+  }
+
+  ApproveUser(u: any): Observable<any>{
+    return this.http.post<any>('http://localhost:52295/api/Data/approveUser',u);
+  }
+
+  DenyUser(u: any): Observable<any>{
+    return this.http.post<any>('http://localhost:52295/api/Data/denyUser',u);
   }
 
   UpdateProfile(arg: any): Observable<any> {

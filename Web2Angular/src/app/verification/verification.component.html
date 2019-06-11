@@ -6,13 +6,31 @@
 
 <table class="demo">
   <thead class="my-thead-font">
-    <tr>
-      <th>{{Route}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let u of stations">
-      <td>{{u.Ticket}}</td>
-    </tr>
-  </tbody>
+	<tr>
+		<th>Email</th>
+    <th>Name</th>
+    <th>Last name</th>
+    <th>Address</th>
+    <th>Date of birth</th>
+    <th>Type</th>
+    <th>Status</th>
+    <th >&nbsp;</th>
+    <th >&nbsp;</th>
+    <th >&nbsp;</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr *ngFor="let u of tableData; let i=index" (click) = "RowSelect(u)">
+		<td>{{u.Email}}</td>
+    <td>{{u.Address}}</td>
+    <td>{{u.LastName}}</td>
+    <td>{{u.Name}}</td>
+    <td>{{u.Birthday}}</td>
+    <td>{{u.PassengerType}}</td>
+    <td>{{u.IsValidated}}</td>
+    <td><a id="apr" class="button" (click)="ApproveUser(u)">Approve</a></td>
+    <td><a id="dec" class="button" (click)="DenyUser(u)">Decline</a></td>
+    <td><a id="shw" class="button" (click)="showDocument(u)">Document</a></td>
+	</tr>
+	</tbody>
 </table>
