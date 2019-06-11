@@ -13,8 +13,10 @@ import { Marker } from '@agm/core/services/google-maps-types';
 export class MapComponent implements OnInit {
   public polyline: Polyline;
   public stationsIcon: MarkerInfo[];
+  public busLocation: MarkerInfo[];
   public zoom: number;
   private _route: any;
+  private _bus:  any;
 
   ngOnInit() {
     this.polyline= new Polyline([], '#9966ff', { url:"", scaledSize: {width: 50, height: 50}});
@@ -27,8 +29,37 @@ export class MapComponent implements OnInit {
   set route(route: any) {
     this._route = route;
     if(this._route){
+        this.busLocation = undefined;
         this.drowRoutes();
     }
+  }
+
+  @Input()
+  set bus(bus: any) {
+    this._bus = bus;
+    if(this._bus){
+       this.drowBus();
+    }
+  }
+
+  HaveBus()
+  {
+    if(this.busLocation)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  
+  drowBus()
+  {
+    this.busLocation = [];
+    this._bus.forEach(element => {
+      this.busLocation.push(new MarkerInfo(new GeoLocation(element.X, element.Y), "assets/bus.png","","",""));
+    });
   }
 
   drowRoutes()
@@ -36,6 +67,7 @@ export class MapComponent implements OnInit {
     this.polyline= new Polyline([], '#9966ff', { url:"", scaledSize: {width: 50, height: 50}});
     this.stationsIcon = [];
     this._route.Stations.forEach(element => {
+     
       if(!element.IsStation)
       {
         this.polyline.addLocation(new GeoLocation(element.X, element.Y));

@@ -1,27 +1,28 @@
 <p>
   <!-- Kreiramo mapu -->
-  <agm-map [latitude]="45.25322443622708" [longitude]="19.830062632922136" [zoom]="13" (mapClick)="placeMarker($event)">  
+  <agm-map [latitude]="45.25322443622708" [longitude]="19.830062632922136" [zoom]="13" (mapClick)="placeMarker($event)">
 
     <agm-polyline [strokeColor]="polyline.color">
-         <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.latitude" [longitude]="point.longitude">
-         </agm-polyline-point>
+      <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.latitude" [longitude]="point.longitude">
+      </agm-polyline-point>
     </agm-polyline>
 
-    <agm-marker *ngFor="let point of polyline.path" [latitude]="point.latitude" [longitude]="point.longitude" [iconUrl]="polyline.icon">
+    <agm-marker *ngFor="let point of polyline.path" [latitude]="point.latitude" [longitude]="point.longitude"
+      [iconUrl]="polyline.icon">
     </agm-marker>
 
-    <agm-marker *ngFor= "let markerInfo of stationsIcon"
-                [latitude]="markerInfo.location.latitude" 
-                [longitude]="markerInfo.location.longitude" 
-                [title]="markerInfo.title"
-                [iconUrl]="markerInfo.iconUrl">
+    <agm-marker *ngFor="let markerInfo of stationsIcon" [latitude]="markerInfo.location.latitude"
+      [longitude]="markerInfo.location.longitude" [title]="markerInfo.title" [iconUrl]="markerInfo.iconUrl">
 
-          <agm-info-window [latitude]="markerInfo.location.latitude" 
-                           [longitude]="markerInfo.location.longitude" [disableAutoPan]="true">
-                <p>{{markerInfo.title}}</p>
-                <small>{{markerInfo.label}}</small>
-          </agm-info-window>
-      </agm-marker>
+      <agm-info-window [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude"
+        [disableAutoPan]="true">
+        <p>{{markerInfo.title}}</p>
+        <small>{{markerInfo.label}}</small>
+      </agm-info-window>
+    </agm-marker>
 
+  <agm-marker *ngFor="let markerInfo of busLocation" [latitude]="markerInfo.location.latitude"
+      [longitude]="markerInfo.location.longitude" [title]="markerInfo.title" [iconUrl]="markerInfo.iconUrl">
+    </agm-marker>
   </agm-map>
 </p>

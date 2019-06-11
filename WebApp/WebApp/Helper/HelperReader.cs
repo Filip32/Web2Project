@@ -99,7 +99,7 @@ namespace WebApp.Helper
             }
 
             // dodati statinoRoute
-            RouteStation routeStation = new RouteStation() { Route_id = idRoute, Station_id = idStation };
+            RouteStation routeStation = new RouteStation() { Route_id = idRoute, Station_id = idStation, Station_num = Int32.Parse(split[6]) };
             unitOfWork.RouteStationRepositpry.Add(routeStation);
             unitOfWork.Complete();
         }

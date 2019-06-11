@@ -11,6 +11,7 @@ export class HomeComponent implements OnInit {
 
   routes : any;
   sRoute : any;
+  sBus: any;
   isSelected : any = null;
   isConnected: Boolean;
   notifications: string[];
@@ -24,17 +25,16 @@ export class HomeComponent implements OnInit {
 
  ngOnInit() {
     this.getRoutes();
-    //this.serverConnectionService.notify();
     this.checkConnection();
     this.subscribeForTime();
  }
 
  selectedRoute(route: any)
  {
+    this.notifService.SendBusRoute(route.RouteNumber);
     this.isSelected = route;
     this.serverConnectionService.getRoute(route.Id).subscribe(
       (res) => {
-        console.log(res);
         this.sRoute = res;
       });
  }
@@ -56,14 +56,17 @@ export class HomeComponent implements OnInit {
 }
 
 subscribeForTime() {
-  this.notifService.registerForTimerEvents().subscribe(e => this.onTimeEvent(e));
+  this.notifService.registerForTimerEvents().subscribe(
+    e => {
+      this.onTimeEvent(e);
+      this.sBus = e;
+      console.log(e);
+    });
 }
 
 public onTimeEvent(time: string){
   this.ngZone.run(() => { 
       this.time = time; 
-    //  console.log(this.time);
-    //  console.log(++this.counter)
   });  
  
 }

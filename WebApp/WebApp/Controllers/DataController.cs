@@ -20,7 +20,7 @@ namespace WebApp.Controllers
     public class DataController : ApiController
     {
         ApplicationDbContext dbContext = new ApplicationDbContext();
-        IUnitOfWork unitOfWork;
+        public static IUnitOfWork unitOfWork;
 
         public DataController(IUnitOfWork uw)
         {
@@ -28,8 +28,6 @@ namespace WebApp.Controllers
             //HelperReader.Reader(uw, "1B");
             //HelperReader.Reader(uw, "4A");
             //HelperReader.Reader(uw, "4B");
-            //HelperReader.Reader(uw, "11A");
-            //HelperReader.Reader(uw, "11B");
             //HelperReader.Reader(uw, "12A");
             //HelperReader.Reader(uw, "12B");
             //HelperReader.Reader(uw, "13A");
@@ -38,11 +36,9 @@ namespace WebApp.Controllers
             //HelperReader.Reader(uw, "16B");
             //HelperReader.Reader(uw, "22A");
             //HelperReader.Reader(uw, "22B");
-            //HelperReader.Reader(uw, "32A");
             //HelperReader.Reader(uw, "32B");
             //HelperReader.Reader(uw, "41A");
             //HelperReader.Reader(uw, "41B");
-            //HelperReader.Reader(uw, "51A");
             //HelperReader.Reader(uw, "51B");
             unitOfWork = uw;
         }
