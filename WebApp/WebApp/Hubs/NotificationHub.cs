@@ -20,17 +20,28 @@ namespace WebApp.Hubs
     public class NotificationHub: Hub
     {
         public static ConcurrentDictionary<string, Timer> Timers = new ConcurrentDictionary<string, Timer>();
-        private static readonly object balanceLock = new object();
-        IUnitOfWork unitOfWork = DataController.unitOfWork;
-        private static ApplicationDbContext dbContext = new ApplicationDbContext();
+        public static readonly object balanceLock = new object();
+        private ApplicationDbContext dbContext = new ApplicationDbContext();
+        private IUnitOfWork unitOfWork = AccountController.unitOfWork;
         private static IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-        //private static Timer timer = new Timer();
         private static Dictionary<string,string> groupNames = new Dictionary<string, string>();
         private static Dictionary<string, List<int>> RouteBus = new Dictionary<string, List<int>>();
-        private static bool b = false;
 
         public NotificationHub()
         {
+        }
+
+        public void StopTimeServerUpdates()
+        {
+            if (groupNames.ContainsKey(Context.ConnectionId))
+            {
+                Timer timer = new Timer();
+                Timers.TryRemove(Context.ConnectionId, out timer);
+                timer.Close();
+                Groups.Remove(Context.ConnectionId, groupNames[Context.ConnectionId]);
+                RouteBus.Remove(groupNames[Context.ConnectionId]);
+                groupNames.Remove(Context.ConnectionId);
+            }
         }
 
         public void BroadcastData(string nameOfGroup)
@@ -58,27 +69,18 @@ namespace WebApp.Hubs
 
         public void TimeServerUpdates()
         {
-            //if (!b)
-           // {
-                //b = true;
                 Random random = new Random();
                 Timer timer = new Timer();
                 timer.Interval = random.Next(5000, 10000);
                 timer.Start();
                 timer.Elapsed += OnTimedEvent;
                 Timers[Context.ConnectionId] = timer;
-            //}
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             GetTime();
         }
-
-        //public void StopTimeServerUpdates()
-        //{
-        //    timer.Stop();
-        //}
 
         public void GetTime()
         {
@@ -128,8 +130,8 @@ namespace WebApp.Hubs
                     }
                 }
         }catch(Exception e)
-            {
-            }
+        {
+        }
 }
 
         public override Task OnConnected()

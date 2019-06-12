@@ -2,6 +2,9 @@ import { Component, OnInit, Output,NgZone } from '@angular/core';
 import { ServerConnectionService } from '../server-connection.service';
 import { EventEmitter } from 'protractor';
 import { NotificationService } from '../notification.service';
+import { Router, NavigationEnd } from '@angular/router';
+import { from } from 'rxjs';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -18,12 +21,18 @@ export class HomeComponent implements OnInit {
   time: string;
   counter  = 0
 
-  constructor(private ngZone: NgZone,private notifService: NotificationService,private serverConnectionService: ServerConnectionService) { 
+  constructor(private ngZone: NgZone,private router: Router, private notifService: NotificationService,private serverConnectionService: ServerConnectionService) { 
     this.isConnected = false;
     this.notifications = [];
+        this.router.events.subscribe((ev) => {
+          if(this.sRoute){
+             this.notifService.StopTimer();
+          }
+        });
   }
 
  ngOnInit() {
+    this.serverConnectionService.Hi().subscribe(res => { console.log(res);});
     this.getRoutes();
     this.checkConnection();
     this.subscribeForTime();
@@ -60,7 +69,6 @@ subscribeForTime() {
     e => {
       this.onTimeEvent(e);
       this.sBus = e;
-      console.log(e);
     });
 }
 

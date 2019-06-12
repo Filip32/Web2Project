@@ -1839,3 +1839,4 @@ C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migration
 C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration50.resources
 C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration40.resources
 C:\Users\asus\Desktop\FF300520\444\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration50.resources
+C:\Users\filip\Desktop\Web2\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration51.resources

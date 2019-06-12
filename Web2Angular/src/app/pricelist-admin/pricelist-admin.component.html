@@ -1,21 +1,148 @@
-<p class="my-pricelist-font">Pricelist<p>
-
-    <table class="demo">
-      <thead class="my-thead-font">
+<div style="position: absolute; left: 25%;">
+<div>
+  <p class="my-register-font">Pricelists</p>
+  <table>
+    <thead>
       <tr>
-        <th>Type of ticket</th>
-        <th>Price</th>
+        <th width="15%">From</th>
+        <th width="15%">To</th>
+        <th width="10%">Open</th>
+        <th width="10%">Change</th>
       </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let u of typeOfTicket; let i=index" (click) = "RowSelect(u)">
-        <td>{{u.Ticket}}</td>
-        <td>{{u.Price}}</td>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of pricelists">
+        <td style="text-align:center;">{{c.FromDate}}</td>
+        <td style="text-align:center;">{{c.ToDate}}</td>
+        <td style="text-align:center;">
+            <a id="a" class="button" (click)="openPricelist(c.Id)">Open</a>
+        </td>
+        <td style="text-align:center;">
+            <a id="a" class="button" (click)="changePricelist(c.Id)">Change</a>
+        </td>
       </tr>
-      </tbody>
-    </table>  
-    
-    <br/><br/>
-    <div>
-    <input type="submit" value="Submit">
+    </tbody>
+  </table>
+</div>
+
+<div class="my-font">
+
+  <div *ngIf="newPricelist">
+      <button class="buttonmy" (click)="addNewPricelist()">
+        New Pricelist
+      </button>
+  </div>
+  <br /><br />
+
+  <div class="my-font">
+    {{message}}
+  </div>
+
+  <form [formGroup]="newPricelistForm" (ngSubmit)="onSubmit()">
+    <span *ngIf="!newPricelist">
+      New Pricelist
+    </span>
+
+    <span *ngIf="change">
+      Change Pricelist
+    </span>
+
+    <!--OD-->
+    <div *ngIf="view || !newPricelist || change">
+      <div>
+        <p>From Date</p>
+        <input type="date" formControlName="from" [readonly]="view" required>
+      </div>
+      <div *ngIf="f.from.invalid && (f.from.dirty || f.from.touched)">
+        <div *ngIf="f.from.errors.required">
+          <p>The date from when the price list is valid is a mandatory field.</p>
+        </div>
+      </div>
+
+      <!--DO-->
+      <div>
+        <p>To Date </p>
+        <input type="date" formControlName="to" [readonly]="!changeDate" required>
+      </div>
+      <div *ngIf="f.to.invalid && (f.to.dirty || f.to.touched)">
+        <div *ngIf="f.to.errors.required">
+          <p>The date when the price list is valid is a mandatory field.</p>
+        </div>
+      </div>
+
+      <!--Vremenska karta-->
+      <div>
+        <p>Time ticket</p>
+        <input type="text" formControlName="timely" [readonly]="view" required
+          placeholder="Price of time ticket..." pattern="[0-9]*">
+      </div>
+      <div *ngIf="f.timely.invalid && (f.timely.dirty || f.timely.touched)">
+        <div *ngIf="f.timely.errors.pattern">
+          <p>Must be number.</p>
+        </div>
+        <div *ngIf="f.timely.errors.required">
+          <p>Price of time ticket is a mandatory field.</p>
+        </div>
+      </div>
+
+      <!--Dnevna karta-->
+      <div>
+        <p>Daily ticket</p>
+        <input type="text" formControlName="daily" required placeholder="Price of daily ticket..."
+          [readonly]="view" pattern="[0-9]*">
+      </div>
+      <div *ngIf="f.daily.invalid && (f.daily.dirty || f.daily.touched)">
+          <div *ngIf="f.daily.errors.pattern">
+              <p>Must be number.</p>
+            </div>
+        <div *ngIf="f.daily.errors.required">
+          <p>Price of daily ticket is a mandatory field.</p>
+        </div>
+      </div>
+
+      <!--Mesečna karta-->
+      <div>
+        <p>Monthly ticket</p>
+        <input type="text" formControlName="monthly" required placeholder="Price of monthly ticket..."
+          [readonly]="view" pattern="[0-9]*">
+      </div>
+      <div *ngIf="f.monthly.invalid && (f.monthly.dirty || f.monthly.touched)">
+          <div *ngIf="f.monthly.errors.pattern">
+              <p>Must be number.</p>
+            </div>
+        <div *ngIf="f.monthly.errors.required">
+          <p>Price of monthly ticket is a mandatory field.</p>
+        </div>
+      </div>
+
+      <!--Godišnja karta-->
+      <div>
+        <p>Yearly ticket</p>
+        <input type="text" formControlName="yearly" placeholder="Price of yearly ticket..."
+          [readonly]="view" required pattern="[0-9]*">
+      </div>
+      <div *ngIf="f.yearly.invalid && (f.yearly.dirty || f.yearly.touched)">
+          <div *ngIf="f.yearly.errors.pattern">
+              <p>Must be number.</p>
+            </div>
+        <div *ngIf="f.yearly.errors.required">
+          <p>Price of yearly ticket is a mandatory field.</p>
+        </div>
+      </div>
     </div>
+
+    <div *ngIf="!newPricelist">
+        <button type="submit">
+          Add Pricelist
+        </button>
+    </div>
+
+    <div *ngIf="change">
+        <button type="submit">
+          Change Pricelist
+        </button>
+    </div>
+
+  </form>
+</div>
+</div>

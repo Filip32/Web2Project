@@ -22,3 +22,46 @@ input[type=text], select {
     border-radius: 4px;
     box-sizing: border-box;
   }
+
+
+  tbody :hover
+  {
+      background: #673dff !important;    
+  }
+
+  tr:nth-child(even)
+  {
+      font-style: oblique;
+      font-size: 18px;
+      color: white;
+      font-weight: 400;
+      background: #668cff;
+  }
+  th{
+      background: #668cff !important;    
+  }
+  tr:nth-child(odd)
+  {
+      font-style: oblique;
+      font-size: 18px;
+      font-weight: 400;
+      color:white; 
+      background: #9966ff;
+  }
+
+  .demo {
+    width: 27.5%;
+    border:1px solid #b86cc7;
+    border-collapse:collapse;
+    padding:5px;
+    }
+    .demo th {
+    border:1px solid #b86cc7;
+    padding:5px;
+    background:#F0F0F0;
+    }
+    .demo td {
+    border:1px solid #b86cc7;
+    text-align:left;
+    padding:5px;
+    }
