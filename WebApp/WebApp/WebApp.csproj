@@ -338,6 +338,7 @@
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\PassengerForVerification.cs" />
     <Compile Include="Models\PricelistHelp.cs" />
+    <Compile Include="Models\PictureModel.cs" />
     <Compile Include="Models\RegisterUser.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Models\Passenger.cs" />

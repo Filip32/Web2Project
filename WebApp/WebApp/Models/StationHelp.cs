@@ -12,11 +12,16 @@ namespace WebApp.Models
         private string name;
         private Address address;
         private bool isStation;
+        private string addressString;
+        private int id;
 
         public StationHelp()
         {
             Address = new Address();
         }
+
+        public string AddressString { get { return addressString; } set { addressString = value; } }
+        public int Id { get { return id; } set { id = value; } }
 
         public double X
         {

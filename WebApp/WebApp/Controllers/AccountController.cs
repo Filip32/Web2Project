@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -29,7 +31,8 @@ namespace WebApp.Controllers
         public static IUnitOfWork unitOfWork;
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
-
+        IUnitOfWork DataBase { get; set; }
+		
         public AccountController(IUnitOfWork uw)
         {
             unitOfWork = uw;
@@ -499,6 +502,104 @@ namespace WebApp.Controllers
                 return HttpServerUtility.UrlTokenEncode(data);
             }
         }
+
+        [HttpPost]
+        [Route("UploadPhoto/{id}")]
+        [AllowAnonymous]
+        public IHttpActionResult UploadPhoto(string id)
+        {
+            var httpRequest = HttpContext.Current.Request;
+
+            try
+            {
+                if (httpRequest.Files.Count > 0)
+                {
+                    foreach (string file in httpRequest.Files)
+                    {
+
+                        Passenger passenger = DataBase.PassengerRepository.Find(p => p.AppUserId == id).FirstOrDefault();
+
+                        if (passenger == null)
+                        {
+                            return BadRequest("User does not exists.");
+                        }
+
+                        if (passenger.Picture != null)
+                        {
+                            File.Delete(HttpContext.Current.Server.MapPath("~/UploadFile/" + passenger.Picture));
+                        }
+
+                        var postedFile = httpRequest.Files[file];
+                        string fileName = id + "_" + postedFile.FileName;
+                        var filePath = HttpContext.Current.Server.MapPath("~/UploadFile/" + fileName);
+
+                        passenger.Picture = fileName;
+                        DataBase.PassengerRepository.Update(passenger);
+                        DataBase.Complete();
+
+                        postedFile.SaveAs(filePath);
+                    }
+
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        /*[HttpPost]
+        [Route("UploadPhoto")]
+        [AllowAnonymous]
+        public IHttpActionResult UploadPhoto(PictureModel pm)
+        {
+            var httpRequest = HttpContext.Current.Request;
+
+            try
+            {
+                if (httpRequest.Files.Count > 0)
+                {
+                    foreach (string file in httpRequest.Files)
+                    {
+                        Passenger passenger = DataBase.PassengerRepository.Find(p => p.AppUserId == pm.Id).FirstOrDefault();
+                        if (passenger == null)
+                        {
+                            return BadRequest("User does not exists.");
+                        }
+
+                        if (passenger.Picture != null)
+                        {
+                            File.Delete(HttpContext.Current.Server.MapPath("~/UploadFile/" + passenger.Picture));
+                        }
+
+                        var postedFile = httpRequest.Files[file];
+                        string fileName = pm.Id + "_" + postedFile.FileName;
+                        var filePath = HttpContext.Current.Server.MapPath("~/UploadFile/" + fileName);
+
+                        passenger.Picture = fileName;
+                        DataBase.PassengerRepository.Update(passenger);
+                        DataBase.Complete();
+
+                        postedFile.SaveAs(filePath);
+                    }
+
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }*/
 
         #endregion
     }

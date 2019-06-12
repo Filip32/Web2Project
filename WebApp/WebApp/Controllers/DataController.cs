@@ -14,6 +14,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Globalization;
 using WebApp.Helper;
 using WebApp.Hubs;
+using System.Net.Mail;
+using System.Text;
+using System.Web;
+using System.IO;
 
 namespace WebApp.Controllers
 {
@@ -274,24 +278,25 @@ namespace WebApp.Controllers
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    var userStore = new UserStore<ApplicationUser>(dbContext);
-                    var userManager = new UserManager<ApplicationUser>(userStore);
+					var userStore = new UserStore<ApplicationUser>(dbContext);
+					var userManager = new UserManager<ApplicationUser>(userStore);
 
-                    RegisterUser registerUser = new RegisterUser();
-                    string s = User.Identity.GetUserId();
-                    var user = dbContext.Users.Any(u => u.UserName == s);
-                    Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == s).FirstOrDefault();
-                    Address a = unitOfWork.AddressRepository.Find(u => u.Id == p.Address_id).FirstOrDefault();
-                    registerUser.SendBackBirthday = Convert.ToDateTime(p.Birthday).ToString("yyyy-MM-dd");
-                    registerUser.City = a.City;
-                    registerUser.Lastname = p.LastName;
-                    registerUser.Name = p.Name;
-                    registerUser.StreetName = a.StreetName;
-                    registerUser.StreetNumber = a.StreetNumber;
-                    registerUser.Username = User.Identity.Name;
-                    registerUser.UserType = p.PassengerType;
+					RegisterUser registerUser = new RegisterUser();
+					string s = User.Identity.GetUserId();
+					var user = dbContext.Users.Any(u => u.UserName == s);
+					Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == s).FirstOrDefault();
+					Address a = unitOfWork.AddressRepository.Find(u => u.Id == p.Address_id).FirstOrDefault();
+					registerUser.SendBackBirthday = Convert.ToDateTime(p.Birthday).ToString("yyyy-MM-dd");
+					registerUser.City = a.City;
+					registerUser.Lastname = p.LastName;
+					registerUser.Name = p.Name;
+					registerUser.StreetName = a.StreetName;
+					registerUser.StreetNumber = a.StreetNumber;
+					registerUser.Username = User.Identity.Name;
+					registerUser.UserType = p.PassengerType;
+					registerUser.Photo = p.Picture;
 
-                    return Ok(registerUser);
+					return Ok(registerUser);
                 }
                 return BadRequest();
             }
@@ -457,11 +462,12 @@ namespace WebApp.Controllers
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    var user = dbContext.Users.Any(u => u.UserName == passengerForVerification.Email);
-                    Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == passengerForVerification.Email).FirstOrDefault();
-                    p.IsValidated = Enums.StateType.ACCEPTED;
-                    unitOfWork.PassengerRepository.Update(p);
-                    unitOfWork.Complete();
+					var user = dbContext.Users.Any(u => u.UserName == passengerForVerification.Email);
+					Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == passengerForVerification.Email).FirstOrDefault();
+					p.IsValidated = Enums.StateType.ACCEPTED;
+					unitOfWork.PassengerRepository.Update(p);
+					unitOfWork.Complete();
+					SendMail(passengerForVerification.Email,Enums.StateType.ACCEPTED);
                 }
                 return Ok();
             }
@@ -479,11 +485,12 @@ namespace WebApp.Controllers
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    var user = dbContext.Users.Any(u => u.UserName == passengerForVerification.Email);
-                    Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == passengerForVerification.Email).FirstOrDefault();
-                    p.IsValidated = Enums.StateType.DENIED;
-                    unitOfWork.PassengerRepository.Update(p);
-                    unitOfWork.Complete();
+					var user = dbContext.Users.Any(u => u.UserName == passengerForVerification.Email);
+					Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == passengerForVerification.Email).FirstOrDefault();
+					p.IsValidated = Enums.StateType.DENIED;
+					unitOfWork.PassengerRepository.Update(p);
+					unitOfWork.Complete();
+					SendMail(passengerForVerification.Email, Enums.StateType.DENIED);
                 }
                 return Ok();
             }
@@ -537,6 +544,33 @@ namespace WebApp.Controllers
             }
         }
 
+        [HttpPost]
+        [ActionName("UploadDishImage")]
+        public HttpResponseMessage UploadJsonFile()
+        {
+            HttpResponseMessage response = new HttpResponseMessage();
+            var httpRequest = HttpContext.Current.Request;
+            if (httpRequest.Files.Count > 0)
+            {
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+                    var filePath = HttpContext.Current.Server.MapPath("~/UploadFile/" + postedFile.FileName);
+                    Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == file).FirstOrDefault();
+                    p.Picture = filePath;
+                    if (p.IsValidated != Enums.StateType.UNVERIFIED)
+                    {
+                        p.IsValidated = Enums.StateType.UNVERIFIED;
+                    }
+                    unitOfWork.PassengerRepository.Update(p);
+                    unitOfWork.Complete();
+                    postedFile.SaveAs(filePath);
+                }
+            }
+            return response;
+        }
+
+
         private int GetLastDay(int month) {
             int res;
 
@@ -562,7 +596,6 @@ namespace WebApp.Controllers
 
             return res;
         }
-
 
         [HttpGet, Route("getRoutesCityWorkday")]
         public IHttpActionResult GetRoutesCityWorkday()
@@ -683,5 +716,35 @@ namespace WebApp.Controllers
                 return InternalServerError(e);
             }
         }
+
+        private void SendMail(string emailTo, Enums.StateType state)
+        {
+            SmtpClient client = new SmtpClient();
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("busns021@gmail.com", "Test123!");
+
+            string body = "";
+            string subject = "BusNs status update";
+            if (state == Enums.StateType.ACCEPTED)
+            {
+                body = "Hello,\n\n We are glad to inform you that your status has been changed to Accepted.\n\n Best regards,\nBus Ns";
+            }
+            else if (state == Enums.StateType.DENIED)
+            {
+                body = "Hello,\n\n We regret to inform you that your status has been changed to Denied.\n\n Best regards,\nBus Ns";
+            }
+
+            MailMessage mm = new MailMessage("busns021@gmail.com", emailTo, subject, body);
+            mm.BodyEncoding = UTF8Encoding.UTF8;
+            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+            client.Send(mm);
+        }
+
     }
 }

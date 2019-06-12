@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Ticket } from './Models/ticket';
 import { ArrayType } from '@angular/compiler';
 import { PricelistHelp } from './Models/pricelist-help';
+import { environment } from 'src/environments/environment';
 
 
 const httpOptions = {
@@ -90,6 +91,12 @@ export class ServerConnectionService {
     return this.http.post<any>('http://localhost:52295/api/Data/timetable', par, headers);
   }
 
+  postFile(fileToUpload: File,name:string): Observable<any> {
+    const endpoint = 'http://localhost:52295/api/Data/UploadDishImage';
+    const formData: FormData = new FormData();
+    formData.append(name, fileToUpload, fileToUpload.name);
+    return this.http.post(endpoint, formData);
+}
 
   getPricelist(): Observable<any> {
     return this.http.get<any>('http://localhost:52295/api/Data/getPricelist');
@@ -172,6 +179,21 @@ export class ServerConnectionService {
   DenyUser(u: any): Observable<any>{
     return this.http.post<any>('http://localhost:52295/api/Data/denyUser',u);
   }
+
+  uploadPhotoToBackend(data: any, name: string, options?: any) : Observable<any>{
+
+    let par = {
+      Id: name,
+      Picture: data
+    }
+    let headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+
+    return this.http.post('http://localhost:52295/api/Data/UploadPhoto', par);
+}
 
   UpdateProfile(arg: any): Observable<any> {
     let headers = {

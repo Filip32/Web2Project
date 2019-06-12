@@ -23,6 +23,7 @@ import { RoutesStationsAdminComponent } from './routes-stations-admin/routes-sta
 import { PricelistAdminComponent } from './pricelist-admin/pricelist-admin.component';
 import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
+import { UploadPhotoComponent } from './upload-photo/upload-photo.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MapComponent } from './map/map.component';
     TimetableAdminComponent,
     RoutesStationsAdminComponent,
     PricelistAdminComponent,
-    MapComponent
+    MapComponent,
+    UploadPhotoComponent,
   ],
   imports: [
     BrowserModule,

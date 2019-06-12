@@ -19,12 +19,13 @@ namespace WebApp.Models
         private int streetNumber;
         private string city;
         private Enums.PassengerType userType;
+        private string photo;
 
         public RegisterUser()
         {
 
         }
-
+        public string Photo { get { return photo; } set { photo = value; } }
         public string Username { get { return username; } set { username = value; } }
         public string OriginalPassword { get { return originalPassword; } set { originalPassword = value; } }
         public string SendBackBirthday { get { return sendBackBirthday; } set { sendBackBirthday = value; } }
