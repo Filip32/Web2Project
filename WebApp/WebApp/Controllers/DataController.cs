@@ -13,6 +13,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Globalization;
 using WebApp.Helper;
+using System.Net.Mail;
+using System.Text;
+using System.Web;
+using System.IO;
 
 namespace WebApp.Controllers
 {
@@ -252,6 +256,7 @@ namespace WebApp.Controllers
                 registerUser.StreetNumber = a.StreetNumber;
                 registerUser.Username = User.Identity.Name;
                 registerUser.UserType = p.PassengerType;
+                registerUser.Photo = p.Picture;
 
                 return Ok(registerUser);
             }
@@ -371,12 +376,6 @@ namespace WebApp.Controllers
             return Ok();
         }
 
-
-        /// <summary>
-        ///  Da li da dodamo za logicko brisanje polje ili ne? 
-        /// </summary>
-        /// <param name="passengerForVerification"></param>
-        /// <returns></returns>
         [HttpPost, Route("approveUser")]
         [Authorize(Roles = "Controller")]
         public IHttpActionResult ApproveUser(PassengerForVerification passengerForVerification)
@@ -388,6 +387,7 @@ namespace WebApp.Controllers
                 p.IsValidated = Enums.StateType.ACCEPTED;
                 unitOfWork.PassengerRepository.Update(p);
                 unitOfWork.Complete();
+                SendMail(passengerForVerification.Email,Enums.StateType.ACCEPTED);
             }
             return Ok();
         }
@@ -403,6 +403,7 @@ namespace WebApp.Controllers
                 p.IsValidated = Enums.StateType.DENIED;
                 unitOfWork.PassengerRepository.Update(p);
                 unitOfWork.Complete();
+                SendMail(passengerForVerification.Email, Enums.StateType.DENIED);
             }
             return Ok();
         }
@@ -444,6 +445,31 @@ namespace WebApp.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [ActionName("UploadDishImage")]
+        public HttpResponseMessage UploadJsonFile()
+        {
+            HttpResponseMessage response = new HttpResponseMessage();
+            var httpRequest = HttpContext.Current.Request;
+            if (httpRequest.Files.Count > 0)
+            {
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+                    var filePath = HttpContext.Current.Server.MapPath("~/UploadFile/" + postedFile.FileName);
+                    Passenger p = unitOfWork.PassengerRepository.Find(u => u.AppUserId == file).FirstOrDefault();
+                    p.Picture = filePath;
+                    if (p.IsValidated != Enums.StateType.UNVERIFIED)
+                    {
+                        p.IsValidated = Enums.StateType.UNVERIFIED;
+                    }
+                    unitOfWork.PassengerRepository.Update(p);
+                    unitOfWork.Complete();
+                    postedFile.SaveAs(filePath);
+                }
+            }
+            return response;
+        }
 
         private int GetLastDay(int month) {
             int res;
@@ -469,6 +495,35 @@ namespace WebApp.Controllers
             }
 
             return res;
+        }
+
+        private void SendMail(string emailTo, Enums.StateType state)
+        {
+            SmtpClient client = new SmtpClient();
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("busns021@gmail.com", "Test123!");
+
+            string body = "";
+            string subject = "BusNs status update";
+            if (state == Enums.StateType.ACCEPTED)
+            {
+                body = "Hello,\n\n We are glad to inform you that your status has been changed to Accepted.\n\n Best regards,\nBus Ns";
+            }
+            else if (state == Enums.StateType.DENIED)
+            {
+                body = "Hello,\n\n We regret to inform you that your status has been changed to Denied.\n\n Best regards,\nBus Ns";
+            }
+
+            MailMessage mm = new MailMessage("busns021@gmail.com", emailTo, subject, body);
+            mm.BodyEncoding = UTF8Encoding.UTF8;
+            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+            client.Send(mm);
         }
 
     }

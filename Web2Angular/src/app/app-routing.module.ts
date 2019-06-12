@@ -19,30 +19,46 @@ import { NegAuthGuard } from './neg-auth.guard';
 
 const routes: Routes = [
 
-{path: '', component: HomeComponent},
+  { path: '', component: HomeComponent },
 
-{path: 'timetable', component: TimetableComponent},
-{path: 'pricelist', component: PricelistComponent},
+  { path: 'timetable', component: TimetableComponent },
+  { path: 'pricelist', component: PricelistComponent },
 
-{path: 'login', component: LoginComponent,
-                canActivate: [NegAuthGuard]},
-{path: 'register', component: RegisterComponent,
-                   canActivate: [NegAuthGuard]},
+  {
+    path: 'login', component: LoginComponent,
+    canActivate: [NegAuthGuard]
+  },
+  {
+    path: 'register', component: RegisterComponent,
+    canActivate: [NegAuthGuard]
+  },
 
-{path: 'profil', component: ProfilComponent, 
-                 canActivate: [AuthGuard, AppUserGuard]},
+  {
+    path: 'profil', component: ProfilComponent,
+    canActivate: [AuthGuard, AppUserGuard]
+  },
 
-{path: 'tickets-c', component: TicketsChackComponent, 
-                    canActivate: [AuthGuard, ControllerGuard]},
-{path: 'verification-c', component: VerificationComponent, 
-                         canActivate: [AuthGuard, ControllerGuard]},
+  {
+    path: 'tickets-c', component: TicketsChackComponent,
+    canActivate: [AuthGuard, ControllerGuard]
+  },
+  {
+    path: 'verification-c', component: VerificationComponent,
+    canActivate: [AuthGuard, ControllerGuard]
+  },
 
-{path: 'timetable-a', component: TimetableAdminComponent, 
-                      canActivate: [AuthGuard, AdminGuard]},
-{path: 'routes-stations-a', component: RoutesStationsAdminComponent, 
-                            canActivate: [AuthGuard, AdminGuard]},
-{path: 'priceist-a', component: PricelistAdminComponent, 
-                     canActivate: [AuthGuard, AdminGuard]},
+  {
+    path: 'timetable-a', component: TimetableAdminComponent,
+    canActivate: [AuthGuard, AdminGuard]
+  },
+  {
+    path: 'routes-stations-a', component: RoutesStationsAdminComponent,
+    canActivate: [AuthGuard, AdminGuard]
+  },
+  {
+    path: 'priceist-a', component: PricelistAdminComponent,
+    canActivate: [AuthGuard, AdminGuard]
+  }
 ];
 
 @NgModule({

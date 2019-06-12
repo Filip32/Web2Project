@@ -115,11 +115,19 @@
     <br />
 
     <label class="my-font-title">Type of user</label>
-    <select id="type" formControlName="UserType">
+    <select id="type" formControlName="UserType" [(ngModel)]="typeOfUser">
       <option value="0">Regular</option>
       <option value="1">Pensioner</option>
       <option value="2">Student</option>
     </select>
+
+    <div *ngIf="typeOfUser!='Regular'">
+      <div class="form-group">
+        <label for="file">Choose document</label>
+        <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+        <img [src]="photoo">
+      </div>
+  </div>
 
     <input type="submit" value="Update">
     <label class="my-register-font">{{serverSuccessMessage}}</label>

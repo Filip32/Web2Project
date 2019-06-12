@@ -1,0 +1,81 @@
+<!--<h2 class="title">Uploading photo</h2>
+<!--nav>
+
+    Please, upload your student ID or pension check ...
+
+  <form [formGroup]="uploadPhotoForm" (ngSubmit)="uploadPhoto()">
+    <input type="file" formControlName="Picture" (change)="onFileSelected($event)" />
+    <br />
+    <div class="p-t-10">
+      <button type="submit">Upload</button>
+    </div>
+  </form>
+  <br />
+  <br />
+  <a routerLink="/login" routerLinkActive="active">Skip</a>
+</nav>
+<input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
+<div id="imgTest"></div>
+<script type='text/javascript'>
+  function encodeImageFileAsURL() {
+
+    var filesSelected = document.getElementById("inputFileToLoad").files;
+    if (filesSelected.length > 0) {
+      var fileToLoad = filesSelected[0];
+
+      var fileReader = new FileReader();
+
+      fileReader.onload = function(fileLoadedEvent) {
+        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+
+        var newImage = document.createElement('img');
+        newImage.src = srcData;
+
+        document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+        alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+        console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+      }
+      fileReader.readAsDataURL(fileToLoad);
+    }
+  }
+</script>
+
+<script type='text/javascript'>
+  function encodeImageFileAsURL() {
+
+    var filesSelected = document.getElementById("inputFileToLoad").files;
+    if (filesSelected.length > 0) {
+      var fileToLoad = filesSelected[0];
+
+      var fileReader = new FileReader();
+
+      fileReader.onload = function(fileLoadedEvent) {
+        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+
+        var newImage = document.createElement('img');
+        newImage.src = srcData;
+
+        document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+        alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+        console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+      }
+      fileReader.readAsDataURL(fileToLoad);
+    }
+  }
+</script>
+
+<input id="inputFileToLoad" type="file" accept="image/*" name="File" onchange="encodeImageFileAsURL();" />
+<div id="imgTest"></div>
+
+<form [formGroup]="uploadPhotoForm" (ngSubmit)="uploadPhoto()">
+  <br />
+  <div class="p-t-10">
+    <button type="submit">Upload</button>
+  </div>
+</form>
+-->
+<div class="form-group">
+  <label for="file">Choose File</label>
+  <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+</div>
+

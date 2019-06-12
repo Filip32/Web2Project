@@ -105,13 +105,26 @@
     <br />
 
     <label class="my-font-title">Type of user</label>
-    <select id="type" formControlName="UserType">
+    <select id="type" formControlName="UserType" [(ngModel)]="typeOfUser">
       <option value="Regular">Regular</option>
       <option value="Pensioner">Pensioner</option>
       <option value="Student">Student</option>
     </select>
 
-    <input type="submit" [disabled]="registerForm.invalid" value="Submit">
-    <label class="my-register-font">{{serverSuccessMessage}}</label>
+    <!--- type="file" formControlName="photo" (change)="onFileSelected($event)" />-->
+    <br />
+    <!--div class="p-t-10">
+      button class="btn btn--pill btn--green" type="submit">Upload</button-->
+    <!--/div-->
+
+    <div *ngIf="!f.Email.errors && typeOfUser!='Regular'">
+      <div class="form-group">
+        <label for="file">Choose File</label>
+        <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+      </div>
   </div>
+  
+  <input type="submit" value="Submit">
+    <label class="my-register-font">{{serverSuccessMessage}}</label>
+</div>
 </form>

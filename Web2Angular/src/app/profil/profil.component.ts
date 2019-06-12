@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { ConfirmPasswordValidator } from './confirm-password.validator';
 import { ServerConnectionService } from '../server-connection.service';
+import { NgAnalyzeModulesHost } from '@angular/compiler';
 
 @Component({
   selector: 'app-profil',
@@ -15,6 +16,9 @@ export class ProfilComponent implements OnInit {
   submitted: boolean = false;
   serverSuccessMessage = "";
   UserValid: any;
+  typeOfUser: any;
+  fileToUpload: File = null;
+  photoo : any;
 
   constructor(private fb: FormBuilder, private ServerConnectionService: ServerConnectionService) { }
 
@@ -30,7 +34,8 @@ export class ProfilComponent implements OnInit {
       Address_StreetNumber: ['', Validators.required],
       Address_City: ['', Validators.required],
       Birthday: ['', Validators.required],
-      UserType: ['']
+      UserType: [''],
+      Photo: ['']
     }, {
         validator: MustMatch('password', 'confirmPassword')
       })
@@ -54,6 +59,13 @@ export class ProfilComponent implements OnInit {
       let poruka = this.ServerConnectionService.UpdateProfile(this.profileForm.value).subscribe(
         (res) => {
           this.serverSuccessMessage = res;
+          if(res ==="Profile successfully updated.")
+          {
+            if(this.fileToUpload!=null)
+            {
+              this.uploadFileToActivity();
+            }
+          }
         }
       );
       this.submitted = true;
@@ -66,6 +78,18 @@ export class ProfilComponent implements OnInit {
     }
   } 
  // }
+ handleFileInput(files: FileList) {
+  this.fileToUpload = files.item(0);
+}
+
+uploadFileToActivity() {
+  let e = this.profileForm.get("Email").value;
+  this.ServerConnectionService.postFile(this.fileToUpload, e).subscribe(data => {
+  }, error => {
+    console.log(error);
+  });
+}
+
 
   getProfileData() {
     this.ServerConnectionService.getProfileData().subscribe(
@@ -79,7 +103,9 @@ export class ProfilComponent implements OnInit {
        this.profileForm.controls['Address_StreetName'].setValue(res["StreetName"]);
        this.profileForm.controls['Address_StreetNumber'].setValue(res["StreetNumber"]);
        this.profileForm.controls['UserType'].setValue(res["UserType"]);
-
+       this.profileForm.controls['Photo'].setValue(res["Photo"]);
+       this.typeOfUser = res["UserType"];
+       this.photoo = res["Photo"];
       }
     );
 
