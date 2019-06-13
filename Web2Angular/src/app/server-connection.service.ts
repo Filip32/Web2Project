@@ -157,4 +157,10 @@ export class ServerConnectionService {
     };
   }
 
+  getPhoto(id: string): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Data/getPhoto' + `/?id=${id}`);
+  }
+
+  
+
 }

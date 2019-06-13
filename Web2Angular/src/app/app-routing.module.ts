@@ -16,6 +16,7 @@ import { AdminGuard } from './admin.guard';
 import { ControllerGuard } from './controller.guard';
 import { AppUserGuard } from './app-user.guard';
 import { NegAuthGuard } from './neg-auth.guard';
+import { ControllerAddComponent } from './controller-add/controller-add.component';
 
 const routes: Routes = [
 
@@ -57,6 +58,10 @@ const routes: Routes = [
   },
   {
     path: 'priceist-a', component: PricelistAdminComponent,
+    canActivate: [AuthGuard, AdminGuard]
+  },
+  {
+    path:'addControllor',component:ControllerAddComponent,
     canActivate: [AuthGuard, AdminGuard]
   }
 ];

@@ -24,6 +24,7 @@ import { PricelistAdminComponent } from './pricelist-admin/pricelist-admin.compo
 import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './map/map.component';
 import { UploadPhotoComponent } from './upload-photo/upload-photo.component';
+import { ControllerAddComponent } from './controller-add/controller-add.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { UploadPhotoComponent } from './upload-photo/upload-photo.component';
     PricelistAdminComponent,
     MapComponent,
     UploadPhotoComponent,
+    ControllerAddComponent,
   ],
   imports: [
     BrowserModule,
