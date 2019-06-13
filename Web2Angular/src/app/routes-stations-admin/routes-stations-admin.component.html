@@ -1,99 +1,113 @@
-<div>
-  <p class="my-register-font">
-    Changing stations
-  </p>
-</div>
-
-<form [formGroup]="routesStationsForm" (ngSubmit)="onSubmit()">
-  <div class="in-centar">
-    <div>
-      <p class="my-font-title">Select route</p>
-      <select id="type-of-user">
-        <option value="7">7</option>
-        <option value="11a">11a</option>
-      </select>
-    </div>
-    <br />
-    <p class="my-font-title">Select the station</p>
-    <table class="demo">
-      <thead class="my-thead-font">
+<div >
+  <div>
+    <br/>
+    <p class="my-register-font">Stations</p>
+    <table style="max-height: 400px; overflow: auto; display: inline-block;">
+      <thead>
         <tr>
-          <th>{{Route}}</th>
+          <th>X coordinate</th>
+          <th>Y coordinate</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Route</th>
+          <th width="10%">Change</th>
+          <th width="10%">Delete</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let u of stations">
-          <td>{{u.Ticket}}</td>
+        <tr *ngFor="let l of stations">
+          <td style="text-align:center;">{{l.X}}</td>
+          <td style="text-align:center;">{{l.Y}}</td>
+          <td style="text-align:center;">{{l.Name}}</td>
+          <td style="text-align:center;">{{l.Address}}</td>
+          <td style="text-align:center;">{{l.RouteNumber}}</td>
+          <td style="text-align:center;">
+              <a class="button" (click)="changeStation(l)">Change</a>
+          </td>
+          <td style="text-align:center;">
+              <a class="button" (click)="deleteRouteAdmin(l)">Delete</a>
+          </td>
         </tr>
       </tbody>
     </table>
-
-    <br />
-
-    <input type="submit" value="Change">
-
-    <br />
-    <label class="my-font-title">Enter x coordinate</label>
-    <br />
-    <input type="text" formControlName="StationXcoordinate" placeholder="Enter x coordinate..">
-    <div *ngIf="f.StationXcoordinate.invalid && (f.StationXcoordinate.dirty || f.StationXcoordinate.touched)">
-      <div *ngIf="f.StationXcoordinate.errors.required" class="my-font-title">
-        X coordinate is required.
-      </div>
-    </div>
-    <br />
-
-    <label class="my-font-title">Enter y coordinate</label>
-    <br />
-    <input type="text" formControlName="StationYcoordinate" placeholder="Enter y coordinate..">
-    <div *ngIf="f.StationYcoordinate.invalid && (f.StationYcoordinate.dirty || f.StationYcoordinate.touched)">
-      <div *ngIf="f.StationYcoordinate.errors.required" class="my-font-title">
-        Y coordinate is required.
-      </div>
-    </div>
-    <br />
-
-    <label class="my-font-title">Enter station name </label>
-    <br />
-    <input type="text" formControlName="StationName" placeholder="Enter station name..">
-    <div *ngIf="f.StationName.invalid && (f.StationName.dirty || f.StationName.touched)">
-      <div *ngIf="f.StationName.errors.required" class="my-font-title">
-        Station name is required.
-      </div>
-    </div>
-    <br />
-
-    <label class="my-font-title">Address</label>
-    <br />
-    <label class="my-font-title">Street name</label>
-    <br />
-    <input type="text" formControlName="AddressStreetName" placeholder="Enter street name..">
-    <div *ngIf="f.AddressStreetName.invalid && (f.AddressStreetName.dirty || f.AddressStreetName.touched)">
-      <div *ngIf="f.AddressStreetName.errors.required" class="my-font-title">
-        Street name is required.
-      </div>
-    </div>
-    <br />
-    <label class="my-font-title">Enter street number</label>
-    <br />
-    <input type="text" formControlName="AddressStreetNumber" placeholder="Enter street number..">
-    <div *ngIf="f.AddressStreetNumber.invalid && (f.AddressStreetNumber.dirty || f.AddressStreetNumber.touched)">
-      <div *ngIf="f.AddressStreetNumber.errors.required" class="my-font-title">
-        Street number is required.
-      </div>
-    </div>
-    <br />
-    <label class="my-font-title">Enter zip code</label>
-    <br />
-    <input type="text" formControlName="AddressZipcode" placeholder="Enter zip code..">
-    <div *ngIf="f.AddressZipcode.invalid && (f.AddressZipcode.dirty || f.AddressZipcode.touched)">
-      <div *ngIf="f.AddressZipcode.errors.required" class="my-font-title">
-        Zip code is required.
-      </div>
-    </div>
-    <br />
-
-    <input type="submit" value="Apply station change">
-    <!--Stavi dodatna polja za izmenu stanice da se prikazu-->
   </div>
-</form>
+
+
+  <div>
+    <div *ngIf="newStation">
+        <button (click)="addNewStation()" class="submit-button">
+          Add new station
+        </button>
+    </div>
+    <div *ngIf="newStations">
+      <button (click)="addNewStations()" class="submit-button">
+        Add new stations
+      </button>
+  </div>
+    <br/>
+    <br/>
+
+    <!--changeStation-->
+    <div *ngIf="changeStationbool">
+      <form [formGroup]="changeStationForm" (ngSubmit)="onSubmitSaveChanges()">
+        <div>
+          <div><span class="my-font">Name of Station</span></div>
+          <input type="text" formControlName="Name" placeholder="Enter name.." required>
+          <div *ngIf="f.Name.invalid && (f.Name.dirty || f.Name.touched)">
+            <div *ngIf="f.Name.errors.required" class="my-font">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="submit-button">
+            Save changes
+          </button>
+      </div>
+      </form>
+    </div>
+
+    <!--deleteRouteAdmin-->
+    <div *ngIf="deleteStationAdminbool">
+      <form [formGroup]="deleteStationForm" (ngSubmit)="onSubmitSaveDelete()">
+        <div><span class="my-font">Delete station from route</span></div>
+        <select style="width: 255px;" formControlName="DeleteStationRoute" 
+                [(ngModel)]="selectedRouteDel">
+          <option *ngFor="let c of listRoutes" [ngValue]="c">{{c}}</option>
+        </select>
+        <div>
+          <button type="submit" class="submit-button">
+            Save changes
+          </button>
+      </div>
+      </form>
+    </div>
+
+    <!--addNewStation-->
+    <div *ngIf="newStationbool">
+      <form [formGroup]="changeStationForm" (ngSubmit)="onSubmitSaveChanges()">
+
+
+        <div>
+          <button type="submit" class="submit-button">
+            Save changes
+          </button>
+      </div>
+      </form>
+    </div>
+
+    <!--addNewStations-->
+    <div *ngIf="newStationsbool">
+      <form [formGroup]="changeStationForm" (ngSubmit)="onSubmitSaveChanges()">
+
+
+        <div>
+          <button type="submit" class="submit-button">
+            Save changes
+          </button>
+      </div>
+      </form>
+    </div>
+
+  </div>
+</div>

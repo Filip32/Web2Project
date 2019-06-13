@@ -298,4 +298,9 @@ export class ServerConnectionService {
     };
     return this.http.post<any>('http://localhost:52295/api/Timetable/addNewRouteAdmin', par, headers);
   }
+
+  getStationsAdmin(): Observable<any>
+  {
+    return this.http.get<any>('http://localhost:52295/api/Stations/getStationsAdmin');
+  }
 }

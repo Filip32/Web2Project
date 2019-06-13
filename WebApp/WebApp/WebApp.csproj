@@ -254,6 +254,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PricelistAdminController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\StationAdminController.cs" />
     <Compile Include="Controllers\TimetableAdminController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -349,6 +350,7 @@
     <Compile Include="Models\RouteStation.cs" />
     <Compile Include="Models\Station.cs" />
     <Compile Include="Models\StationHelp.cs" />
+    <Compile Include="Models\StationHelper.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\TicketHelp.cs" />
     <Compile Include="Models\Timetable.cs" />
