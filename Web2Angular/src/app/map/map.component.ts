@@ -14,6 +14,7 @@ export class MapComponent implements OnInit {
   public polyline: Polyline;
   public stationsIcon: MarkerInfo[];
   public busLocation: MarkerInfo[];
+  public markers : MarkerInfo[];
   public zoom: number;
   private _route: any;
   private _bus:  any;
@@ -21,6 +22,7 @@ export class MapComponent implements OnInit {
   private isPop: any = false;
 
   ngOnInit() {
+    this.markers = [];
     this.polyline= new Polyline([], '#9966ff', { url:"", scaledSize: {width: 50, height: 50}});
   }
 
@@ -28,7 +30,7 @@ export class MapComponent implements OnInit {
   }
 
   @Output() sendData = new EventEmitter<any>();
-
+  @Output() sendDataDot = new EventEmitter<any>();
   @Input()
   set route(route: any) {
     this._route = route;
@@ -108,7 +110,15 @@ export class MapComponent implements OnInit {
         "" , "",""));
       }else{
         this.polyline.addLocation(new GeoLocation($event.coords.lat, $event.coords.lng));
-        console.log(this.polyline);
+        this.markers.push(new MarkerInfo(new GeoLocation($event.coords.lat, $event.coords.lng), "assets/dot.png",
+        "" , "",""));
+
+        let pom = {
+          'X' : $event.coords.lat,
+          'Y' : $event.coords.lng
+        };
+
+        this.sendDataDot.emit(pom);
       }
     }
   }

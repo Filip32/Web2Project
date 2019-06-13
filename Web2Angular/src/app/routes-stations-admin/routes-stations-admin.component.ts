@@ -16,6 +16,8 @@ export class RoutesStationsAdminComponent implements OnInit {
   newStationbool: boolean;
   newStationsbool: boolean;
 
+  listRoutesNewRoute: any;
+  selectedRouteNewRoute: any;
   stations: any;
   selectedRouteDel: any;
   listRoutes : any;
@@ -25,6 +27,7 @@ export class RoutesStationsAdminComponent implements OnInit {
   sType: any;
   sRoute : any;
   sXY: any;
+  sXYDot: any[];
 
   deleteStationForm = this.fb.group({
     IdStation: [''],
@@ -52,6 +55,7 @@ export class RoutesStationsAdminComponent implements OnInit {
   get d() { return this.addStationForm.controls; }
 
   ngOnInit() {
+    this.sXYDot = [];
     this.newStation = true;
     this.newStations = true;
     this.changeStationbool = false;
@@ -142,11 +146,24 @@ export class RoutesStationsAdminComponent implements OnInit {
     this.deleteStationAdminbool = false;
     this.newStationbool = false;
     this.newStationsbool = true;
+
+
+    this.serverConnectionService.getNewRoutes().subscribe(
+      (res) => {
+        this.listRoutesNewRoute = res;
+        this.selectedRouteNewRoute = this.listRoutesNewRoute[0];
+      });
   }
 
   XYData(data: any)
   {
     this.sXY = data;
+  }
+
+  XYDataDot(data: any)
+  {
+    console.log(data);
+    this.sXYDot.push(data);
   }
 
   onSubmitSaveChanges()

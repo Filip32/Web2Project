@@ -41,7 +41,7 @@
     </div>
     <div *ngIf="newStations">
       <button (click)="addNewStations()" class="submit-button">
-        Add line to route
+        Add lines to route
       </button>
   </div>
     <br/>
@@ -125,15 +125,16 @@
 
     <!--addNewStations-->
     <div *ngIf="newStationsbool">
-      <form [formGroup]="changeStationForm" (ngSubmit)="onSubmitSaveChanges()">
-
-        <app-map [route] = "sRoute" [bus] = "sBus"></app-map>
+        <div><span class="my-font">New Routes</span></div>
+        <select style="width: 255px;" [(ngModel)]="selectedRouteNewRoute">
+          <option *ngFor="let c of listRoutesNewRoute" [ngValue]="c">{{c.RouteNumber}}</option>
+        </select>
+        <app-map [route] = "sRoute" [bus] = "sBus" (sendDataDot)="XYDataDot($event)"></app-map>
         <div>
-          <button type="submit" class="submit-button">
+          <button type="submit" class="submit-button" (click)="onSubmitSaveChanges()">
             Save changes
           </button>
       </div>
-      </form>
     </div>
 
   </div>

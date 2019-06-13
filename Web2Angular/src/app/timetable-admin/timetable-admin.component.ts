@@ -76,6 +76,7 @@ export class TimetableAdminComponent implements OnInit {
         this.view = true;
         this.izmeni = false;
         this.obrisi = false;
+        this.novaLinija = true;
       });
   }
 
@@ -88,6 +89,7 @@ export class TimetableAdminComponent implements OnInit {
         this.view = false;
         this.izmeni = true;
         this.obrisi = false;
+        this.novaLinija = true;
         this.polasciForm['svipolasci'] = res;
         this.naslovForm['naslov'] = RouteNumber;
         this.idlinije = Id;
@@ -151,6 +153,7 @@ export class TimetableAdminComponent implements OnInit {
         this.view = false;
         this.izmeni = false;
         this.obrisi = true;
+        this.novaLinija = true;
         this.getRoutesAdmin();
       });
     }
@@ -190,7 +193,7 @@ export class TimetableAdminComponent implements OnInit {
             if (res === "New route added.") {
   
               setTimeout(() => {
-                this.router.navigate(['/red-voznje-admin']);
+                this.router.navigate(['/timetable-a']);
               },
                 2000);
             }
