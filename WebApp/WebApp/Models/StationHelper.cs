@@ -17,6 +17,7 @@ namespace WebApp.Models
         public List<string> RouteNumbers;
         public bool IsStation;
         public List<int> StationNumbers;
+        public int NumberInRoute;
 
         public StationHelper()
         {

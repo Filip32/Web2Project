@@ -31,7 +31,7 @@ export class RoutesStationsAdminComponent implements OnInit {
 
   deleteStationForm = this.fb.group({
     IdStation: [''],
-    DeleteStationRoute: ['', Validators.required],
+    RouteNumber: ['', Validators.required],
   });
 
   changeStationForm = this.fb.group({
@@ -47,6 +47,7 @@ export class RoutesStationsAdminComponent implements OnInit {
     X: ['', Validators.required],
     Y: ['', Validators.required],
     RouteNumbers : ['', Validators.required],
+    NumberInRoute: ['']
   });
 
   constructor(private fb: FormBuilder, private serverConnectionService: ServerConnectionService) { }
@@ -168,16 +169,89 @@ export class RoutesStationsAdminComponent implements OnInit {
 
   onSubmitSaveChanges()
   {
-
+    //
+    console.log(this.changeStationForm.value);
+    this.serverConnectionService.onSubmitSaveChanges(this.changeStationForm.value).subscribe(
+      (res) => {
+        console.log(res);
+      });
   }
 
   onSubmitSaveDelete()
-  {
+  {//
+    let p = this.deleteStationForm.value;
 
+    let pom =  this.stations.filter(function(s) {
+    return s.IdStation == p.IdStation;
+    });
+
+    let pom2 = 0;
+    let bb = true;
+
+    pom[0].RouteNumbers.forEach(element => {
+        if(element == p.RouteNumber)
+        {
+          bb = false;
+        }
+
+        if(bb)
+        {
+          pom2 += 1;
+        }
+    });
+
+    let fpom = pom[0].IdRoute[pom2];
+
+   p.RouteNumber = fpom;
+
+   this.serverConnectionService.deleteStationFromRoute(p).subscribe(
+    (res) => {
+      console.log(res);
+    });
   }
 
   onSubmitAddStation()
-  {
+  {////hlper
+    let routeNumberPom:any;
+    //let idRoutePom:any;
+    let pom :any[];
+    pom = [];
+    pom.push(this.addStationForm.value["RouteNumbers"]);
 
+    this.addStationForm.value["RouteNumbers"] = pom;
+   // idRoutePom =  this.addStationForm.value["RouteNumber"]["Id"];
+    routeNumberPom = this.addStationForm.value["RouteNumber"]["RouteNumber"];
+    pom = [];
+    pom.push(this.selectedRouteAddStation.Id);
+    //this.addStationForm["RouteNumber"].setValue(routeNumberPom);
+    this.addStationForm.controls['RouteNumber'].setValue(routeNumberPom);
+    this.addStationForm.controls['IdRoute'].setValue(pom);
+    //NumberInRoute
+    this.addStationForm.controls['NumberInRoute'].setValue(this.addStationForm.value["RouteNumbers"][0]);
+    this.addStationForm.controls['X'].setValue(this.sXY.X);
+    this.addStationForm.controls['Y'].setValue(this.sXY.Y);
+    console.log(this.addStationForm.value);
+
+    this.serverConnectionService.addStation(this.addStationForm.value).subscribe(
+      (res) => {
+        console.log(res);
+      });
+  }
+
+  onSubmitSaveRouteLines()
+  {
+    //sXYDot
+    console.log(this.sXYDot);
+    console.log(this.selectedRouteNewRoute);
+    //selectedRouteNewRoute
+
+    //nova klasa in string lista 
+    let pom = {"Id": this.selectedRouteNewRoute.Id, "RouteNumber":this.selectedRouteNewRoute.RouteNumber,
+  "Dots":this.sXYDot  }
+    console.log(pom);
+    this.serverConnectionService.addLines(pom).subscribe(
+      (res) => {
+        console.log(res);
+      });
   }
 }

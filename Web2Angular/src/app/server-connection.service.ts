@@ -318,4 +318,23 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Stations/getNewRoutes');
   }
 
+  onSubmitSaveChanges(arg:any):Observable<any>
+  {
+    return this.http.post<any>('http://localhost:52295/api/Stations/saveStationChanges', arg);
+  }
+
+  deleteStationFromRoute(arg:any):Observable<any>
+  {
+    return this.http.post<any>('http://localhost:52295/api/Stations/deleteStationFromRoute', arg);
+  }
+
+  addStation(arg:any):Observable<any>
+  {
+    return this.http.post<any>('http://localhost:52295/api/Stations/addStation', arg);
+  }
+
+  addLines(arg:any):Observable<any>
+  {
+    return this.http.post<any>('http://localhost:52295/api/Stations/addLines', arg);
+  }
 }

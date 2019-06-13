@@ -71,7 +71,7 @@
     <div *ngIf="deleteStationAdminbool">
       <form [formGroup]="deleteStationForm" (ngSubmit)="onSubmitSaveDelete()">
         <div><span class="my-font">Delete station from route</span></div>
-        <select style="width: 255px;" formControlName="DeleteStationRoute" 
+        <select style="width: 255px;" formControlName="RouteNumber" 
                 [(ngModel)]="selectedRouteDel">
           <option *ngFor="let c of listRoutes" [ngValue]="c">{{c}}</option>
         </select>
@@ -131,8 +131,8 @@
         </select>
         <app-map [route] = "sRoute" [bus] = "sBus" (sendDataDot)="XYDataDot($event)"></app-map>
         <div>
-          <button type="submit" class="submit-button" (click)="onSubmitSaveChanges()">
-            Save changes
+          <button type="submit" class="submit-button" (click)="onSubmitSaveRouteLines()">
+            Save lines
           </button>
       </div>
     </div>
