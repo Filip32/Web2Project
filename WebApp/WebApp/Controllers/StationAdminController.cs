@@ -68,5 +68,19 @@ namespace WebApp.Controllers
 
             return Ok(stationHelper);
         }
+
+        [Route("getRoutesAddStation")]
+        [Authorize(Roles = "Admin")]
+        public IHttpActionResult getRoutesAddStation()
+        {
+            List<Routes> routes = new List<Routes>();
+            List<Route> r = unitOfWork.RouteRepository.GetAll().Where(x => x.DayType == Enums.TypeOfDay.WORKDAY).ToList();
+
+            foreach(Route rr in r)
+            {
+                routes.Add(new Routes() { Id = rr.Id, RouteNumber = rr.RouteNumber });
+            }
+            return Ok(routes);
+        }
     }
 }

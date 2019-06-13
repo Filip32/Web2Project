@@ -16,9 +16,15 @@ export class RoutesStationsAdminComponent implements OnInit {
   newStationbool: boolean;
   newStationsbool: boolean;
 
-  stations; any;
+  stations: any;
   selectedRouteDel: any;
-  listRoutes :any;
+  listRoutes : any;
+  selectedRouteAddStation : any;
+  listRoutesAddStation: any;
+
+  sType: any;
+  sRoute : any;
+  sXY: any;
 
   deleteStationForm = this.fb.group({
     IdStation: [''],
@@ -30,10 +36,20 @@ export class RoutesStationsAdminComponent implements OnInit {
     Name: ['', Validators.required],
   });
 
+  addStationForm = this.fb.group({
+    Name: ['', Validators.required],
+    Address: ['', Validators.required],
+    RouteNumber: ['', Validators.required],
+    IdRoute: ['', Validators.required],
+    X: ['', Validators.required],
+    Y: ['', Validators.required],
+    RouteNumbers : ['', Validators.required],
+  });
+
   constructor(private fb: FormBuilder, private serverConnectionService: ServerConnectionService) { }
 
   get f() { return this.changeStationForm.controls; }
-  get d() { return this.deleteStationForm.controls; }
+  get d() { return this.addStationForm.controls; }
 
   ngOnInit() {
     this.newStation = true;
@@ -90,6 +106,32 @@ export class RoutesStationsAdminComponent implements OnInit {
     this.deleteStationAdminbool = false;
     this.newStationbool = true;
     this.newStationsbool = false;
+
+    this.serverConnectionService.getRoutesAddStation().subscribe(
+      (res) => {
+            this.listRoutesAddStation = res;
+            this.selectedRouteAddStation = this.listRoutesAddStation[0];
+            this.mapDrow(this.listRoutesAddStation[0].Id);
+            this.sType = true;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  }
+
+  mySelectHandler()
+  {
+    this.mapDrow(this.selectedRouteAddStation.Id);
+    this.sType = true;
+  }
+
+  mapDrow(id: any)
+  {
+    this.serverConnectionService.getRoute(id).subscribe(
+      (res) => {
+        this.sRoute = res;
+      });
   }
 
   addNewStations()
@@ -102,12 +144,22 @@ export class RoutesStationsAdminComponent implements OnInit {
     this.newStationsbool = true;
   }
 
+  XYData(data: any)
+  {
+    this.sXY = data;
+  }
+
   onSubmitSaveChanges()
   {
 
   }
 
   onSubmitSaveDelete()
+  {
+
+  }
+
+  onSubmitAddStation()
   {
 
   }

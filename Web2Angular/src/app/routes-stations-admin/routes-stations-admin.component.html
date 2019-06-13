@@ -41,7 +41,7 @@
     </div>
     <div *ngIf="newStations">
       <button (click)="addNewStations()" class="submit-button">
-        Add new stations
+        Add line to route
       </button>
   </div>
     <br/>
@@ -77,7 +77,7 @@
         </select>
         <div>
           <button type="submit" class="submit-button">
-            Save changes
+            Delete
           </button>
       </div>
       </form>
@@ -85,9 +85,36 @@
 
     <!--addNewStation-->
     <div *ngIf="newStationbool">
-      <form [formGroup]="changeStationForm" (ngSubmit)="onSubmitSaveChanges()">
-
-
+      <form [formGroup]="addStationForm" (ngSubmit)="onSubmitAddStation()">
+        <div>
+          <div><span class="my-font">Name of Station</span></div>
+          <input type="text" formControlName="Name" placeholder="Enter name.." required>
+          <div *ngIf="d.Name.invalid && (d.Name.dirty || d.Name.touched)">
+            <div *ngIf="d.Name.errors.required" class="my-font">
+              Name is required.
+            </div>
+          </div>
+          <div><span class="my-font">Address of Station</span></div>
+          <input type="text" formControlName="Address" placeholder="Enter address.." required>
+          <div *ngIf="d.Address.invalid && (d.Address.dirty || d.Address.touched)">
+            <div *ngIf="d.Address.errors.required" class="my-font">
+              Name is required.
+            </div>
+          </div>
+          <div><span class="my-font">Station number in route</span></div>
+          <input type="text" formControlName="RouteNumbers" placeholder="Enter station number.." required>
+          <div *ngIf="d.RouteNumbers.invalid && (d.RouteNumbers.dirty || d.RouteNumbers.touched)">
+            <div *ngIf="d.RouteNumbers.errors.required" class="my-font">
+              Name is required.
+            </div>
+          </div>
+          <div><span class="my-font">Belongs to route</span></div>
+        <select style="width: 255px;" formControlName="RouteNumber" (change)="mySelectHandler()"
+                [(ngModel)]="selectedRouteAddStation">
+          <option *ngFor="let c of listRoutesAddStation" [ngValue]="c">{{c.RouteNumber}}</option>
+        </select>
+        </div>
+        <app-map [route] = "sRoute" [type] = "sType" (sendData)="XYData($event)"></app-map>
         <div>
           <button type="submit" class="submit-button">
             Save changes
@@ -100,7 +127,7 @@
     <div *ngIf="newStationsbool">
       <form [formGroup]="changeStationForm" (ngSubmit)="onSubmitSaveChanges()">
 
-
+        <app-map [route] = "sRoute" [bus] = "sBus"></app-map>
         <div>
           <button type="submit" class="submit-button">
             Save changes

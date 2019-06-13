@@ -308,4 +308,8 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Stations/getStationsAdmin');
   }
 
+  getRoutesAddStation(): Observable<any>
+  {
+    return this.http.get<any>('http://localhost:52295/api/Stations/getRoutesAddStation');
+  }
 }

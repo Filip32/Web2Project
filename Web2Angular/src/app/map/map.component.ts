@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, NgZone } from '@angular/core';
 import { MarkerInfo } from './model/marker-info.model';
 import { GeoLocation } from './model/geolocation';
 import { Polyline } from './model/polyline';
@@ -17,6 +17,8 @@ export class MapComponent implements OnInit {
   public zoom: number;
   private _route: any;
   private _bus:  any;
+  private _type: any;
+  private isPop: any = false;
 
   ngOnInit() {
     this.polyline= new Polyline([], '#9966ff', { url:"", scaledSize: {width: 50, height: 50}});
@@ -24,6 +26,8 @@ export class MapComponent implements OnInit {
 
   constructor(private ngZone: NgZone){
   }
+
+  @Output() sendData = new EventEmitter<any>();
 
   @Input()
   set route(route: any) {
@@ -40,6 +44,11 @@ export class MapComponent implements OnInit {
     if(this._bus){
        this.drowBus();
     }
+  }
+
+  @Input()
+  set type(type: any) {
+    this._type = type;
   }
 
   HaveBus()
@@ -82,8 +91,25 @@ export class MapComponent implements OnInit {
 
   placeMarker($event){
     if(localStorage.role == "Admin"){
-      this.polyline.addLocation(new GeoLocation($event.coords.lat, $event.coords.lng));
-      console.log(this.polyline);
+      if(this._type == true)
+      {
+        if(this.isPop == true){
+          this.stationsIcon.pop();
+        }
+        this.isPop = true;
+        let pom = {
+          'X' : $event.coords.lat,
+          'Y' : $event.coords.lng
+        };
+
+        this.sendData.emit(pom);
+
+        this.stationsIcon.push(new MarkerInfo(new GeoLocation($event.coords.lat, $event.coords.lng), "assets/busicon.png",
+        "" , "",""));
+      }else{
+        this.polyline.addLocation(new GeoLocation($event.coords.lat, $event.coords.lng));
+        console.log(this.polyline);
+      }
     }
   }
 }
