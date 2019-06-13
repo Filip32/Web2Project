@@ -2,16 +2,16 @@
 <div class="in-centar">
     <div>
       <p class="my-font float">Type of timetable</p>
-      <select id="type-of-user">
+      <select id="type-of-user" [(ngModel)]="selectedTypeOfTimetable" (click)="ChangeRoutes()">
         <option value="Suburban">Suburban</option>
-        <option value="City">City</option>
+        <option value="City" selected>City</option>
       </select>
     </div>
 
     <div>
       <p class="my-font">Day</p>
-      <select id="type-of-user">
-        <option value="Workday">Workday</option>
+      <select id="type-of-user" [(ngModel)] = "selectedTypeOfDay" (click)="ChangeByDay()">
+        <option value="Workday" selected>Workday</option>
         <option value="Saturday">Saturday</option>
         <option value="Sunday">Sunday</option>
       </select>
@@ -19,8 +19,8 @@
 
     <div>
       <p class="my-font">Route</p>
-      <select id="type-of-user">
-        <option *ngFor="let opt of nekaLista" [value]="nekaLista.id">{{nekaLista.name}}</option>
+      <select id="type-of-user" [(ngModel)] = "selectedRoute" (click)="getTimetable()">
+        <option *ngFor="let opt of routes" [value]="opt">{{opt}}</option>
       </select>
     </div>
   </div>
@@ -28,12 +28,12 @@
     <table class="demo">
       <thead class="my-thead-font">
       <tr>
-        <th>{{Route}}</th>
+        <th>Departures</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let u of typeOfTicket">
-        <td>{{u.Ticket}}</td>
+      <tr *ngFor="let u of departures">
+        <td>{{u}}</td>
       </tr>
       </tbody>
     </table>

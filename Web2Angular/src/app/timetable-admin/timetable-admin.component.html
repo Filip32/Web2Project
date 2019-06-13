@@ -1,31 +1,155 @@
-<div>
-  <p class="my-register-font">
-      Timetable
-  </p>
-</div>
-
-<p class="my-font-title">Select day</p>
-
-<div class="in-centar">
-  <div>
-    <select id="type-of-user">
-      <option value="Monday">Monday</option>
-      <option value="Tuesday">Tuesday</option>
-      <option value="Wednesday">Wednesday</option>
-      <option value="Thursday">Thursday</option>
-      <option value="Friday">Friday</option>
-      <option value="Saturday">Saturday</option>
-      <option value="Sunday">Sunday</option>
-    </select>
-  </div>
-
-  <div>
-    <p class="my-font-title">Select route</p>
-    <select id="type-of-user">
-      <option value="7">7</option>
-      <option value="11a">11a</option>
-    </select>
-  </div>
-
-
+<div style="position: absolute; left: 25%;">
+      <div>
+          <br/>
+          <p class="my-register-font">Timetable</p>
+          <table style="max-height: 400px; overflow: auto; display: inline-block;">
+            <thead>
+              <tr>
+                <th>Type of Route</th>
+                <th>Day</th>
+                <th>Route Name</th>
+                <th width="10%">Open</th>
+                <th width="10%">Change</th>
+                <th width="10%">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let l of routes">
+                <td style="text-align:center;">{{l.RouteType}}</td>
+                <td style="text-align:center;">{{l.Day}}</td>
+                <td style="text-align:center;">{{l.RouteNumber}}</td>
+                <td style="text-align:center;">
+                    <a class="button" (click)="openRote(l.Id, l.RouteNumber)">Open</a>
+                </td>
+                <td style="text-align:center;">
+                    <a class="button" (click)="changeRoute(l.Id, l.RouteNumber)">Change</a>
+                </td>
+                <td style="text-align:center;">
+                    <a class="button" (click)="deleteRouteAdmin(l.Id)">Delete</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <div class="col-5">
+          <div *ngIf="novaLinija">
+              <button (click)="addNewRoute()" class="submit-button">
+                Add new route
+              </button>
+          </div>
+          <br/>
+          <br/>
+  
+  
+           <!--Prikaz polazaka-->
+           <div *ngIf="View()">
+              <table class="demo">
+                  <thead class="my-thead-font">
+                  <tr>
+                    <th>{{routeNumber}}</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let u of departures">
+                    <td>{{u}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+            </div>
+    
+    
+            <!--Izmena polazaka, dana i naziva linije-->
+            <div *ngIf="izmeni">
+              <form [formGroup]="naslovForm" (ngSubmit)="onSubmitRouteNumber()">
+                
+                <div><span class="my-font"> Route </span></div>
+                <textarea formControlName="naslov" [(ngModel)]="routeNumber" wrap="hard"
+                  ng-model-options="{ getterSetter: true }"
+                  style="width: 255px; height: 20px; background-color: rgb(255, 255, 255, 0.65); border: black; resize: none;"> </textarea>
+                <div>
+                    <button type="submit" class="submit-button">
+                      Change route number
+                    </button>
+                </div>
+                <br />
+              </form>
+    
+              <div class="my-font">
+                {{message}}
+              </div>
+    
+              <form [formGroup]="danForm" (ngSubmit)="onSubmitDay()" class="login100-form validate-form">
+                <div>
+                    <div><span class="my-font">Day</span></div>
+                  <select style="width: 255px;" formControlName="dan" [(ngModel)]="selectedtipDana">
+                    <option *ngFor="let c of tipDana" [ngValue]="c" ng-model-options="{ getterSetter: true }">{{c}}</option>
+                  </select>
+                </div>
+                <div>
+                    <button type="submit" class="submit-button">
+                      Change day
+                    </button>
+                </div>
+                <br />
+              </form>
+    
+              <form [formGroup]="polasciForm" (ngSubmit)="onSubmit()" class="login100-form validate-form">
+                <textarea class="txt4" formControlName="svipolasci"
+                  style="width: 250px; height: 500px; background-color: rgb(255, 255, 255, 0.65); border: black; resize: none;"
+                  [(ngModel)]="departures" ng-model-options="{ getterSetter: true }"> </textarea>
+                <div>
+                    <button type="submit" class="submit-button">
+                      Change departure
+                    </button>
+                </div>
+              </form>
+            </div>
+    
+    
+            <div *ngIf="obrisi">
+              <div class="my-font">
+                {{message}}
+              </div>
+            </div>
+  
+  
+          <!--Dodavanje nove linije-->
+          <form [formGroup]="novaLinijaForm" (ngSubmit)="addRoute()" *ngIf="!novaLinija">
+           <div> <span class="my-font">New Route </span></div>
+  
+            <textarea formControlName="naslovNew" wrap="hard" placeholder="Route Number...."
+              style="width: 250px; height: 20px; background-color: rgb(255, 255, 255, 0.65); border: black; resize: none;"
+              required>
+            </textarea>
+            <br />
+  
+            <div >
+              <div><span class="my-font">Day</span></div>
+              <select style="width: 255px;" formControlName="danNew" [(ngModel)]="selectedtipDana">
+                <option *ngFor="let c of tipDana" [ngValue]="c">{{c}}</option>
+              </select>
+            </div>
+  
+            <div>
+              <div><span class="my-font">Timetable</span></div>
+              <select style="width: 255px;" formControlName="redvoznje" [(ngModel)]="selectedTipRedVoznje">
+                <option *ngFor="let c of tipRedVoznje" [ngValue]="c">{{c}}</option>
+              </select>
+            </div>
+  
+            <br />
+            <textarea formControlName="svipolasciNew" placeholder="Enter departures...."
+              style="width: 250px; height: 500px; background-color: rgb(255, 255, 255, 0.65); border: black; resize: none;"
+              required>
+            </textarea>
+  
+            <div>
+                <button type="submit" class="submit-button">
+                  Add Route
+                </button>
+            </div>
+          </form>
+  
+        </div>
 </div>

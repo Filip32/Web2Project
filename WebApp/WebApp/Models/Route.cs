@@ -13,6 +13,8 @@ namespace WebApp.Models
         private string departures;
         private int id;
         private string routeNumber;
+        private Enums.TypeOfDay dayType;
+        private bool deleted = false;
 
         public Route()
         {
@@ -26,6 +28,18 @@ namespace WebApp.Models
             set { id = value; }
         }
 
+        public bool Deleted
+        {
+            get
+            {
+                return deleted;
+            }
+            set
+            {
+                deleted = value;
+            }
+        }
+
         public string Departures
         {
             get
@@ -37,6 +51,19 @@ namespace WebApp.Models
                 departures = value;
             }
         }
+
+        public Enums.TypeOfDay DayType
+        {
+            get
+            {
+                return dayType;
+            }
+            set
+            {
+                dayType = value;
+            }
+        }
+
         public Enums.TypeOfRoute RouteType
         {
             get

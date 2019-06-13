@@ -16,23 +16,26 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using WebApp.Models;
+using WebApp.Persistence;
 using WebApp.Persistence.UnitOfWork;
 using WebApp.Providers;
 using WebApp.Results;
 
 namespace WebApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        ApplicationDbContext dbContext = new ApplicationDbContext();
+        public static IUnitOfWork unitOfWork;
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
-
         IUnitOfWork DataBase { get; set; }
-
-        public AccountController()
+		
+        public AccountController(IUnitOfWork uw)
         {
+            unitOfWork = uw;
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -76,6 +79,12 @@ namespace WebApp.Controllers
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            return Ok();
+        }
+
+        [Route("hi")]
+        public IHttpActionResult GetHi()
+        {
             return Ok();
         }
 

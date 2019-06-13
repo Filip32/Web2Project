@@ -3,6 +3,18 @@
     background-color: #cad4f5 !important
 }
 
+.submit-button
+{
+    width: 40%;
+    background-color: #668cff;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold    
+}
 .my-font-title{
     font-style: oblique;
     font-size: 17px;
@@ -27,3 +39,16 @@
     text-align: center;
     justify-content: center;
 }
+
+.button {
+    font: bold 14px oblique;
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #9966ff;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    cursor: pointer;
+  }

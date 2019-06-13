@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { catchError, map } from 'rxjs/operators';
 import { Ticket } from './Models/ticket';
 import { ArrayType } from '@angular/compiler';
+import { PricelistHelp } from './Models/pricelist-help';
 import { environment } from 'src/environments/environment';
 
 
@@ -18,14 +19,84 @@ export class ServerConnectionService {
 
   constructor(private http: HttpClient) { }
 
+  addPricelist(arg: any): Observable<any> {
+    let headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+    let par = {
+      FromDate: arg.from,
+      ToDate: arg.to,
+      TimePrice: arg.timely,
+      DailyPrice: arg.daily,
+      MonthlyPrice: arg.monthly,
+      YearlyPrice: arg.yearly
+    };
+    return this.http.post<any>('http://localhost:52295/api/Pricelist/addPricelist', par, headers);
+  }
+
+  changePricelist(arg: any, id: number): Observable<any> {
+    let headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+    let c: PricelistHelp = new PricelistHelp();
+          c.Id = id;
+          c.ToDate = arg.to;
+    return this.http.post<any>('http://localhost:52295/api/Pricelist/changePricelist', c, headers);
+  }
+
+  getPricelistsAdmin(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Pricelist/getPricelists');
+  }
+
+  getPricelistAdminChange(id: number): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Pricelist/getPricelistChange' + `/?id=${id}`);
+  }
+
+  getPricelistAdmin(id: number): Observable<any>
+  {
+    return this.http.get<any>('http://localhost:52295/api/Pricelist/getPricelist' + `/?id=${id}`);
+  }
+
+  getRoutesCityWorkday(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Data/getRoutesCityWorkday');
+  }
+  getRoutesCitySaturday(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Data/getRoutesCitySaturday');
+  }
+  getRoutesCitySunday(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Data/getRoutesCitySunday');
+  }
+  getRoutesSuburbanWorkday(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Data/getRoutesSuburbanWorkday');
+  }
+  getRoutesSuburbanSaturday(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Data/getRoutesSuburbanSaturday');
+  }
+  getRoutesSuburbanSunday(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Data/getRoutesSuburbanSunday');
+  }
+  Hi(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Account/hi');
+  }
+  getTimetable(par: any): Observable<any> {
+    let headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+    return this.http.post<any>('http://localhost:52295/api/Data/timetable', par, headers);
+  }
+
   postFile(fileToUpload: File,name:string): Observable<any> {
     const endpoint = 'http://localhost:52295/api/Data/UploadDishImage';
     const formData: FormData = new FormData();
     formData.append(name, fileToUpload, fileToUpload.name);
     return this.http.post(endpoint, formData);
 }
-
-
 
   getPricelist(): Observable<any> {
     return this.http.get<any>('http://localhost:52295/api/Data/getPricelist');
@@ -57,10 +128,6 @@ export class ServerConnectionService {
 
   getTypeOfLoginUser(): Observable<any> {
     return this.http.get<any>('http://localhost:52295/api/Data/getTypeOfLoginUser');
-  }
-
-  notify(): Observable<any> {  
-    return this.http.post("http://localhost:52295/api/Notify", "", {headers:{"Accept": "text/plain"}});
   }
 
   buyTicket(typeOfUser: string, typeOfTicket: string, totalPrice: number): Observable<any> {
@@ -151,16 +218,89 @@ export class ServerConnectionService {
     return this.http.post<any>('http://localhost:52295/api/Data/updateProfile', par, headers);
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      return of(result as T);
+  getRouteListAdmin(id: number): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Timetable/getRouteListAdmin' + `/?id=${id}`);
+  }
+
+  getRoutesAdmin(): Observable<any>
+  {
+    return this.http.get<any>('http://localhost:52295/api/Timetable/getRoutesAdmin');
+  }
+
+  getRouteAdmin(id: number): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Timetable/getRouteAdmin' + `/?id=${id}`);
+  }
+
+  getTypeOfDay(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Timetable/getTypeOfDay');
+  }
+
+  changeRouteNumberAdmin(line: string, idlinije: number): Observable<any> {
+    let headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+
+    let par = {
+      RouteNumber: line,
+      Id: idlinije
     };
+    return this.http.post<any>('http://localhost:52295/api/Timetable/changeRouteNumberAdmin', par, headers);
+  }
+
+  chageDayRouteAdmin(selectedtipDana: string, idlinije: number): Observable<any> {
+    let headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+    let par = {
+      Day: selectedtipDana,
+      Id: idlinije
+    };
+    return this.http.post<any>('http://localhost:52295/api/Timetable/chageDayRouteAdmin', par, headers);
+  }
+
+  changeDepAdmin(arg: any, idlinije: number): Observable<any> {
+    let headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+
+    let par = {
+      Departures: arg.svipolasci,
+      Id: idlinije
+    };
+    return this.http.post<any>('http://localhost:52295/api/Timetable/changeDepAdmin', par, headers);
+  }
+
+  deleteRouteAdmin(id: number): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Timetable/deleteRouteAdmin' + `/?id=${id}`);
+  }
+
+  getTypeOfTimetable(): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Timetable/getTypeOfTimetable');
   }
 
   getPhoto(id: string): Observable<any> {
     return this.http.get<any>('http://localhost:52295/api/Data/getPhoto' + `/?id=${id}`);
   }
 
-  
+  addNewRouteAdmin(arg: any): Observable<any> {
+    let headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+    let par = {
+      Day: arg.danNew,
+      Departures: arg.svipolasciNew,
+      RouteNumber: arg.naslovNew,
+      TyoeOfRoute: arg.redvoznje
+    };
+    return this.http.post<any>('http://localhost:52295/api/Timetable/addNewRouteAdmin', par, headers);
+  }
 
 }

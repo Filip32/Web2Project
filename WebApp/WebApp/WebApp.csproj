@@ -252,7 +252,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PricelistAdminController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\TimetableAdminController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -319,6 +321,10 @@
     <Compile Include="Migrations\201906100832387_Migration5.0.Designer.cs">
       <DependentUpon>201906100832387_Migration5.0.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906111522143_Migration5.1.cs" />
+    <Compile Include="Migrations\201906111522143_Migration5.1.Designer.cs">
+      <DependentUpon>201906111522143_Migration5.1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -326,16 +332,19 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\BuyedTicket.cs" />
     <Compile Include="Models\Coefficients.cs" />
+    <Compile Include="Models\DepartureHelp.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\PassengerForVerification.cs" />
+    <Compile Include="Models\PricelistHelp.cs" />
     <Compile Include="Models\PictureModel.cs" />
     <Compile Include="Models\RegisterUser.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Models\Passenger.cs" />
     <Compile Include="Models\Pricelist.cs" />
     <Compile Include="Models\PricelistItem.cs" />
+    <Compile Include="Models\RouteHelp.cs" />
     <Compile Include="Models\Routes.cs" />
     <Compile Include="Models\RouteStation.cs" />
     <Compile Include="Models\Station.cs" />
@@ -514,6 +523,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906100832387_Migration5.0.resx">
       <DependentUpon>201906100832387_Migration5.0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906111522143_Migration5.1.resx">
+      <DependentUpon>201906111522143_Migration5.1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
