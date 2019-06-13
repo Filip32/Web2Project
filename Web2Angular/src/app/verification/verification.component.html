@@ -30,7 +30,11 @@
     <td>{{u.IsValidated}}</td>
     <td><a id="apr" class="button" (click)="ApproveUser(u)">Approve</a></td>
     <td><a id="dec" class="button" (click)="DenyUser(u)">Decline</a></td>
-    <td><a id="shw" class="button" (click)="showDocument(u)">Document</a></td>
+    <td><a id="shw" class="button" (click)="getSlika(u.Email)">Document</a></td>
 	</tr>
 	</tbody>
 </table>
+
+<div *ngIf="slikaBool">
+<img [src]="photoo" width="300px" height="300px">
+</div>

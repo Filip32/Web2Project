@@ -1,0 +1,51 @@
+<div>
+  <p class="my-login-font">
+      Log in
+  </p>
+
+<form [formGroup]="controllerForm" (ngSubmit)="onSubmit()">
+
+  <div id="controllerForm-id">
+      <label class="my-font-title">Email</label>
+      
+      <input type="email" formControlName="email" placeholder="Enter email.." ng-model="email.text" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+
+      <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
+          <div *ngIf="f.email.errors.required" class="my-p-font">
+                  Email is required.
+          </div>
+          <div *ngIf="f.email.errors && f.email.errors.pattern" class="my-p-font">
+                  Email is not of correct format.
+          </div>
+
+      </div>
+
+      <label class="my-font-title">Password</label>
+    <br />
+    <input type="password" formControlName="password" placeholder="Enter password.." required>
+    <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
+      <div *ngIf="f.password.errors.required" class="my-font-title">
+        Password is reqired.
+      </div>
+    </div>
+    <br />
+    <label class="my-font-title">Repeat password</label>
+    <br />
+    <input type="password" formControlName="confirmPassword" placeholder="Enter password.." required>
+    <div *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
+      <div *ngIf="f.confirmPassword.errors.required" class="my-font-title">
+        Password is reqired.
+      </div>
+      <div *ngIf="f.confirmPassword.errors.mustMatch" class="my-font-title">
+        <p> Passwords must match. </p>
+      </div>
+    </div>
+    <br />
+  </div>
+  <input type="submit" value="Add Controller">
+            <div>
+            <label class="my-font-title" center>{{serverSuccessMessage}}</label>
+            </div>
+
+</form>
+</div>

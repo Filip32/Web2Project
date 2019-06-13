@@ -10,11 +10,28 @@ export class VerificationComponent implements OnInit {
 
   tableData: any[] = [];
   selectedRow: any;
+  slikaBool: boolean = false;
+  photoo:any;
+  idd: string;
   
   constructor(private serverConnectionService: ServerConnectionService) { }
 
   ngOnInit() {
     this.getUsers();
+  }
+
+  getSlika(email:string)
+  {
+    this.serverConnectionService.getPhoto(email).subscribe(
+      (res) => {
+        this.photoo = 'data:image/png;base64,' + res;
+        this.slikaBool = true;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  
   }
 
   getUsers()

@@ -284,6 +284,10 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Timetable/getTypeOfTimetable');
   }
 
+  getPhoto(id: string): Observable<any> {
+    return this.http.get<any>('http://localhost:52295/api/Data/getPhoto' + `/?id=${id}`);
+  }
+
   addNewRouteAdmin(arg: any): Observable<any> {
     let headers = {
       headers: new HttpHeaders({
@@ -303,4 +307,5 @@ export class ServerConnectionService {
   {
     return this.http.get<any>('http://localhost:52295/api/Stations/getStationsAdmin');
   }
+
 }

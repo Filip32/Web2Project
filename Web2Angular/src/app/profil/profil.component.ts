@@ -19,6 +19,7 @@ export class ProfilComponent implements OnInit {
   typeOfUser: any;
   fileToUpload: File = null;
   photoo : any;
+  idd : any;
 
   constructor(private fb: FormBuilder, private ServerConnectionService: ServerConnectionService) { }
 
@@ -96,6 +97,7 @@ uploadFileToActivity() {
       (res) => {
         console.log(res);
        this.profileForm.controls['Email'].setValue(res["Username"]);
+       this.idd = res["Username"];
        this.profileForm.controls['Name'].setValue(res["Name"]);
        this.profileForm.controls['Lastname'].setValue(res["Lastname"]);
        this.profileForm.controls['Birthday'].setValue(res["SendBackBirthday"]);
@@ -105,7 +107,9 @@ uploadFileToActivity() {
        this.profileForm.controls['UserType'].setValue(res["UserType"]);
        this.profileForm.controls['Photo'].setValue(res["Photo"]);
        this.typeOfUser = res["UserType"];
-       this.photoo = res["Photo"];
+       //this.photoo = res["Photo"];
+       //getPhoto
+       this.getPhoto();
       }
     );
 
@@ -118,7 +122,19 @@ uploadFileToActivity() {
     );
 
   }
+
+  getPhoto() {
+    this.ServerConnectionService.getPhoto(this.idd).subscribe(
+      (res) => {
+        this.photoo = 'data:image/png;base64,' + res;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  }
 }
+
 
 
 export function MustMatch(controlName: string, matchingControlName: string) {

@@ -570,6 +570,36 @@ namespace WebApp.Controllers
             return response;
         }
 
+        [HttpGet, Route("getPhoto")]
+        public IHttpActionResult GetPhoto(string id)
+        {
+            Passenger k = unitOfWork.PassengerRepository.Find(u => u.AppUserId == id).FirstOrDefault();
+
+            if (k.Picture == null)
+            {
+                return Ok("Nema slike");
+            }
+
+            var filePath = k.Picture;
+
+            FileInfo fileInfo = new FileInfo(filePath);
+            string type = fileInfo.Extension.Split('.')[1];
+            byte[] data = new byte[fileInfo.Length];
+
+            HttpResponseMessage response = new HttpResponseMessage();
+            using (FileStream fs = fileInfo.OpenRead())
+            {
+                fs.Read(data, 0, data.Length);
+                response.StatusCode = HttpStatusCode.OK;
+                response.Content = new ByteArrayContent(data);
+                response.Content.Headers.ContentLength = data.Length;
+
+            }
+
+            response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/png");
+
+            return Ok(data);
+        }
 
         private int GetLastDay(int month) {
             int res;
