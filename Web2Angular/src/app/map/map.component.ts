@@ -23,6 +23,7 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.markers = [];
+    this.stationsIcon = [];
     this.polyline= new Polyline([], '#9966ff', { url:"", scaledSize: {width: 50, height: 50}});
   }
 
