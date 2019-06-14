@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { ServerConnectionService } from '../server-connection.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-routes-stations-admin',
@@ -24,7 +25,7 @@ export class RoutesStationsAdminComponent implements OnInit {
   selectedRouteAddStation : any;
   listRoutesAddStation: any;
 
-  //
+  message: any;
   infoMessage : any;
 
   sType: any;
@@ -53,12 +54,13 @@ export class RoutesStationsAdminComponent implements OnInit {
     NumberInRoute: ['']
   });
 
-  constructor(private fb: FormBuilder, private serverConnectionService: ServerConnectionService) { }
+  constructor(private fb: FormBuilder, private serverConnectionService: ServerConnectionService, private router: Router) { }
 
   get f() { return this.changeStationForm.controls; }
   get d() { return this.addStationForm.controls; }
 
   ngOnInit() {
+    this.message = "";
     this.sXYDot = [];
     this.newStation = true;
     this.newStations = true;
@@ -74,6 +76,7 @@ export class RoutesStationsAdminComponent implements OnInit {
   {
     this.serverConnectionService.getStationsAdmin().subscribe(
       (res) => {
+        this.message = "";
         this.stations = res;
       },
       (err) => {
@@ -92,6 +95,7 @@ export class RoutesStationsAdminComponent implements OnInit {
     this.deleteStationAdminbool = false;
     this.newStationbool = false;
     this.newStationsbool = false;
+    this.message = "";
   }
 
   deleteRouteAdmin(station: any)
@@ -105,6 +109,7 @@ export class RoutesStationsAdminComponent implements OnInit {
     this.deleteStationAdminbool = true;
     this.newStationbool = false;
     this.newStationsbool = false;
+    this.message = "";
   }
 
   addNewStation()
@@ -115,6 +120,7 @@ export class RoutesStationsAdminComponent implements OnInit {
     this.deleteStationAdminbool = false;
     this.newStationbool = true;
     this.newStationsbool = false;
+    this.message = "";
 
     this.serverConnectionService.getRoutesAddStation().subscribe(
       (res) => {
@@ -151,7 +157,7 @@ export class RoutesStationsAdminComponent implements OnInit {
     this.deleteStationAdminbool = false;
     this.newStationbool = false;
     this.newStationsbool = true;
-
+    this.message = "";
 
     this.serverConnectionService.getNewRoutes().subscribe(
       (res) => {
@@ -173,16 +179,18 @@ export class RoutesStationsAdminComponent implements OnInit {
 
   onSubmitSaveChanges()
   {
-    //
-    console.log(this.changeStationForm.value);
     this.serverConnectionService.onSubmitSaveChanges(this.changeStationForm.value).subscribe(
       (res) => {
-        console.log(res);
+        this.message = "Changes are made.";
+        setTimeout(() => {
+          this.router.navigate(['/routes-stations-a']);
+        },
+          2000);
       });
   }
 
   onSubmitSaveDelete()
-  {//
+  {
     let p = this.deleteStationForm.value;
 
     let pom =  this.stations.filter(function(s) {
@@ -210,13 +218,20 @@ export class RoutesStationsAdminComponent implements OnInit {
 
    this.serverConnectionService.deleteStationFromRoute(p).subscribe(
     (res) => {
-      console.log(res);
+      this.message = "Station is deleted.";
+      setTimeout(() => {
+        this.router.navigate(['/routes-stations-a']);
+      },
+        2000);
     });
   }
 
   onSubmitAddStation()
   {////hlper
-
+    let ii = this.addStationForm.value["Address"];
+    let i: any[] = ii.split(',');
+    console.log(+i[2]);
+    if(i.length == 3 && !isNaN(+i[2]) ){
     if(this.sXY){
     let routeNumberPom:any;
     //let idRoutePom:any;
@@ -240,12 +255,21 @@ export class RoutesStationsAdminComponent implements OnInit {
 
     this.serverConnectionService.addStation(this.addStationForm.value).subscribe(
       (res) => {
-        console.log(res);
+        this.message = "Station is added.";
+
+        setTimeout(() => {
+          this.router.navigate(['/routes-stations-a']);
+        },
+          2000);
       });
     }else
     {
       this.infoMessage = "You must select station position on map.";
     }
+  }else
+  {
+    this.infoMessage = "Address format is not valid.";
+  }
   }
 
   onSubmitSaveRouteLines()
@@ -262,7 +286,12 @@ export class RoutesStationsAdminComponent implements OnInit {
     console.log(pom);
     this.serverConnectionService.addLines(pom).subscribe(
       (res) => {
-        console.log(res);
+        this.message = "Line is added.";
+
+        setTimeout(() => {
+          this.router.navigate(['/routes-stations-a']);
+        },
+          2000);
       });
     }else
     {

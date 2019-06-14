@@ -32,7 +32,7 @@ export class ProfilComponent implements OnInit {
       Name: ['', Validators.required],
       Lastname: ['', Validators.required],
       Address_StreetName: ['', Validators.required],
-      Address_StreetNumber: ['', Validators.required],
+      Address_StreetNumber: ['', [Validators.required, Validators.pattern("[0-9]*")]],
       Address_City: ['', Validators.required],
       Birthday: ['', Validators.required],
       UserType: [''],

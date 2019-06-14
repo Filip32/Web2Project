@@ -77,11 +77,14 @@
     <br />
     <label class="my-font-title">Enter street number</label>
     <br />
-    <input type="text" formControlName="Address_StreetNumber" placeholder="Enter street number..">
+    <input type="text" formControlName="Address_StreetNumber" pattern="[0-9]*" placeholder="Enter street number..">
     <div *ngIf="f.Address_StreetNumber.invalid && (f.Address_StreetNumber.dirty || f.Address_StreetNumber.touched)">
       <div *ngIf="f.Address_StreetNumber.errors.required" class="my-font-title">
         Street number is required.
       </div>
+      <div *ngIf="f.Address_StreetNumber.errors.pattern" class="my-font-title">
+          <p>Must be number.</p>
+        </div>
     </div>
     <br />
     <label class="my-font-title">Enter city name</label>
