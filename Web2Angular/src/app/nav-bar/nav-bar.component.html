@@ -9,7 +9,7 @@
   <a routerLink="/priceist-a" *ngIf="isAdmin()">Pricelist</a>
   <a routerLink="/register" *ngIf="!isLogin()">Register</a>
   <a routerLink="/login" *ngIf="!isLogin()">Log in</a>
-  <a routerLink="/addControllor" *ngIf="!isAdmin()">Add controller</a>
+  <a routerLink="/addControllor" *ngIf="isAdmin()">Add controller</a>
   <a routerLink="/" *ngIf="isLogin()" (click)="logout()">Log out</a>
 </div>
 

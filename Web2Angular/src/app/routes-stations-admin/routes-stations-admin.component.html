@@ -94,18 +94,18 @@
               Name is required.
             </div>
           </div>
-          <div><span class="my-font">Address of Station</span></div>
+          <div><span class="my-font">Address of Station in format City, Street, Street number </span></div>
           <input type="text" formControlName="Address" placeholder="Enter address.." required>
           <div *ngIf="d.Address.invalid && (d.Address.dirty || d.Address.touched)">
             <div *ngIf="d.Address.errors.required" class="my-font">
-              Name is required.
+              Address is required.
             </div>
           </div>
           <div><span class="my-font">Station number in route</span></div>
           <input type="text" formControlName="RouteNumbers" placeholder="Enter station number.." required>
           <div *ngIf="d.RouteNumbers.invalid && (d.RouteNumbers.dirty || d.RouteNumbers.touched)">
             <div *ngIf="d.RouteNumbers.errors.required" class="my-font">
-              Name is required.
+              Station number in route is required.
             </div>
           </div>
           <div><span class="my-font">Belongs to route</span></div>
@@ -114,6 +114,11 @@
           <option *ngFor="let c of listRoutesAddStation" [ngValue]="c">{{c.RouteNumber}}</option>
         </select>
         </div>
+
+        <div>
+            <p class="my-font"> {{infoMessage}}</p>
+          </div>
+
         <app-map [route] = "sRoute" [type] = "sType" (sendData)="XYData($event)"></app-map>
         <div>
           <button type="submit" class="submit-button">
@@ -129,6 +134,10 @@
         <select style="width: 255px;" [(ngModel)]="selectedRouteNewRoute">
           <option *ngFor="let c of listRoutesNewRoute" [ngValue]="c">{{c.RouteNumber}}</option>
         </select>
+
+        <div>
+            <p class="my-font"> {{infoMessage}}</p>
+          </div>
         <app-map [route] = "sRoute" [bus] = "sBus" (sendDataDot)="XYDataDot($event)"></app-map>
         <div>
           <button type="submit" class="submit-button" (click)="onSubmitSaveRouteLines()">
@@ -138,4 +147,5 @@
     </div>
 
   </div>
+
 </div>

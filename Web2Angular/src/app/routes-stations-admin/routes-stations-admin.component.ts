@@ -24,6 +24,9 @@ export class RoutesStationsAdminComponent implements OnInit {
   selectedRouteAddStation : any;
   listRoutesAddStation: any;
 
+  //
+  infoMessage : any;
+
   sType: any;
   sRoute : any;
   sXY: any;
@@ -64,6 +67,7 @@ export class RoutesStationsAdminComponent implements OnInit {
     this.newStationbool = false;
     this.newStationsbool = false;
     this.getAllStations();
+    this.infoMessage="";
   }
   
   getAllStations()
@@ -212,6 +216,8 @@ export class RoutesStationsAdminComponent implements OnInit {
 
   onSubmitAddStation()
   {////hlper
+
+    if(this.sXY){
     let routeNumberPom:any;
     //let idRoutePom:any;
     let pom :any[];
@@ -236,11 +242,16 @@ export class RoutesStationsAdminComponent implements OnInit {
       (res) => {
         console.log(res);
       });
+    }else
+    {
+      this.infoMessage = "You must select station position on map.";
+    }
   }
 
   onSubmitSaveRouteLines()
   {
     //sXYDot
+    if(this.sXYDot.length > 1){
     console.log(this.sXYDot);
     console.log(this.selectedRouteNewRoute);
     //selectedRouteNewRoute
@@ -253,5 +264,9 @@ export class RoutesStationsAdminComponent implements OnInit {
       (res) => {
         console.log(res);
       });
+    }else
+    {
+      this.infoMessage = "You must select at least 2 dots.";
+    }
   }
 }
