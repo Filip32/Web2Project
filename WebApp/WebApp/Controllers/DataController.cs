@@ -243,6 +243,11 @@ namespace WebApp.Controllers
                         return Ok(returnMessage);
                     }
 
+                    if (userToUpdate.UserType != p.PassengerType)
+                    {
+                        p.IsValidated = Enums.StateType.UNVERIFIED;
+                    }
+
                     apu.PasswordHash = ApplicationUser.HashPassword(userToUpdate.Password);
                     userManager.Update(apu);
 
@@ -762,11 +767,11 @@ namespace WebApp.Controllers
             string subject = "BusNs status update";
             if (state == Enums.StateType.ACCEPTED)
             {
-                body = "Hello,\n\n We are glad to inform you that your status has been changed to Accepted.\n\n Best regards,\nBus Ns";
+                body = "Hello,\n\n We are glad to inform you that your status has been changed to Accepted.\n\nBest regards,\nBus Ns";
             }
             else if (state == Enums.StateType.DENIED)
             {
-                body = "Hello,\n\n We regret to inform you that your status has been changed to Denied.\n\n Best regards,\nBus Ns";
+                body = "Hello,\n\n We regret to inform you that your status has been changed to Denied.\n\nBest regards,\nBus Ns";
             }
 
             MailMessage mm = new MailMessage("busns021@gmail.com", emailTo, subject, body);

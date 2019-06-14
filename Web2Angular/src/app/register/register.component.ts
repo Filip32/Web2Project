@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit {
             if(this.fileToUpload!=null)
             {
               this.uploadFileToActivity();
-            }
+            }this.serverSuccessMessage = res;
           }else
           {
             this.serverSuccessMessage = res;

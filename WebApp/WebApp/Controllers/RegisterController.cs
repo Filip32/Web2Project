@@ -54,6 +54,7 @@ namespace WebApp.Controllers
                 List<Address> addresses = unitOfWork.AddressRepository.GetAll().ToList();
                 passenger.Address_id = addresses.Where(x => x.City == userToRegister.City && x.StreetName == userToRegister.StreetName && x.StreetNumber == userToRegister.StreetNumber).FirstOrDefault().Id;
                 passenger.AppUserId = user.Id;
+                passenger.PassengerType = userToRegister.UserType;
                 passenger.Birthday = userToRegister.Birthday;
                 passenger.IsValidated = Enums.StateType.UNVERIFIED;
                 passenger.LastName = userToRegister.Lastname;

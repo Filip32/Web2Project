@@ -1,13 +1,14 @@
-<div>
-  <p class="my-login-font">
-      Log in
-  </p>
+<div style="position: absolute; left: 25%;">
 
 <form [formGroup]="controllerForm" (ngSubmit)="onSubmit()">
 
-  <div id="controllerForm-id">
+  <div id="controllerForm-id" >
+
+      <p class="my-login-font">
+          Create new controller
+      </p>
       <label class="my-font-title">Email</label>
-      
+      <br />
       <input type="email" formControlName="email" placeholder="Enter email.." ng-model="email.text" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
 
       <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
@@ -19,7 +20,7 @@
           </div>
 
       </div>
-
+      <br />
       <label class="my-font-title">Password</label>
     <br />
     <input type="password" formControlName="password" placeholder="Enter password.." required>
@@ -41,11 +42,12 @@
       </div>
     </div>
     <br />
+    <input type="submit" value="Add Controller">
+    <div>
+    <label class="my-font-title" center>{{serverSuccessMessage}}</label>
+    </div>
   </div>
-  <input type="submit" value="Add Controller">
-            <div>
-            <label class="my-font-title" center>{{serverSuccessMessage}}</label>
-            </div>
+
 
 </form>
 </div>

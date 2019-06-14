@@ -15,6 +15,11 @@ namespace WebApp.Controllers
     {
         ApplicationDbContext dbContext = new ApplicationDbContext();
         public IUnitOfWork unitOfWork;
+        private static object locka = new object();
+        private static object lockb = new object();
+        private static object lockc = new object();
+        private static object lockd = new object();
+        private static object locke = new object();
 
         public StationAdminController(IUnitOfWork uw)
         {
@@ -25,80 +30,104 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Admin")]
         public IHttpActionResult getStations()
         {
-            List<StationHelper> stationHelper = new List<StationHelper>();
 
-            List<Station> stations = unitOfWork.StationRepository.GetAll().ToList();
-
-            foreach (Station s in stations)
+            try
             {
-                if (s.IsStation)
+                List<StationHelper> stationHelper = new List<StationHelper>();
+
+                List<Station> stations = unitOfWork.StationRepository.GetAll().ToList();
+
+                foreach (Station s in stations)
                 {
-                    Address a = unitOfWork.AddressRepository.Get(s.Address_id);
-                    List<RouteStation> routeStations = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Station_id == s.Id).ToList();
-
-                    List<int> routesId = new List<int>();
-                    List<string> routesName = new List<string>();
-                    List<int> stationNumbers = new List<int>();
-                    string routesNamee = "";
-
-                    foreach (RouteStation rs in routeStations)
+                    if (s.IsStation)
                     {
-                        Route rr = unitOfWork.RouteRepository.Get(rs.Route_id);
-                        routesName.Add(rr.RouteNumber);
-                        routesId.Add(rr.Id);
-                        stationNumbers.Add(rs.Station_num);
-                        routesNamee += "[" + rr.RouteNumber + "] ";
+                        Address a = unitOfWork.AddressRepository.Get(s.Address_id);
+                        List<RouteStation> routeStations = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Station_id == s.Id).ToList();
+
+                        List<int> routesId = new List<int>();
+                        List<string> routesName = new List<string>();
+                        List<int> stationNumbers = new List<int>();
+                        string routesNamee = "";
+
+                        foreach (RouteStation rs in routeStations)
+                        {
+                            Route rr = unitOfWork.RouteRepository.Get(rs.Route_id);
+                            routesName.Add(rr.RouteNumber);
+                            routesId.Add(rr.Id);
+                            stationNumbers.Add(rs.Station_num);
+                            routesNamee += "[" + rr.RouteNumber + "] ";
+                        }
+
+                        stationHelper.Add(new StationHelper()
+                        {
+                            X = s.X,
+                            Y = s.Y,
+                            Name = s.Name,
+                            IdStation = s.Id,
+                            IsStation = s.IsStation,
+                            Address = a.City + ", " + a.StreetName + " " + a.StreetNumber,
+                            IdRoute = routesId,
+                            RouteNumber = routesNamee,
+                            RouteNumbers = routesName,
+                            StationNumbers = stationNumbers
+                        });
                     }
-
-                    stationHelper.Add(new StationHelper()
-                    {
-                        X = s.X,
-                        Y = s.Y,
-                        Name = s.Name,
-                        IdStation = s.Id,
-                        IsStation = s.IsStation,
-                        Address = a.City + ", " + a.StreetName + " " + a.StreetNumber,
-                        IdRoute = routesId,
-                        RouteNumber = routesNamee,
-                        RouteNumbers = routesName,
-                        StationNumbers = stationNumbers
-                    });
                 }
-            }
 
-            return Ok(stationHelper);
+                return Ok(stationHelper);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+            //
+
         }
 
         [Route("getRoutesAddStation")]
         [Authorize(Roles = "Admin")]
         public IHttpActionResult getRoutesAddStation()
         {
-            List<Routes> routes = new List<Routes>();
-            List<Route> r = unitOfWork.RouteRepository.GetAll().Where(x => x.DayType == Enums.TypeOfDay.WORKDAY).ToList();
+            try {
+                List<Routes> routes = new List<Routes>();
+                List<Route> r = unitOfWork.RouteRepository.GetAll().Where(x => x.DayType == Enums.TypeOfDay.WORKDAY).ToList();
 
-            foreach(Route rr in r)
-            {
-                routes.Add(new Routes() { Id = rr.Id, RouteNumber = rr.RouteNumber });
+                foreach (Route rr in r)
+                {
+                    routes.Add(new Routes() { Id = rr.Id, RouteNumber = rr.RouteNumber });
+                }
+                return Ok(routes);
             }
-            return Ok(routes);
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+
         }
 
         [Route("getNewRoutes")]
         [Authorize(Roles = "Admin")]
         public IHttpActionResult getNewRoutes()
         {
-            List<Routes> routes = new List<Routes>();
-            List<Route> r = unitOfWork.RouteRepository.GetAll().Where(x => x.DayType == Enums.TypeOfDay.WORKDAY).ToList();
-
-            foreach (Route rr in r)
+            try
             {
-                List<RouteStation> rs = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Route_id == rr.Id).ToList();
-                if (rs.Count == 0)
+                List<Routes> routes = new List<Routes>();
+                List<Route> r = unitOfWork.RouteRepository.GetAll().Where(x => x.DayType == Enums.TypeOfDay.WORKDAY).ToList();
+
+                foreach (Route rr in r)
                 {
-                    routes.Add(new Routes() { Id = rr.Id, RouteNumber = rr.RouteNumber });
+                    List<RouteStation> rs = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Route_id == rr.Id).ToList();
+                    if (rs.Count == 0)
+                    {
+                        routes.Add(new Routes() { Id = rr.Id, RouteNumber = rr.RouteNumber });
+                    }
                 }
+                return Ok(routes);
             }
-            return Ok(routes);
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
         [Route("saveStationChanges")]
@@ -109,13 +138,15 @@ namespace WebApp.Controllers
             {
                 if (User.Identity.IsAuthenticated)
                 {
+                    lock (locka)
+                    {
+                        Station station = unitOfWork.StationRepository.Find(u => u.Id == sh.IdStation).FirstOrDefault();
+                        station.Name = sh.Name;
+                        unitOfWork.StationRepository.Update(station);
+                        unitOfWork.Complete();
 
-                    Station station = unitOfWork.StationRepository.Find(u => u.Id == sh.IdStation).FirstOrDefault();
-                    station.Name = sh.Name;
-                    unitOfWork.StationRepository.Update(station);
-                    unitOfWork.Complete();
-
-                    return Ok();
+                        return Ok();
+                    }
                 }
                 return BadRequest();
             }
@@ -129,85 +160,117 @@ namespace WebApp.Controllers
         [HttpPost, Authorize(Roles = "Admin")]
         public IHttpActionResult deleteStationFromRoute(StationHelper sh)
         {
-            int IdRoute = Int32.Parse(sh.RouteNumber);
-            RouteStation rs = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Route_id == IdRoute && x.Station_id == sh.IdStation).FirstOrDefault();
-            unitOfWork.RouteStationRepositpry.Remove(rs);
-            unitOfWork.Complete();
-
-            List<RouteStation> routeStations = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Station_id == sh.IdStation).ToList();
-
-            if (routeStations.Count == 0)
+            try
             {
-                Station station = unitOfWork.StationRepository.Get(sh.IdStation);
-                station.IsStation = false;
-                unitOfWork.StationRepository.Update(station);
-                unitOfWork.Complete();
-            }
+                lock (lockb)
+                {
+                    int IdRoute = Int32.Parse(sh.RouteNumber);
+                    RouteStation rs = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Route_id == IdRoute && x.Station_id == sh.IdStation).FirstOrDefault();
+                    unitOfWork.RouteStationRepositpry.Remove(rs);
+                    unitOfWork.Complete();
 
-            return Ok();
+                    List<RouteStation> routeStations = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Station_id == sh.IdStation).ToList();
+
+                    if (routeStations.Count == 0)
+                    {
+                        Station station = unitOfWork.StationRepository.Get(sh.IdStation);
+                        station.IsStation = false;
+                        unitOfWork.StationRepository.Update(station);
+                        unitOfWork.Complete();
+                    }
+
+                    return Ok();
+                }
+            }
+            catch(Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
         [Route("addStation")]
         [HttpPost, Authorize(Roles = "Admin")]
         public IHttpActionResult addStation(StationHelper sh)
         {
-            string[] split = sh.Address.Split(',');
-            Address address = new Address() { City = split[0], StreetName = split[1], StreetNumber = Int32.Parse(split[2]) };
-            unitOfWork.AddressRepository.Add(address);
-            unitOfWork.Complete();
-            
-            address = unitOfWork.AddressRepository.GetAll().Where(x => x.City == split[0] && x.StreetName == split[1] && x.StreetNumber == Int32.Parse(split[2])).FirstOrDefault();
-            Station station = new Station() { Name = sh.Name, X = sh.X, Y = sh.Y, IsStation = true , Address_id = address.Id};
-            unitOfWork.StationRepository.Add(station);
-            unitOfWork.Complete();
-            station = unitOfWork.StationRepository.GetAll().Where(x => x.Address_id == address.Id && x.X == sh.X && x.Y == sh.Y).FirstOrDefault();
 
-            RouteStation routeStation = new RouteStation()
+            try
             {
-                Route_id = sh.IdRoute[0],
-                Station_id = station.Id,
-                Station_num = sh.NumberInRoute
-            };
-
-            List<RouteStation> routeStations = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Route_id == sh.IdRoute[0] && x.Station_num > 0).ToList();
-            routeStations = routeStations.OrderBy(x => x.Station_num).ToList();
-            List<RouteStation> list = routeStations.Where(x => x.Station_num == routeStation.Station_num).ToList();
-
-            int count = routeStation.Station_num;
-            if (list.Count != 0)
-            {
-                foreach (RouteStation rs in routeStations)
+                lock (lockc)
                 {
-                    if (count == rs.Station_num)
+
+                    string[] split = sh.Address.Split(',');
+                    Address address = new Address() { City = split[0], StreetName = split[1], StreetNumber = Int32.Parse(split[2]) };
+                    unitOfWork.AddressRepository.Add(address);
+                    unitOfWork.Complete();
+
+                    address = unitOfWork.AddressRepository.GetAll().Where(x => x.City == split[0] && x.StreetName == split[1] && x.StreetNumber == Int32.Parse(split[2])).FirstOrDefault();
+                    Station station = new Station() { Name = sh.Name, X = sh.X, Y = sh.Y, IsStation = true, Address_id = address.Id };
+                    unitOfWork.StationRepository.Add(station);
+                    unitOfWork.Complete();
+                    station = unitOfWork.StationRepository.GetAll().Where(x => x.Address_id == address.Id && x.X == sh.X && x.Y == sh.Y).FirstOrDefault();
+
+                    RouteStation routeStation = new RouteStation()
                     {
-                        RouteStation pom = unitOfWork.RouteStationRepositpry.Get(rs.Id);
-                        pom.Station_num++;
-                        count++;
-                        unitOfWork.RouteStationRepositpry.Update(pom);
-                        unitOfWork.Complete();
+                        Route_id = sh.IdRoute[0],
+                        Station_id = station.Id,
+                        Station_num = sh.NumberInRoute
+                    };
+
+                    List<RouteStation> routeStations = unitOfWork.RouteStationRepositpry.GetAll().Where(x => x.Route_id == sh.IdRoute[0] && x.Station_num > 0).ToList();
+                    routeStations = routeStations.OrderBy(x => x.Station_num).ToList();
+                    List<RouteStation> list = routeStations.Where(x => x.Station_num == routeStation.Station_num).ToList();
+
+                    int count = routeStation.Station_num;
+                    if (list.Count != 0)
+                    {
+                        foreach (RouteStation rs in routeStations)
+                        {
+                            if (count == rs.Station_num)
+                            {
+                                RouteStation pom = unitOfWork.RouteStationRepositpry.Get(rs.Id);
+                                pom.Station_num++;
+                                count++;
+                                unitOfWork.RouteStationRepositpry.Update(pom);
+                                unitOfWork.Complete();
+                            }
+                        }
                     }
+
+                    unitOfWork.RouteStationRepositpry.Add(routeStation);
+                    unitOfWork.Complete();
+                    return Ok();
                 }
             }
-
-            unitOfWork.RouteStationRepositpry.Add(routeStation);
-            unitOfWork.Complete();
-            return Ok();
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
         [Route("addLines")]
         [HttpPost, Authorize(Roles = "Admin")]
         public IHttpActionResult addLines(AddLinesHelper alh)
         {
-            foreach(Dot dot in alh.dots)
+            try
             {
-                Station station = new Station() { Address_id = -1, X = dot.X, Y = dot.Y, Name = "", IsStation = false };
-                unitOfWork.StationRepository.Add(station);
-                unitOfWork.Complete();
-                station = unitOfWork.StationRepository.GetAll().Where(x => x.X == dot.X && x.Y == dot.Y).FirstOrDefault();
-                unitOfWork.RouteStationRepositpry.Add(new RouteStation() { Station_id = station.Id, Route_id = alh.Id, Station_num = 0 });
-                unitOfWork.Complete();
+                lock (lockd)
+                {
+                    foreach (Dot dot in alh.dots)
+                    {
+                        Station station = new Station() { Address_id = -1, X = dot.X, Y = dot.Y, Name = "", IsStation = false };
+                        unitOfWork.StationRepository.Add(station);
+                        unitOfWork.Complete();
+                        station = unitOfWork.StationRepository.GetAll().Where(x => x.X == dot.X && x.Y == dot.Y).FirstOrDefault();
+                        unitOfWork.RouteStationRepositpry.Add(new RouteStation() { Station_id = station.Id, Route_id = alh.Id, Station_num = 0 });
+                        unitOfWork.Complete();
+                    }
+                    return Ok();
+                }
             }
-            return Ok();
+            catch(Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
     }
