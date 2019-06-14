@@ -30,7 +30,6 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Admin")]
         public IHttpActionResult getStations()
         {
-
             try
             {
                 List<StationHelper> stationHelper = new List<StationHelper>();
@@ -69,7 +68,8 @@ namespace WebApp.Controllers
                             IdRoute = routesId,
                             RouteNumber = routesNamee,
                             RouteNumbers = routesName,
-                            StationNumbers = stationNumbers
+                            StationNumbers = stationNumbers,
+                            LastUpdate = s.LastUpdate.ToString()
                         });
                     }
                 }
@@ -141,11 +141,20 @@ namespace WebApp.Controllers
                     lock (locka)
                     {
                         Station station = unitOfWork.StationRepository.Find(u => u.Id == sh.IdStation).FirstOrDefault();
-                        station.Name = sh.Name;
-                        unitOfWork.StationRepository.Update(station);
-                        unitOfWork.Complete();
 
-                        return Ok();
+                        if (sh.LastUpdate == station.LastUpdate.ToString())
+                        {
+                            station.Name = sh.Name;
+                            station.LastUpdate = DateTime.Now;
+                            unitOfWork.StationRepository.Update(station);
+                            unitOfWork.Complete();
+
+                            return Ok();
+                        }
+                        else
+                        {
+                            return BadRequest("Database is changed. Please refresh page.");
+                        }
                     }
                 }
                 return BadRequest();
@@ -192,7 +201,6 @@ namespace WebApp.Controllers
         [HttpPost, Authorize(Roles = "Admin")]
         public IHttpActionResult addStation(StationHelper sh)
         {
-
             try
             {
                 lock (lockc)
@@ -204,7 +212,7 @@ namespace WebApp.Controllers
                     unitOfWork.Complete();
 
                     address = unitOfWork.AddressRepository.GetAll().Where(x => x.City == split[0] && x.StreetName == split[1] && x.StreetNumber == Int32.Parse(split[2])).FirstOrDefault();
-                    Station station = new Station() { Name = sh.Name, X = sh.X, Y = sh.Y, IsStation = true, Address_id = address.Id };
+                    Station station = new Station() { LastUpdate = DateTime.Now, Name = sh.Name, X = sh.X, Y = sh.Y, IsStation = true, Address_id = address.Id };
                     unitOfWork.StationRepository.Add(station);
                     unitOfWork.Complete();
                     station = unitOfWork.StationRepository.GetAll().Where(x => x.Address_id == address.Id && x.X == sh.X && x.Y == sh.Y).FirstOrDefault();
@@ -272,6 +280,5 @@ namespace WebApp.Controllers
                 return InternalServerError(e);
             }
         }
-
     }
 }

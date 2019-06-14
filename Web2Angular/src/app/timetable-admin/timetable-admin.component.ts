@@ -22,28 +22,33 @@ export class TimetableAdminComponent implements OnInit {
   message: any;
   idlinije: number;
 
+  LastUpdate: any;
   tipDana: any;
   selectedtipDana = null;
   tipRedVoznje: any;
   selectedTipRedVoznje = null;
 
   polasciForm = this.fb.group({
-    svipolasci: [""]
+    svipolasci: [""],
+    lastUpdate: [""]
   });
 
   naslovForm = this.fb.group({
-    naslov: [""]
+    naslov: [""],
+    lastUpdate: [""]
   });
 
   danForm = this.fb.group({
-    dan: [""]
+    dan: [""],
+    lastUpdate: [""]
   });
 
   novaLinijaForm = this.fb.group({
     naslovNew: ['', Validators.required],
     danNew: [""],
     redvoznje: ["", Validators.required],
-    svipolasciNew: ["", Validators.required]
+    svipolasciNew: ["", Validators.required],
+    lastUpdate: [""]
   });
 
   constructor(private fb: FormBuilder, private serverConnectionService: ServerConnectionService, private router: Router) { }
@@ -80,7 +85,7 @@ export class TimetableAdminComponent implements OnInit {
       });
   }
 
-  changeRoute(Id: number, RouteNumber: string): void {
+  changeRoute(Id: number, RouteNumber: string, LastUpdate: any): void {
     this.serverConnectionService.getRouteAdmin(Id).subscribe(
       (res) => {
         this.message = "";
@@ -93,6 +98,7 @@ export class TimetableAdminComponent implements OnInit {
         this.polasciForm['svipolasci'] = res;
         this.naslovForm['naslov'] = RouteNumber;
         this.idlinije = Id;
+        this.LastUpdate = LastUpdate;
         this.getTypeOfDay();
       });
   }
@@ -111,36 +117,39 @@ export class TimetableAdminComponent implements OnInit {
   }
 
   onSubmitRouteNumber() {
-    this.serverConnectionService.changeRouteNumberAdmin(this.routeNumber, this.idlinije).subscribe(
+    this.serverConnectionService.changeRouteNumberAdmin(this.routeNumber, this.idlinije, this.LastUpdate).subscribe(
       (res) => {
         this.message = res;
         this.getRoutesAdmin();
       },
       (err) => {
         console.error(err);
+        this.message = err.error.Message;
       }
     );
   }
 
   onSubmitDay() {
-    this.serverConnectionService.chageDayRouteAdmin(this.selectedtipDana, this.idlinije).subscribe(
+    this.serverConnectionService.chageDayRouteAdmin(this.selectedtipDana, this.idlinije, this.LastUpdate).subscribe(
       (res) => {
         this.message = res;
         this.getRoutesAdmin();
       },
       (err) => {
         console.error(err);
+        this.message = err.error.Message;
       }
     );
   }
 
   onSubmit() {
-    this.serverConnectionService.changeDepAdmin(this.polasciForm.value, this.idlinije).subscribe(
+    this.serverConnectionService.changeDepAdmin(this.polasciForm.value, this.idlinije, this.LastUpdate).subscribe(
       (res) => {
         this.message = res;
       },
       (err) => {
         console.error(err);
+        this.message = err.error.Message;
       }
     );
   }

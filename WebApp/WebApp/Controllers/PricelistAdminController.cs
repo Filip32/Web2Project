@@ -34,7 +34,7 @@ namespace WebApp.Controllers
                 List<PricelistHelp> ret = new List<PricelistHelp>();
                 foreach (Pricelist p in pricelists)
                 {
-                    ret.Add(new PricelistHelp() { Id = p.Id, FromDate = p.From.ToString("yyyy-MM-dd"), ToDate = p.To.ToString("yyyy-MM-dd") });
+                    ret.Add(new PricelistHelp() { Id = p.Id, FromDate = p.From.ToString("yyyy-MM-dd"), ToDate = p.To.ToString("yyyy-MM-dd"), LastUpdate = p.LastUpdate.ToString() });
                 }
 
                 return Ok(ret);
@@ -61,7 +61,7 @@ namespace WebApp.Controllers
                 ch.DailyPrice = listaCenovnika.Where(x => x.Item_id == 2 && x.Pricelist_id == c.Id).FirstOrDefault().Price.ToString();
                 ch.MonthlyPrice = listaCenovnika.Where(x => x.Item_id == 3 && x.Pricelist_id == c.Id).FirstOrDefault().Price.ToString();
                 ch.YearlyPrice = listaCenovnika.Where(x => x.Item_id == 4 && x.Pricelist_id == c.Id).FirstOrDefault().Price.ToString();
-
+                ch.LastUpdate = c.LastUpdate.ToString();
                 return Ok(ch);
             }
             catch (Exception e)
@@ -86,6 +86,7 @@ namespace WebApp.Controllers
                 ch.DailyPrice = listaCenovnika.Where(x => x.Item_id == 2 && x.Pricelist_id == c.Id).FirstOrDefault().Price.ToString();
                 ch.MonthlyPrice = listaCenovnika.Where(x => x.Item_id == 3 && x.Pricelist_id == c.Id).FirstOrDefault().Price.ToString();
                 ch.YearlyPrice = listaCenovnika.Where(x => x.Item_id == 4 && x.Pricelist_id == c.Id).FirstOrDefault().Price.ToString();
+                ch.LastUpdate = c.LastUpdate.ToString();
 
                 if (DateTime.Compare(c.To, DateTime.Now) >= 0)
                     ch.Change = true;
@@ -110,6 +111,7 @@ namespace WebApp.Controllers
                     c.From = DateTime.Parse(pricelist.FromDate);
                     c.To = DateTime.Parse(pricelist.ToDate);
 
+                    c.LastUpdate = DateTime.Now;
                     unitOfWork.PricelistRepository.Add(c);
                     unitOfWork.Complete();
 
@@ -144,6 +146,7 @@ namespace WebApp.Controllers
                     cs.Coefficients_id = unitOfWork.CoefficientRepository.Get(1).Id;
                     cs.Item_id = 4;
                     cs.Price = Decimal.Parse(pricelist.YearlyPrice);
+                    
                     unitOfWork.PricelistItemRepository.Add(cs);
                     unitOfWork.Complete();
 
@@ -166,18 +169,25 @@ namespace WebApp.Controllers
                 {
                     Pricelist c = unitOfWork.PricelistRepository.Get(pricelist.Id);
 
-                    if (DateTime.Compare(c.To, DateTime.Parse(pricelist.ToDate)) < 0)
+                    if (pricelist.LastUpdate == c.LastUpdate.ToString())
                     {
-                        c.To = DateTime.Parse(pricelist.ToDate);
+                        if (DateTime.Compare(c.To, DateTime.Parse(pricelist.ToDate)) < 0)
+                        {
+                            c.To = DateTime.Parse(pricelist.ToDate);
+                            c.LastUpdate = DateTime.Now;
+                            unitOfWork.PricelistRepository.Update(c);
+                            unitOfWork.Complete();
 
-                        unitOfWork.PricelistRepository.Update(c);
-                        unitOfWork.Complete();
-
-                        return Ok("Pricelist was changed successfully.");
+                            return Ok("Pricelist was changed successfully.");
+                        }
+                        else
+                        {
+                            return Ok("Date is already pass.");
+                        }
                     }
                     else
                     {
-                        return Ok("Date is already pass.");
+                        return BadRequest("Database is changed. Please refresh page.");
                     }
                 }
             }

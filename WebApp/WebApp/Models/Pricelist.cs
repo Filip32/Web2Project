@@ -12,6 +12,7 @@ namespace WebApp.Models
         private int id;
         private DateTime from;
         private DateTime to;
+        private DateTime lastUpdate;
 
         public Pricelist()
         {
@@ -47,6 +48,18 @@ namespace WebApp.Models
             set
             {
                 to = value;
+            }
+        }
+
+        public DateTime LastUpdate
+        {
+            get
+            {
+                return lastUpdate;
+            }
+            set
+            {
+                lastUpdate = value;
             }
         }
     }

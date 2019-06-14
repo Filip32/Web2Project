@@ -12,6 +12,7 @@ namespace WebApp.Models
         public string RouteNumber { get; set; }
         public string Day { get; set; }
         public string TyoeOfRoute { get; set; }
+        public string LastUpdate { get; set; }
 
         public DepartureHelp() { }
     }

@@ -6,4 +6,5 @@ export class PricelistHelp {
     DailyPrice: string;
     MonthlyPrice: string;
     YearlyPrice: string;
+    LastUpdate: string;
 }

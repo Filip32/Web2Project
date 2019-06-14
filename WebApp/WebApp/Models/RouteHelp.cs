@@ -13,6 +13,7 @@ namespace WebApp.Models
         public string Day { get; set; }
         public List<StationHelp> Stations { get; set; }
         public string RouteType { get; set; }
+        public string LastUpdate { get; set; }
 
         public RouteHelp()
         {

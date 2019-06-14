@@ -15,6 +15,7 @@ namespace WebApp.Models
         public string MonthlyPrice { get; set; }
         public string YearlyPrice { get; set; }
         public bool Change { get; set; }
+        public string LastUpdate { get; set; }
 
         public PricelistHelp() { }
     }

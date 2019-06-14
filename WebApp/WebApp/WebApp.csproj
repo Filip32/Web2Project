@@ -330,6 +330,22 @@
     <Compile Include="Migrations\201906132347042_Migration7.0.Designer.cs">
       <DependentUpon>201906132347042_Migration7.0.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906140236205_Migration8.0.cs" />
+    <Compile Include="Migrations\201906140236205_Migration8.0.Designer.cs">
+      <DependentUpon>201906140236205_Migration8.0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906140254227_Migration8.1.cs" />
+    <Compile Include="Migrations\201906140254227_Migration8.1.Designer.cs">
+      <DependentUpon>201906140254227_Migration8.1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906140341184_Migration8.2.cs" />
+    <Compile Include="Migrations\201906140341184_Migration8.2.Designer.cs">
+      <DependentUpon>201906140341184_Migration8.2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906140404598_Migration8.3.cs" />
+    <Compile Include="Migrations\201906140404598_Migration8.3.Designer.cs">
+      <DependentUpon>201906140404598_Migration8.3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -537,6 +553,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906132347042_Migration7.0.resx">
       <DependentUpon>201906132347042_Migration7.0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906140236205_Migration8.0.resx">
+      <DependentUpon>201906140236205_Migration8.0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906140254227_Migration8.1.resx">
+      <DependentUpon>201906140254227_Migration8.1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906140341184_Migration8.2.resx">
+      <DependentUpon>201906140341184_Migration8.2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906140404598_Migration8.3.resx">
+      <DependentUpon>201906140404598_Migration8.3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

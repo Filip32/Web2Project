@@ -15,6 +15,7 @@ namespace WebApp.Models
         private string name;
         private int address_id;
         private bool isStation;
+        private DateTime lastUpdate;
 
         public Station()
         {
@@ -86,6 +87,18 @@ namespace WebApp.Models
             set
             {
                 address_id = value;
+            }
+        }
+
+        public DateTime LastUpdate
+        {
+            get
+            {
+                return lastUpdate;
+            }
+            set
+            {
+                lastUpdate = value;
             }
         }
     }

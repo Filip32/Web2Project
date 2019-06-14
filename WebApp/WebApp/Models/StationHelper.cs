@@ -18,6 +18,7 @@ namespace WebApp.Models
         public bool IsStation;
         public List<int> StationNumbers;
         public int NumberInRoute;
+        public string LastUpdate { get; set; }
 
         public StationHelper()
         {

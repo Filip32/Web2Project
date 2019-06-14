@@ -38,7 +38,7 @@ namespace WebApp.Controllers
 
                 foreach (Route l in routesDb)
                 {
-                    routes.Add(new RouteHelp { Id = l.Id, RouteNumber = l.RouteNumber, RouteType = l.RouteType.ToString(), Day = l.DayType.ToString() });
+                    routes.Add(new RouteHelp { LastUpdate = l.LastUpdate.ToString(),  Id = l.Id, RouteNumber = l.RouteNumber, RouteType = l.RouteType.ToString(), Day = l.DayType.ToString() });
                 }
 
                 routes = routes.OrderBy(x => x.RouteType).ToList();
@@ -121,12 +121,19 @@ namespace WebApp.Controllers
                 lock (locka) {
                     Route l = unitOfWork.RouteRepository.Get(departureHelp.Id);
 
-                    l.RouteNumber = departureHelp.RouteNumber;
+                    if (departureHelp.LastUpdate == l.LastUpdate.ToString())
+                    {
+                        l.RouteNumber = departureHelp.RouteNumber;
+                        l.LastUpdate = DateTime.Now;
+                        unitOfWork.RouteRepository.Update(l);
+                        unitOfWork.Complete();
 
-                    unitOfWork.RouteRepository.Update(l);
-                    unitOfWork.Complete();
-
-                    return Ok("Route Number changed.");
+                        return Ok("Route Number changed.");
+                    }
+                    else
+                    {
+                        return BadRequest("Database is changed. Please refresh page.");
+                    }
                 }
             }
             catch (Exception e)
@@ -145,17 +152,25 @@ namespace WebApp.Controllers
                 {
                     Route l = unitOfWork.RouteRepository.Get(departureHelp.Id);
 
-                    if (String.Compare(departureHelp.Day.ToUpper(), Enums.TypeOfDay.WORKDAY.ToString()) == 0)
-                        l.DayType = Enums.TypeOfDay.WORKDAY;
-                    else if (String.Compare(departureHelp.Day.ToUpper(), Enums.TypeOfDay.SATURDAY.ToString()) == 0)
-                        l.DayType = Enums.TypeOfDay.SATURDAY;
-                    else if (String.Compare(departureHelp.Day.ToUpper(), Enums.TypeOfDay.SUNDAY.ToString()) == 0)
-                        l.DayType = Enums.TypeOfDay.SUNDAY;
+                    if (departureHelp.LastUpdate == l.LastUpdate.ToString())
+                    {
+                        if (String.Compare(departureHelp.Day.ToUpper(), Enums.TypeOfDay.WORKDAY.ToString()) == 0)
+                            l.DayType = Enums.TypeOfDay.WORKDAY;
+                        else if (String.Compare(departureHelp.Day.ToUpper(), Enums.TypeOfDay.SATURDAY.ToString()) == 0)
+                            l.DayType = Enums.TypeOfDay.SATURDAY;
+                        else if (String.Compare(departureHelp.Day.ToUpper(), Enums.TypeOfDay.SUNDAY.ToString()) == 0)
+                            l.DayType = Enums.TypeOfDay.SUNDAY;
 
-                    unitOfWork.RouteRepository.Update(l);
-                    unitOfWork.Complete();
+                        l.LastUpdate = DateTime.Now;
+                        unitOfWork.RouteRepository.Update(l);
+                        unitOfWork.Complete();
 
-                    return Ok("Day of  route changed.");
+                        return Ok("Day of  route changed.");
+                    }
+                    else
+                    {
+                        return BadRequest("Database is changed. Please refresh page.");
+                    }
                 }
             }
             catch (Exception e)
@@ -173,18 +188,26 @@ namespace WebApp.Controllers
                 lock (lockc) {
                     Route l = unitOfWork.RouteRepository.Get(departureHelp.Id);
 
-                    string[] vremena = departureHelp.Departures.Split('\n');
-                    string s = "";
-                    foreach (var ss in vremena)
+                    if (departureHelp.LastUpdate == l.LastUpdate.ToString())
                     {
-                        s += ss + '.';
+                        string[] vremena = departureHelp.Departures.Split('\n');
+                        string s = "";
+                        foreach (var ss in vremena)
+                        {
+                            s += ss + '.';
+                        }
+                        l.Departures = s;
+
+                        l.LastUpdate = DateTime.Now;
+                        unitOfWork.RouteRepository.Update(l);
+                        unitOfWork.Complete();
+
+                        return Ok("Polasci uspešno izmenjeni...");
                     }
-                    l.Departures = s;
-
-                    unitOfWork.RouteRepository.Update(l);
-                    unitOfWork.Complete();
-
-                    return Ok("Polasci uspešno izmenjeni...");
+                    else
+                    {
+                        return BadRequest("Database is changed. Please refresh page.");
+                    }
                 }
             }
             catch (Exception e)
@@ -257,6 +280,7 @@ namespace WebApp.Controllers
                     else if (String.Compare(departureHelp.Day, Enums.TypeOfDay.SUNDAY.ToString()) == 0)
                         l.DayType = Enums.TypeOfDay.SUNDAY;
 
+                    l.LastUpdate = DateTime.Now;
                     unitOfWork.RouteRepository.Add(l);
                     unitOfWork.Complete();
 

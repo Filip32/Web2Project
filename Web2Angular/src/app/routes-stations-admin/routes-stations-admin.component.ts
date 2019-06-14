@@ -36,11 +36,13 @@ export class RoutesStationsAdminComponent implements OnInit {
   deleteStationForm = this.fb.group({
     IdStation: [''],
     RouteNumber: ['', Validators.required],
+    LastUpdate:['']
   });
 
   changeStationForm = this.fb.group({
     IdStation: [''],
     Name: ['', Validators.required],
+    LastUpdate:['']
   });
 
   addStationForm = this.fb.group({
@@ -51,7 +53,8 @@ export class RoutesStationsAdminComponent implements OnInit {
     X: ['', Validators.required],
     Y: ['', Validators.required],
     RouteNumbers : ['', Validators.required],
-    NumberInRoute: ['']
+    NumberInRoute: [''],
+    LastUpdate:['']
   });
 
   constructor(private fb: FormBuilder, private serverConnectionService: ServerConnectionService, private router: Router) { }
@@ -89,6 +92,7 @@ export class RoutesStationsAdminComponent implements OnInit {
   {
     this.changeStationForm.controls['IdStation'].setValue(station["IdStation"]);
     this.changeStationForm.controls['Name'].setValue(station["Name"]);
+    this.changeStationForm.controls['LastUpdate'].setValue(station["LastUpdate"]);
     this.newStation = true;
     this.newStations = true;
     this.changeStationbool = true;
@@ -102,6 +106,7 @@ export class RoutesStationsAdminComponent implements OnInit {
   {
     this.listRoutes = station.RouteNumbers;
     this.deleteStationForm.controls['IdStation'].setValue(station["IdStation"]);
+    this.deleteStationForm.controls['LastUpdate'].setValue(station["LastUpdate"]);
     this.selectedRouteDel =  this.listRoutes[0];
     this.newStation = true;
     this.newStations = true;
@@ -186,6 +191,11 @@ export class RoutesStationsAdminComponent implements OnInit {
           this.router.navigate(['/routes-stations-a']);
         },
           2000);
+      },
+      (err) => 
+      {
+          this.message = err.error.Message;
+          console.log(err);
       });
   }
 

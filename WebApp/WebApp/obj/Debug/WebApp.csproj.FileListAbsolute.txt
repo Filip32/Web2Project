@@ -2170,3 +2170,7 @@ C:\Users\filip\Desktop\Web22\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csproj.C
 C:\Users\filip\Desktop\Web22\Web2Project\WebApp\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 C:\Users\filip\Desktop\Web22\Web2Project\WebApp\WebApp\obj\Debug\WebApp.dll
 C:\Users\filip\Desktop\Web22\Web2Project\WebApp\WebApp\obj\Debug\WebApp.pdb
+C:\Users\filip\Desktop\Web22\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration80.resources
+C:\Users\filip\Desktop\Web22\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration81.resources
+C:\Users\filip\Desktop\Web22\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration82.resources
+C:\Users\filip\Desktop\Web22\Web2Project\WebApp\WebApp\obj\Debug\WebApp.Migrations.Migration83.resources

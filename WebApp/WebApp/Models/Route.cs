@@ -15,7 +15,7 @@ namespace WebApp.Models
         private string routeNumber;
         private Enums.TypeOfDay dayType;
         private bool deleted = false;
-
+        private DateTime lastUpdate;
         public Route()
         {
         }
@@ -85,6 +85,18 @@ namespace WebApp.Models
             set
             {
                 routeNumber = value;
+            }
+        }
+
+        public DateTime LastUpdate
+        {
+            get
+            {
+                return lastUpdate;
+            }
+            set
+            {
+                lastUpdate = value;
             }
         }
     }

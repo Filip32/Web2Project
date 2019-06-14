@@ -26,7 +26,8 @@ export class PricelistAdminComponent implements OnInit {
     timely: ['', Validators.required],
     daily: ['', Validators.required],
     monthly: ['', Validators.required],
-    yearly: ['', Validators.required]
+    yearly: ['', Validators.required],
+    lastUpdate : ['']
   });
   
   constructor(private fb: FormBuilder, private serverConnectionService: ServerConnectionService) { }
@@ -81,6 +82,7 @@ export class PricelistAdminComponent implements OnInit {
           this.newPricelistForm.controls['daily'].setValue(+res["DailyPrice"]);
           this.newPricelistForm.controls['monthly'].setValue(+res["MonthlyPrice"]);
           this.newPricelistForm.controls['yearly'].setValue(+res["YearlyPrice"]);
+          this.newPricelistForm.controls['lastUpdate'].setValue(res["LastUpdate"]);
         }
         else
         {
@@ -129,7 +131,6 @@ export class PricelistAdminComponent implements OnInit {
         )
       }
       else {
-        console.log("sss");
         this.serverConnectionService.changePricelist(this.newPricelistForm.value, this.pricelistId).subscribe(
           (res) => {
             this.message = res;
@@ -142,6 +143,11 @@ export class PricelistAdminComponent implements OnInit {
               this.change = false;
               this.changeDate = false;
             }, 2000);
+          },
+          (err) =>
+          {
+            this.message = err.error.Message;
+            console.log(err);
           }
         )
       }

@@ -45,6 +45,7 @@ export class ServerConnectionService {
     let c: PricelistHelp = new PricelistHelp();
           c.Id = id;
           c.ToDate = arg.to;
+          c.LastUpdate = arg.lastUpdate;
     return this.http.post<any>('http://localhost:52295/api/Pricelist/changePricelist', c, headers);
   }
 
@@ -235,7 +236,7 @@ export class ServerConnectionService {
     return this.http.get<any>('http://localhost:52295/api/Timetable/getTypeOfDay');
   }
 
-  changeRouteNumberAdmin(line: string, idlinije: number): Observable<any> {
+  changeRouteNumberAdmin(line: string, idlinije: number, LastUpdate : string): Observable<any> {
     let headers = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -244,12 +245,13 @@ export class ServerConnectionService {
 
     let par = {
       RouteNumber: line,
-      Id: idlinije
+      Id: idlinije,
+      LastUpdate: LastUpdate
     };
     return this.http.post<any>('http://localhost:52295/api/Timetable/changeRouteNumberAdmin', par, headers);
   }
 
-  chageDayRouteAdmin(selectedtipDana: string, idlinije: number): Observable<any> {
+  chageDayRouteAdmin(selectedtipDana: string, idlinije: number, LastUpdate: string): Observable<any> {
     let headers = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -257,12 +259,13 @@ export class ServerConnectionService {
     }
     let par = {
       Day: selectedtipDana,
-      Id: idlinije
+      Id: idlinije,
+      LastUpdate: LastUpdate
     };
     return this.http.post<any>('http://localhost:52295/api/Timetable/chageDayRouteAdmin', par, headers);
   }
 
-  changeDepAdmin(arg: any, idlinije: number): Observable<any> {
+  changeDepAdmin(arg: any, idlinije: number, LastUpdate: string): Observable<any> {
     let headers = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -271,7 +274,8 @@ export class ServerConnectionService {
 
     let par = {
       Departures: arg.svipolasci,
-      Id: idlinije
+      Id: idlinije,
+      LastUpdate: LastUpdate
     };
     return this.http.post<any>('http://localhost:52295/api/Timetable/changeDepAdmin', par, headers);
   }
